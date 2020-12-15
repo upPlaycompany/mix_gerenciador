@@ -1,7 +1,7 @@
 import environ
 
 
-env = environ.ctx(
+env = environ.Env(
     DEBUG=(bool, False)
 )
 
