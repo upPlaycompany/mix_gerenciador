@@ -1,6 +1,6 @@
 import environ
 
-from mix_brasil.settings.base import *
+import mix_brasil.mix_brasil.settings.base
 
 env = environ.Env(
     DEBUG=(bool, False)
