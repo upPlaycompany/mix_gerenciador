@@ -14,14 +14,13 @@ firebaseConfig = {
     'measurementId': "G-VH0XXQFXES"
 }
 
-firebase_with_admin = firebase_admin.initialize_app(firebaseConfig)
+firebase_with_admin = initialize_app(firebaseConfig)
 firebase_normal = pyrebase.initialize_app(firebaseConfig)
 auth = firebase_normal.auth()
-a = firebase.credentials.from_json(firebaseConfig)
 db = firestore.client()
 
 def index(request):
-    teste = db.collection(u'categorias')
+    teste = db.collection('categorias')
     doc = teste.stream()
     return render(request, 'index.html', {'lista': doc})
 
