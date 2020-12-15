@@ -1,6 +1,7 @@
 import pyrebase
 from django.shortcuts import render
 from django.contrib import auth as autent
+from firebase_admin import firestore, initialize_app, credentials
 
 firebaseConfig = {
     'apiKey': "AIzaSyBh-DC_fXWzzcHV6XYhFQ1Ya6MWG5OjH_w",
@@ -13,12 +14,16 @@ firebaseConfig = {
     'measurementId': "G-VH0XXQFXES"
 }
 
-firebase = pyrebase.initialize_app(firebaseConfig)
-auth = firebase.auth()
-database = firebase.database()
+firebase_with_admin = firebase_admin.initialize_app(firebaseConfig)
+firebase_normal = pyrebase.initialize_app(firebaseConfig)
+auth = firebase_normal.auth()
+a = firebase.credentials.from_json(firebaseConfig)
+db = firestore.client()
 
 def index(request):
-    return render(request, 'index.html')
+    teste = db.collection(u'categorias')
+    doc = teste.stream()
+    return render(request, 'index.html', {'lista': doc})
 
 
 def login(request):
@@ -42,5 +47,4 @@ def post_sign_in(request):
 def logout(request):
     autent.logout(request)
     return render(request, 'login.html')
-
 
