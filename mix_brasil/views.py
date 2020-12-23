@@ -25,7 +25,7 @@ cred = credentials.Certificate("/app/mix_brasil/credencial.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
-@login_required(pyrebase.auth().sign_in_with_email_and_password())
+@login_required()
 def index(request):
     teste = db.collection('categorias')
     docs = teste.stream()
@@ -47,7 +47,7 @@ def logar(request):
         return HttpResponseRedirect("index")
     return render(request, "login.html")
 
-@login_required(pyrebase.auth().sign_in_with_email_and_password())
+@login_required()
 def logout(request):
     autent.logout(request)
     return HttpResponseRedirect("logar")
