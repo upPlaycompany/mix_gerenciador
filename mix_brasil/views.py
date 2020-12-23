@@ -36,7 +36,6 @@ def logar(request):
             return render(request, 'login.html', {"msg": mensagem})
         session_id = user['idToken']
         request.session['uid'] = str(session_id)
-        return HttpResponseRedirect("index")
     return render(request, "login.html")
 
 @login_required( login_url='/index/')
