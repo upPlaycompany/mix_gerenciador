@@ -25,13 +25,6 @@ cred = credentials.Certificate("/app/mix_brasil/credencial.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
-@login_required("if request.session['uid'] == True", login_url='/index/')
-def index(request):
-    teste = db.collection('categorias')
-    docs = teste.stream()
-    return render(request, 'index.html',{'lista': docs})
-
-
 def logar(request):
     if request.method == 'POST':
         email = request.POST['email']
@@ -46,7 +39,13 @@ def logar(request):
         return HttpResponseRedirect("index")
     return render(request, "login.html")
 
-@login_required("if request.session['uid'] == True", login_url='/index/')
+@login_required( login_url='/index/')
+def index(request):
+    teste = db.collection('categorias')
+    docs = teste.stream()
+    return render(request, 'index.html',{'lista': docs})
+
+@login_required(login_url='/index/')
 def logout(request):
     autent.logout(request)
     return HttpResponseRedirect("logar")
