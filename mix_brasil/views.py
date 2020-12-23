@@ -28,7 +28,7 @@ def index(request):
     docs = teste.stream()
     for doc in docs:
         print('{} => {} '.format(doc.id, doc.to_dict()))
-    return render(request, 'index.html', {'lista': doc})
+    return render(request, 'index.html')
 
 
 def login(request):
