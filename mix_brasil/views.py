@@ -25,7 +25,9 @@ db = firestore.client()
 
 def index(request):
     teste = db.collection('categorias')
-    doc = teste.stream()
+    docs = teste.stream()
+    for doc in docs:
+        print('{} => {} '.format(doc.id, doc.to_dict()))
     return render(request, 'index.html', {'lista': doc})
 
 
