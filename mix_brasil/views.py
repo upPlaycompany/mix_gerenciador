@@ -1,6 +1,7 @@
 import pyrebase
 from django.shortcuts import render
 from django.contrib import auth as autent
+from django.http import HttpResponseRedirect
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
