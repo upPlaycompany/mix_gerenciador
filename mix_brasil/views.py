@@ -41,13 +41,12 @@ def logar(request):
         except:
             mensagem = "Login inválido"
             return render(request, 'login.html', {"msg": mensagem})
-        print(user['idToken'])
         session_id = user['idToken']
         request.session['uid'] = str(session_id)
         return HttpResponseRedirect("index")
     return render(request, "login.html")
 
-@login_required(login_url='')
+@login_required
 def logout(request):
     autent.logout(request)
     return HttpResponseRedirect("logar")
