@@ -25,7 +25,7 @@ cred = credentials.Certificate("/app/mix_brasil/credencial.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
-@login_required(function="if request.session['uid'] == True", login_url='/index/')
+@login_required("if request.session['uid'] == True", login_url='/index/')
 def index(request):
     teste = db.collection('categorias')
     docs = teste.stream()
@@ -46,7 +46,7 @@ def logar(request):
         return HttpResponseRedirect("index")
     return render(request, "login.html")
 
-@login_required(function="if request.session['uid'] == True", login_url='/index/')
+@login_required("if request.session['uid'] == True", login_url='/index/')
 def logout(request):
     autent.logout(request)
     return HttpResponseRedirect("logar")
