@@ -39,13 +39,13 @@ def logar(request):
         return HttpResponseRedirect("index")
     return render(request, "login.html")
 
-@logar()
+@logar(request)
 def index(request):
     teste = db.collection('categorias')
     docs = teste.stream()
     return render(request, 'index.html',{'lista': docs})
 
-@logar()
+@logar(request)
 def logout(request):
     autent.logout(request)
     return HttpResponseRedirect("logar")
