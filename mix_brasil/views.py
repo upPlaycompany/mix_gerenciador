@@ -45,7 +45,10 @@ def index(request):
     return render(request, 'index.html',{'lista': docs})
 
 def logout(request):
-    autent.logout(request)
+    try:
+        del request.session['uid']
+    except KeyError:
+        pass
     return HttpResponseRedirect("logar")
 
 
