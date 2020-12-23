@@ -1,11 +1,13 @@
 import pyrebase
 from django.shortcuts import render
 from django.contrib import auth as autent
-from firebase_admin import firestore, initialize_app, credentials
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 
 firebaseConfig = {
-    'apiKey': "AIzaSyBh-DC_fXWzzcHV6XYhFQ1Ya6MWG5OjH_w",
-    'authDomain': "mix-brasil.firebaseapp.com",
+    'apiKey' : "AIzaSyBh-DC_fXWzzcHV6XYhFQ1Ya6MWG5OjH_w",
+    'authDomain' : "mix-brasil.firebaseapp.com",
     'databaseURL': "https://mix-brasil.firebaseio.com",
     'projectId': "mix-brasil",
     'storageBucket': "mix-brasil.appspot.com",
@@ -14,9 +16,11 @@ firebaseConfig = {
     'measurementId': "G-VH0XXQFXES"
 }
 
-firebase_with_admin = initialize_app(firebaseConfig)
 firebase_normal = pyrebase.initialize_app(firebaseConfig)
 auth = firebase_normal.auth()
+
+cred = credentials.Certificate("./credencial.json")
+firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 def index(request):
@@ -46,4 +50,6 @@ def post_sign_in(request):
 def logout(request):
     autent.logout(request)
     return render(request, 'login.html')
+
+
 
