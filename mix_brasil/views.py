@@ -19,7 +19,7 @@ firebaseConfig = {
 firebase_normal = pyrebase.initialize_app(firebaseConfig)
 auth = firebase_normal.auth()
 
-cred = credentials.Certificate("./credencial.json")
+cred = credentials.Certificate("/app/mix_brasil/credencial.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
