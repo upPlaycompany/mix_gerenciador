@@ -36,15 +36,16 @@ def logar(request):
             return render(request, 'login.html', {"msg": mensagem})
         session_id = user['idToken']
         request.session['uid'] = str(session_id)
+        return HttpResponseRedirect("index")
     return render(request, "login.html")
 
-@login_required( login_url='/index/')
+@login_required
 def index(request):
     teste = db.collection('categorias')
     docs = teste.stream()
     return render(request, 'index.html',{'lista': docs})
 
-@login_required(login_url='/index/')
+@login_required
 def logout(request):
     autent.logout(request)
     return HttpResponseRedirect("logar")
