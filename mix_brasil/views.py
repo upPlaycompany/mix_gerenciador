@@ -2,6 +2,7 @@ import pyrebase
 from django.shortcuts import render
 from django.contrib import auth as autent
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -17,13 +18,14 @@ firebaseConfig = {
     'measurementId': "G-VH0XXQFXES"
 }
 
-firebase_normal = pyrebase.initialize_app(firebaseConfig)
-auth = firebase_normal.auth()
+pyrebase = pyrebase.initialize_app(firebaseConfig)
+auth = pyrebase.auth()
 
 cred = credentials.Certificate("/app/mix_brasil/credencial.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
+@login_required(pyrebase.auth().sign_in_with_email_and_password())
 def index(request):
     teste = db.collection('categorias')
     docs = teste.stream()
@@ -45,7 +47,7 @@ def logar(request):
         return HttpResponseRedirect("index")
     return render(request, "login.html")
 
-
+@login_required(pyrebase.auth().sign_in_with_email_and_password())
 def logout(request):
     autent.logout(request)
     return HttpResponseRedirect("logar")
