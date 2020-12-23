@@ -30,17 +30,18 @@ def index(request):
 
 
 def logar(request):
-    email = request.POST.get('email')
-    password = request.POST.get('password')
-    try:
-        user = auth.sign_in_with_email_and_password(email, password)
-    except:
-        mensagem = "Login inválido"
-        return render(request, 'login.html', {"msg": mensagem})
-    print(user['idToken'])
-    session_id = user['idToken']
-    request.session['uid'] = str(session_id)
-    return HttpResponseRedirect("index")
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        try:
+            user = auth.sign_in_with_email_and_password(email, password)
+        except:
+            mensagem = "Login inválido"
+            return render(request, 'login.html', {"msg": mensagem})
+        print(user['idToken'])
+        session_id = user['idToken']
+        request.session['uid'] = str(session_id)
+        return HttpResponseRedirect("index")
     return render(request, "login.html")
 
 
