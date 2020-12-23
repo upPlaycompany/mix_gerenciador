@@ -4,5 +4,19 @@ Página inicial
 {% endblock title %}
 
 {% block content %}
-<h1> {{ doc }}</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Nome</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for docs in lista %}
+    <tr>
+      <th scope="row">{{ docs.id }} </th>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
 {% endblock %}

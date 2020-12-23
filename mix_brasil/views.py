@@ -26,16 +26,10 @@ db = firestore.client()
 def index(request):
     teste = db.collection('categorias')
     docs = teste.stream()
-    for doc in docs:
-        print('{} => {} '.format(doc.id, doc.to_dict()))
-    return render(request, 'index.html')
+    return render(request, 'index.html',{'lista': docs})
 
 
-def login(request):
-    return render(request, 'login.html')
-
-
-def post_sign_in(request):
+def logar(request):
     email = request.POST.get('email')
     password = request.POST.get('password')
     try:
@@ -46,12 +40,12 @@ def post_sign_in(request):
     print(user['idToken'])
     session_id = user['idToken']
     request.session['uid'] = str(session_id)
-    return render(request, "index.html", {'e': email})
+    return HttpResponseRedirect("index")
+    return render(request, "login.html")
 
 
 def logout(request):
     autent.logout(request)
-    return render(request, 'login.html')
-
+    return HttpResponseRedirect("logar")
 
 
