@@ -51,7 +51,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-LOGIN_URL='/'
 
 ROOT_URLCONF = 'mix_brasil.urls'
 
