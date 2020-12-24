@@ -1,11 +1,22 @@
 import pyrebase
 from django.shortcuts import render
-from django.contrib import auth as autent
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+import csv
+import psycopg2
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core import paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db import connections
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404
+import pandas as pd
+from .models import *
 
 firebaseConfig = {
     'apiKey' : "AIzaSyBh-DC_fXWzzcHV6XYhFQ1Ya6MWG5OjH_w",
@@ -44,7 +55,7 @@ def index(request):
 
 @login_required
 def deslogar(request):
-    autent.logout(request)
+    logout(request)
     return HttpResponseRedirect("logar")
 
 
