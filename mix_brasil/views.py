@@ -26,29 +26,25 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 def logar(request):
-    if request.method == 'POST':
-        email = request.POST['email']
+    next = request.GET.get('next', '/index/')
+    if request.method == "POST":
+        username = request.POST['username']
         password = request.POST['password']
-        try:
-            user = auth.sign_in_with_email_and_password(email, password)
-        except:
-            mensagem = "Login inválido"
-            return render(request, 'login.html', {"msg": mensagem})
-        session_id = user['idToken']
-        request.session['uid'] = str(session_id)
-        return HttpResponseRedirect("index")
-    return render(request, "login.html")
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(next)
+    return render(request, 'login.html', {'redirect_to': next})
 
+@login_required
 def index(request):
     teste = db.collection('categorias')
     docs = teste.stream()
     return render(request, 'index.html',{'lista': docs})
 
-def logout(request):
-    try:
-        del request.session['uid']
-    except KeyError:
-        pass
+@login_required
+def deslogar(request):
+    autent.logout(request)
     return HttpResponseRedirect("logar")
 
 
