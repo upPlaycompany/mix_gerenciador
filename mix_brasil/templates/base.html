@@ -190,6 +190,17 @@
     <div class="menu-block customscroll">
         <div class="sidebar-menu">
             <ul id="accordion-menu">
+                <li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle">
+							<span class="micon dw dw-house-1"></span><span class="mtext">Categorias</span>
+						</a>
+
+						<ul class="submenu">
+                            {% for categorias in c %}
+							<li>{{ categorias }}</li>
+                            {% endfor %}
+						</ul>
+					</li>
             </ul>
         </div>
     </div>

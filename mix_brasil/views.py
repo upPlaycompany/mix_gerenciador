@@ -53,4 +53,10 @@ def deslogar(request):
     logout(request)
     return HttpResponseRedirect("/")
 
+@login_required
+def categoria_listagem(request):
+    categorias = db.collection('categorias').stream()
+    c = dict(categorias)
+    return render(request,'base.html', {c})
+
 
