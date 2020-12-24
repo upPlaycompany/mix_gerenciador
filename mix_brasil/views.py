@@ -46,7 +46,7 @@ def logar(request):
 
 @login_required
 def index(request):
-    return render(request, 'index.html',{'lista': docs})
+    return render(request, 'index.html')
 
 @login_required
 def deslogar(request):
