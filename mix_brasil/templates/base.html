@@ -194,11 +194,11 @@
 						<a href="javascript:;" class="dropdown-toggle">
 							<span class="micon dw dw-house-1"></span><span class="mtext">Categorias</span>
 						</a>
+                    {% for categorias in lista %}
 						<ul class="submenu">
-                            {% for categorias in lista %}
 							<li><a href="index.html">{{ categorias.id }}</a></li>
-                            {% endfor %}
 						</ul>
+                    {% endfor %}
 					</li>
             </ul>
         </div>
