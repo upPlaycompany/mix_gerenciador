@@ -46,8 +46,6 @@ def logar(request):
 
 @login_required
 def index(request):
-    teste = db.collection('categorias')
-    docs = teste.stream()
     return render(request, 'index.html',{'lista': docs})
 
 @login_required
