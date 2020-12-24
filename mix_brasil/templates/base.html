@@ -194,10 +194,9 @@
 						<a href="javascript:;" class="dropdown-toggle">
 							<span class="micon dw dw-house-1"></span><span class="mtext">Categorias</span>
 						</a>
-
 						<ul class="submenu">
-                            {% for categorias in c %}
-							<li>{{ categorias }}</li>
+                            {% for c in categorias %}
+							<li>{{ c }}</li>
                             {% endfor %}
 						</ul>
 					</li>
