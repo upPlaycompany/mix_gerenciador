@@ -56,8 +56,6 @@ def deslogar(request):
 @login_required
 def categoria_listagem(request):
     categorias = db.collection('categorias').stream()
-    for c in categorias:
-        print(u'{} => {}'.format(doc.id, doc.to_dict()))
-    return render(request,'base.html', {categorias: c})
+    return render(request,'base.html', {'lista': categorias})
 
 

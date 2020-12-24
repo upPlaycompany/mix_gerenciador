@@ -195,8 +195,9 @@
 							<span class="micon dw dw-house-1"></span><span class="mtext">Categorias</span>
 						</a>
 						<ul class="submenu">
-							<li>Dashboard style 1</li>
-							<li>Dashboard style 2</li>
+                            {% for categorias in lista %}
+							<li><a href="index.html">{{ categorias.to_dict }}</a></li>
+                            {% endfor %}
 						</ul>
 					</li>
             </ul>
