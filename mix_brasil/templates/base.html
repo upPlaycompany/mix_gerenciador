@@ -36,6 +36,7 @@
 
 		gtag('config', 'UA-119386393-1');
 
+
     </script>
 </head>
 <body>
@@ -60,7 +61,7 @@
 
         </div>
     </div>
-	<div class="header-right">
+    <div class="header-right">
         <div class="dashboard-setting user-notification">
             <div class="dropdown">
                 <a class="dropdown-toggle no-arrow" href="javascript:;" data-toggle="right-sidebar">
@@ -68,22 +69,22 @@
                 </a>
             </div>
         </div>
-    </div>
-
-    <div class="user-info-dropdown">
-        <div class="dropdown">
-            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+        <div class="user-info-dropdown">
+            <div class="dropdown">
+                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 						<span class="user-icon">
 							<img src="{% static 'vendors/images/photo1.jpg' %}" alt="">
 						</span>
-                <span class="user-name">{{ user.username }}</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                    <span class="user-name">{{ user.username }}</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 
-                <a class="dropdown-item" href="{% url 'deslogar' %}"><i class="dw dw-logout"></i> Logout</a>
+                    <a class="dropdown-item" href="{% url 'deslogar' %}"><i class="dw dw-logout"></i> Logout</a>
+                </div>
             </div>
         </div>
     </div>
+
 
 </div>
 
