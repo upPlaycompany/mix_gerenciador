@@ -62,9 +62,8 @@ def categoria_listagem(request):
 def academia_suplementos_lojas(request):
     academia = db.collection(u'categorias').document(u'academia_suplementos')
     lojas = academia.collection(u'lojas')
-    query = list(lojas)
-    query2 = [str(x) for x in query]
-    return render(request, 'academia_suplementos_lojas.html', {'lista': query2})
+    query = dict(lojas)
+    return render(request, 'academia_suplementos_lojas.html', {'lista': query})
 
 
 
