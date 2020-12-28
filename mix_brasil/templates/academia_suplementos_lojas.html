@@ -5,18 +5,24 @@ Lojas de Suplementos de Academia
 {% endblock title %}
 
 {% block content %}
-<table class="data-table table nowrap">
+<table class="table">
     <thead>
     <tr>
-        <th>Lojas</th>
+        <th scope="col">Identificador de lojas</th>
+    </tr>
+    <tr>
+        <th scope="col">Dados de lojas</th>
     </tr>
     </thead>
     <tbody>
-    {% for query in lista %}
+    {% for q1 in lista %}
     <tr>
-        <td class="table-plus">
-            {{ query }}
-        </td>
+        <td scope="row">{{ q1 }}</td>
+    </tr>
+    {% endfor %}
+    {% for q2 in lista %}
+    <tr>
+        <td scope="row">{{ q2 }}</td>
     </tr>
     {% endfor %}
     </tbody>
