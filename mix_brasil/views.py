@@ -58,4 +58,11 @@ def categoria_listagem(request):
     categorias = db.collection('categorias').stream()
     return render(request,'base.html', {'lista': categorias})
 
+@login_required
+def academia_suplementos_lojas(request):
+    academia = db.collection(u'categorias').document(u'academia_suplementos')
+    lojas = academia.collection(u'lojas').stream()
+    return render(request, 'academia_suplementos_lojas.html', {'lista': lojas})
+
+
 

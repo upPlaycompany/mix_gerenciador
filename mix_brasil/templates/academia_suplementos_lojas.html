@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}
+Página inicial
+{% endblock title %}
+
+{% block content %}
+<table class="data-table table nowrap">
+    <thead>
+    <tr>
+        <th>Lojas</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for lojas in lista % }
+    <tr>
+        <td>
+            {{ lojas.id }}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
