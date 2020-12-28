@@ -14,6 +14,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db import connections
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
+import pandas as pd
 
 firebaseConfig = {
     'apiKey' : "AIzaSyBh-DC_fXWzzcHV6XYhFQ1Ya6MWG5OjH_w",
@@ -62,9 +63,8 @@ def categoria_listagem(request):
 def academia_suplementos_lojas(request):
     academia = db.collection(u'categorias').document(u'academia_suplementos')
     lojas = academia.collection(u'lojas')
-    q1 = lojas.id
-    q2 = dict(lojas)
-    query = {'lista': q1, 'lista2': q2}
+    abc = pd.DataFrame(lojas)
+    query = {'lista': abc}
     return render(request, 'academia_suplementos_lojas.html', query)
 
 
