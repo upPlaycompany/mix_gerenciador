@@ -10,14 +10,14 @@ Página inicial
         <th>Lojas</th>
     </tr>
     </thead>
-    <tbody>
     {% for lojas in lista % }
+    <tbody>
     <tr>
         <td>
             {{ lojas.id }}
         </td>
     </tr>
-    {% endfor %}
     </tbody>
+    {% endfor %}
 </table>
 {% endblock %}
