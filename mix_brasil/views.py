@@ -62,8 +62,8 @@ def categoria_listagem(request):
 @login_required
 def academia_suplementos_lojas(request):
     academia = db.collection(u'categorias').document(u'academia_suplementos')
-    lojas = academia.collection(u'lojas').stream()
-    query = {'lista': lojas}
+    lojas = academia.collection(u'lojas')
+    query = print(lojas)
     return render(request, 'academia_suplementos_lojas.html', query)
 
 
