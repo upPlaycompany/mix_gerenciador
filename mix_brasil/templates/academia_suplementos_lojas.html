@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+
 {% block title %}
-Página inicial
+Lojas de Suplementos de Academia
 {% endblock title %}
 
 {% block content %}
@@ -10,14 +11,16 @@ Página inicial
         <th>Lojas</th>
     </tr>
     </thead>
-    {% for lojas in lista % }
+
     <tbody>
+    {% for lojas in lista %}
     <tr>
         <td>
             {{ lojas.id }}
         </td>
     </tr>
-    </tbody>
     {% endfor %}
+    </tbody>
 </table>
+
 {% endblock %}
