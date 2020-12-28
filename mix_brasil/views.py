@@ -63,7 +63,7 @@ def academia_suplementos_lojas(request):
     academia = db.collection(u'categorias').document(u'academia_suplementos')
     lojas = academia.collection(u'lojas')
     q1 = lojas.id
-    q2 = lojas.to_dict
+    q2 = dict(lojas)
     query = {'lista': q1, 'lista2': q2}
     return render(request, 'academia_suplementos_lojas.html', query)
 
