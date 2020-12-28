@@ -8,13 +8,13 @@ Lojas de Suplementos de Academia
 <table class="table">
     <thead>
     <tr>
-        <th scope="col">Identificador de lojas</th>
+        <th>Identificador de lojas</th>
     </tr>
     </thead>
     <tbody>
     {% for lojas in lista %}
     <tr>
-        <td scope="row">{{ lojas }}</td>
+        <td>{{ lojas.id }}</td>
     </tr>
     {% endfor %}
     </tbody>
