@@ -8,13 +8,19 @@ Lojas de Suplementos de Academia
 <table class="table">
     <thead>
     <tr>
-        <th>Identificador de lojas</th>
+        <th>Nome da loja</th>
+        <th>Descrição da loja</th>
+        <th>Imagem da loja</th>
     </tr>
     </thead>
     <tbody>
     {% for docs in lista %}
     <tr>
         <td>{{ docs.name }}</td>
+        <td>{{ docs.descricao }}</td>
+        {% if docs.img != "" %}
+        <td><img src="{{ docs.img }}"></td>
+        {% endif %}
     </tr>
     {% endfor %}
     </tbody>
