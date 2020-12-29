@@ -21,7 +21,7 @@
         {% if docs.img != "['']" %}
         <td><img src="{{ docs.img|cut:"["|cut:"]"|cut:"'"|cut:"'"}}"></td>
         {% else %}
-        <td>Sem imagem</td>
+        <td><strong>Sem imagem</strong></td>
         {% endif %}
     </tr>
     {% endfor %}
