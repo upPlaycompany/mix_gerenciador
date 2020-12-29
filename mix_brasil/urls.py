@@ -35,8 +35,8 @@ urlpatterns = [
 
     path('cama_mesa_banho_lojas/', views.cama_mesa_banho_lojas, name='cama_mesa_banho_lojas'),
 
-    path('cosmetico_beleza/', views.cosmetico_beleza_lojas, name='cosmetico_beleza_lojas'),
+    path('cosmetico_beleza_lojas/', views.cosmetico_beleza_lojas, name='cosmetico_beleza_lojas'),
 
-
+    path('decoracao_lojas/', views.decoracao_lojas, name='decoracao_lojas'),
 
 ]

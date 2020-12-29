@@ -96,5 +96,11 @@ def cosmetico_beleza_lojas(request):
     docs = [x.to_dict() for x in cosmetico]
     return render(request, 'cosmetico_beleza_lojas.html', {'lista': docs})
 
+@login_required
+def decoracao_lojas(request):
+    decoracao = db.collection('categorias/decoracao/lojas').stream()
+    docs = [x.to_dict() for x in decoracao]
+    return render(request, 'decoracao_lojas.html', {'lista': docs})
+
 
 
