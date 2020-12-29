@@ -33,6 +33,10 @@ urlpatterns = [
 
     path('brinquedos_lojas/', views.brinquedos_lojas, name='brinquedos_lojas'),
 
-    path('cama_mesa_banho_lojas/', views.cama_mesa_banho_lojas, name='cama_mesa_banho_lojas')
+    path('cama_mesa_banho_lojas/', views.cama_mesa_banho_lojas, name='cama_mesa_banho_lojas'),
+
+    path('cosmetico_beleza/', views.cosmetico_beleza_lojas, name='cosmetico_beleza_lojas'),
+
+
 
 ]

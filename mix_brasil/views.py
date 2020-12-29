@@ -90,7 +90,11 @@ def cama_mesa_banho_lojas(request):
     docs = [x.to_dict() for x in cama]
     return render(request,'cama_mesa_banho_lojas.html', {'lista': docs})
 
-
+@login_required
+def cosmetico_beleza_lojas(request):
+    cosmetico = db.collection('categorias/cosmetico_beleza/lojas').stream()
+    docs = [x.to_dict() for x in cosmetico]
+    return render(request, 'cosmetico_beleza_lojas.html', {'lista': docs})
 
 
 

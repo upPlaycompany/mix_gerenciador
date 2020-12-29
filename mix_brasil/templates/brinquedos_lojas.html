@@ -23,6 +23,7 @@
         <td>
             {% for img in docs.img %}
             <span><img src="{{ img|cut:" ["|cut:"]"|cut:"'"|cut:"'"}}"></span>
+            <span></span>
             {% endfor %}
         </td>
         {% else %}
