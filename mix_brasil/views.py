@@ -62,7 +62,7 @@ def categoria_listagem(request):
 
 @login_required
 def academia_suplementos_lojas(request):
-    academia = db.collection('categorias/academia_sumplementos/lojas')
+    academia = db.collection('categorias/academia_sumplementos/lojas').stream()
     docs = [x.to_dict() for x in academia]
     for a in docs:
         abc = pprint.pprint(a)
