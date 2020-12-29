@@ -64,6 +64,7 @@ def categoria_listagem(request):
 def academia_suplementos_lojas(request):
     academia = db.collection('categorias/academia_sumplementos/lojas').stream()
     docs = [x.to_dict() for x in academia]
+    docs.img.replace("['", '').replace("']",'')
     return render(request, 'academia_suplementos_lojas.html', {'lista': docs})
 
 
