@@ -15,6 +15,7 @@ from django.db import connections
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 import pandas as pd
+import pprint
 
 firebaseConfig = {
     'apiKey' : "AIzaSyBh-DC_fXWzzcHV6XYhFQ1Ya6MWG5OjH_w",
@@ -61,10 +62,11 @@ def categoria_listagem(request):
 
 @login_required
 def academia_suplementos_lojas(request):
-    academia = db.collection(u'categorias').document(u'academia_suplementos')
-    lojas = academia.collection(u'lojas')
-    query = print(lojas)
-    return render(request, 'academia_suplementos_lojas.html', query)
+    academia = db.collection('categorias/academia_sumplementos')
+    docs = [x.to_dict() for x in academia]
+    for a in docs:
+        abc = pprint.pprint(a)
+    return render(request, 'academia_suplementos_lojas.html', {'lista': abc})
 
 
 
