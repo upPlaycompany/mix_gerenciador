@@ -19,7 +19,7 @@ Lojas de Suplementos de Academia
         <td>{{ docs.name }}</td>
         <td>{{ docs.descricao }}</td>
         {% if docs.img != "" %}
-        <td><img src="{% url '{{ docs.img }}' %}"></td>
+        <td><img src="../{{ docs.img }}"></td>
         {% else %}
         <td>Sem imagem</td>
         {% endif %}
