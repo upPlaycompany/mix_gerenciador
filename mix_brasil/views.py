@@ -78,6 +78,11 @@ def automoveis_lojas(request):
     docs = [x.to_dict() for x in automoveis]
     return render(request,'automoveis_lojas.html', {'lista': docs})
 
+@login_required
+def brinquedos_lojas(request):
+    brinquedos = db.collection('categorias/brinquedos/lojas').stream()
+    docs = [x.to_dict() for x in brinquedos]
+    return render(request, 'brinquedos_lojas.html', {'lista': docs})
 
 
 
