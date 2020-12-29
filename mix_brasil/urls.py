@@ -22,7 +22,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.logar, name='logar'),
     path('/deslogar', views.deslogar, name='deslogar'),
+
     path('index/', views.index, name='index'),
-    path('academia_suplementos_lojas/', views.academia_suplementos_lojas, name='academia_suplementos_lojas')
+
+    path('academia_suplementos_lojas/', views.academia_suplementos_lojas, name='academia_suplementos_lojas'),
+    path('agencia_viagens_lojas/', views.agencia_viagens_lojas, name='agencia_viagens')
 
 ]

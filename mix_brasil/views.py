@@ -66,5 +66,11 @@ def academia_suplementos_lojas(request):
     docs = [x.to_dict() for x in academia]
     return render(request, 'academia_suplementos_lojas.html', {'lista': docs})
 
+@login_required
+def agencia_viagens_lojas(request):
+    viagens = db.collection('categorias/agencia_viagens/lojas').stream()
+    docs = [x.to_dict() for x in viagens]
+    return render(request, 'agencia_viagens_lojas.html', {'lista': docs})
+
 
 
