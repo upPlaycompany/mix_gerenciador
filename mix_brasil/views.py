@@ -84,6 +84,12 @@ def brinquedos_lojas(request):
     docs = [x.to_dict() for x in brinquedos]
     return render(request, 'brinquedos_lojas.html', {'lista': docs})
 
+@login_required
+def cama_mesa_banho_lojas(request):
+    cama = db.collection('categorias/cama_mesa_banho/lojas').stream()
+    docs = [x.to_dict() for x in cama]
+    return render(request,'cama_mesa_banho_lojas.html', {'lista': docs})
+
 
 
 
