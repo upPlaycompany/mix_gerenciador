@@ -39,4 +39,8 @@ urlpatterns = [
 
     path('decoracao_lojas/', views.decoracao_lojas, name='decoracao_lojas'),
 
+    path('eletronicos_lojas/', views.eletronicos_lojas, name='eletronicos_lojas'),
+
+
+
 ]

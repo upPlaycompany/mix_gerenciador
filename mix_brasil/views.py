@@ -102,5 +102,11 @@ def decoracao_lojas(request):
     docs = [x.to_dict() for x in decoracao]
     return render(request, 'decoracao_lojas.html', {'lista': docs})
 
+@login_required
+def eletronicos_lojas(request):
+    eletronicos = db.collection('categorias/eletronicos/lojas').stream()
+    docs = [x.to_dict() for x in eletronicos]
+    return render(request, 'eletronicos_lojas.html', {'lista': docs})
+
 
 
