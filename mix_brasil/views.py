@@ -72,5 +72,13 @@ def agencia_viagens_lojas(request):
     docs = [x.to_dict() for x in viagens]
     return render(request, 'agencia_viagens_lojas.html', {'lista': docs})
 
+@login_required
+def automoveis_lojas(request):
+    automoveis = db.collection('categorias/automoveis/lojas').stream()
+    docs = [x.to_dict() for x in automoveis]
+    return render(request,'automoveis_lojas.html', {'lista': docs})
+
+
+
 
 

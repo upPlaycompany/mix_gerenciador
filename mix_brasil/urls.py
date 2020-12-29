@@ -26,6 +26,7 @@ urlpatterns = [
     path('index/', views.index, name='index'),
 
     path('academia_suplementos_lojas/', views.academia_suplementos_lojas, name='academia_suplementos_lojas'),
-    path('agencia_viagens_lojas/', views.agencia_viagens_lojas, name='agencia_viagens_lojas')
+    path('agencia_viagens_lojas/', views.agencia_viagens_lojas, name='agencia_viagens_lojas'),
+    path('automoveis_lojas/', views.automoveis_lojas, name='automoveis_lojas')
 
 ]
