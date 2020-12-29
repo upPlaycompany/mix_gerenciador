@@ -19,8 +19,12 @@
         <td>{{ docs.name }}</td>
         <td>{{ docs.descricao }}</td>
         {% if docs.img != "['']" %}
-        {% for img in docs.img %}
-        <td><img src="{{ img|cut:"["|cut:"]"|cut:"'"|cut:"'"}}"></td>
+
+        <td>
+            {% for img in docs.img %}
+            <span><img src="{{ img|cut:" ["|cut:"]"|cut:"'"|cut:"'"}}"></span>
+            {% endfor %}
+        </td>
         {% else %}
         <td><strong>Sem imagem</strong></td>
         {% endif %}
