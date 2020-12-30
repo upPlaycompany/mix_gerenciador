@@ -9,9 +9,7 @@
 <span><div class="card card-box">
     <img class="card-img-top" src="{{ docs.img.0|cut:"'" }}">
     <div class="card-body">
-        { % for identificador in order %}
-        <a href="{% url 'lojas_dados' name=docs.name id={{ identificador }} %}"><h5 class="card-title">{{ docs.name }}</h5></a>
-        {% endfor %}
+        <a href="{% url 'lojas_dados' name=docs.name id= %}"><h5 class="card-title">{{ docs.name }}</h5></a>
         <p class="card-text"><small class="text-muted"></small></p>
     </div>
 </div>
