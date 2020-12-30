@@ -6,41 +6,36 @@
 
 {% block content %}
 <div class="row">
-<table class="table">
+<span><table class="table">
     <thead>
     <tr>
         <th>Nome da loja</th>
-        <th>Ações</th>
     </tr>
     </thead>
     <tbody>
     {% for docs in lista %}
     <tr>
-        <td>{{ docs.name }}</th>
-    {% endfor %}
-    {% for doz in lista_id %}
-        <td><a href="{% url 'lojas_listagem' id=doz %}">Ver lojas</a></td>
+        <td>{{ docs.name }}
+        </th>
     </tr>
     {% endfor %}
     </tbody>
-</table>
-    <table class="table">
+</table></span>
+
+    <span><table class="table">
     <thead>
     <tr>
-        <th>Nome da loja</th>
         <th>Ações</th>
     </tr>
     </thead>
     <tbody>
-    {% for docs in lista %}
-    <tr>
-        <td>{{ docs.name }}</th>
-    {% endfor %}
     {% for doz in lista_id %}
+    <tr>
         <td><a href="{% url 'lojas_listagem' id=doz %}">Ver lojas</a></td>
     </tr>
     {% endfor %}
     </tbody>
 </table>
+    </span>
 </div>
 {% endblock %}
