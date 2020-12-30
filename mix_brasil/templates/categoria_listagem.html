@@ -19,10 +19,7 @@
         {% if docs.image != "''" %}
 
         <td>
-            {% for img in docs.image %}
-            <span><img src="{{ img|cut:"'"}}"></span>
-            <span></span>
-            {% endfor %}
+                <span><img src="{{ img|cut:"'"}}"></span>
         </td>
             {% else %}
         <td><strong>Sem imagem</strong></td>
