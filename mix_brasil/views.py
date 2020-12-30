@@ -55,15 +55,13 @@ def deslogar(request):
     logout(request)
     return HttpResponseRedirect("/")
 
-
-
 @login_required
 def categoria_listagem(request):
     categorias = db.collection('categorias').stream()
     doz = [x.id for x in categorias]
     ident = db.collection('categorias').stream()
     docs = [x.to_dict() for x in ident]
-    return render(request,'categoria_listagem.html', {'lista': docs, 'lista_id': doz})
+    return render(request, 'categoria_listagem.html', {'lista': docs, 'lista_id': doz})
 
 @login_required
 def lojas_listagem(request, id):
