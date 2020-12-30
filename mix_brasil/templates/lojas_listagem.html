@@ -7,7 +7,7 @@
 {% block content %}
 {% for docs in lista %}
 <span><div class="card card-box">
-    <img class="card-img-top" src="{{ docs.img|cut:"['"|cut: "']" }}" alt="Card image cap">
+    <img class="card-img-top" src="{{ docs.img|cut:"'"|cut: "]"|cut:"[" }}">
     <div class="card-body">
         <h5 class="card-title">{{ docs.name }}</h5>
     </div>
