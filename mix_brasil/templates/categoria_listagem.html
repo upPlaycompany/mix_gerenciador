@@ -5,6 +5,7 @@
 {% endblock title %}
 
 {% block content %}
+<div class="row">
 <table class="table">
     <thead>
     <tr>
@@ -23,5 +24,23 @@
     {% endfor %}
     </tbody>
 </table>
-
+    <table class="table">
+    <thead>
+    <tr>
+        <th>Nome da loja</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for docs in lista %}
+    <tr>
+        <td>{{ docs.name }}</th>
+    {% endfor %}
+    {% for doz in lista_id %}
+        <td><a href="{% url 'lojas_listagem' id=doz %}">Ver lojas</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
 {% endblock %}
