@@ -8,20 +8,16 @@
 <table class="table">
     <thead>
     <tr>
-        <th scope="col">Nome da loja</th>
-    </tr>
-    <tr>
-        <th scope="col">Ações</th>
+        <th>Nome da loja</th>
+        <th>Ações</th>
     </tr>
     </thead>
     <tbody>
     {% for docs in lista %}
     <tr>
-        <th scope="row">{{ docs.name }}</th>
-    </tr>
+        <td>{{ docs.name }}</th>
     {% endfor %}
     {% for doz in lista_id %}
-    <tr>
         <td><a href="{% url 'lojas_listagem' id=doz %}">Ver lojas</a></td>
     </tr>
     {% endfor %}
