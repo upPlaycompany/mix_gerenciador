@@ -6,36 +6,21 @@
 
 {% block content %}
 <div class="row">
-<span><table class="table">
-    <thead>
-    <tr>
-        <th>Dados da loja</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for docs in lista %}
-    <tr>
-        <td>{{ docs.name }}
-        </td>
-        <td>{{ docs.descricao }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table></span>
-
-    <span><table class="table">
-    <thead>
-    <tr><th></th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for doz in lista_id %}
-    <tr>
-        <td><a href="{% url 'lojas_listagem' id=doz %}">Ver lojas</a></td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-    </span>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Dados da loja</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for docs in lista %}
+        <tr>
+            <td>{{ docs.name }}
+            </td>
+            <td>{{ docs.descricao }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}

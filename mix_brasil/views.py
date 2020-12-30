@@ -67,9 +67,15 @@ def categoria_listagem(request):
 def lojas_listagem(request, id):
     lojas = db.collection(f'categorias/{id}/lojas').stream()
     docs = [x.to_dict() for x in lojas]
-    dados = db.collection(f'categorias/{id}/lojas').stream()
-    dozz = [x.id for x in dados]
     return render(request, 'lojas_listagem.html', {'lista': docs, 'lista_id': dozz})
+
+@login_required
+def lojas_dados(request, name, id):
+    dados = db.collection(f'categorias/{id}/lojas').where('name','==',f'{name}').stream()
+    abc = [x.to_dict() for x in dados]
+    return render(request,'lojas_dados', {'lista':abc})
+
+
 
 
 
