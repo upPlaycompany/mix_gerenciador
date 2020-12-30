@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<h2>Lojas de {{ docs.name }}</h2>
+<h2>Lojas de {{  }}</h2>
 {% endblock title %}
 
 {% block content %}
@@ -9,7 +9,8 @@
 <span><div class="card card-box">
     <img class="card-img-top" src="{{ docs.img.0|cut:"'" }}">
     <div class="card-body">
-        <h5 class="card-title">{{ docs.name }}</h5>
+        <a href="{% url 'lojas_dados' name=docs.name"><h5 class="card-title">{{ docs.name }}</h5></a>
+        <p class="card-text"><small class="text-muted">{{ azz }}</small></p>
     </div>
 </div>
     <br></span>
