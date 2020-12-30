@@ -63,7 +63,7 @@ def categoria_listagem(request):
     doz = [x.id for x in categorias]
     ident = db.collection('categorias').stream()
     docs = [x.to_dict() for x in ident]
-    return render(request,'categoria_listagem.html', {'lista': docs, 'lista': doz})
+    return render(request,'categoria_listagem.html', {'lista': docs, 'lista_id': doz})
 
 @login_required
 def lojas_listagem(request, id):
