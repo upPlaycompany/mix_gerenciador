@@ -67,8 +67,7 @@ def categoria_listagem(request):
 def lojas_listagem(request, id):
     lojas = db.collection(f'categorias/{id}/lojas').stream()
     docs = [x.to_dict() for x in lojas]
-    identificador = id
-    return render(request, 'lojas_listagem.html', {'lista': docs}, {'order': identificador})
+    return render(request, 'lojas_listagem.html', {'lista': docs})
 
 @login_required
 def lojas_dados(request, name, id):

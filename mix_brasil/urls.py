@@ -29,6 +29,6 @@ urlpatterns = [
 
     path('lojas_listagem/<str:id>', views.lojas_listagem, name='lojas_listagem'),
 
-    path('lojas_dados/<str:name>/<str:id>', views.lojas_dados, name='lojas_dados')
+    path('lojas_dados/<str:name>/<str:lojas_listagem.id>', views.lojas_dados, name='lojas_dados')
 
 ]
