@@ -70,12 +70,8 @@ def lojas_listagem(request, id):
     dados = db.collection(f'categorias/{id}/lojas').stream()
     dozz = [x.id for x in dados]
     azz = {print(a) for a in dozz}
-
     return render(request, 'lojas_listagem.html', {'lista': docs}, azz)
 
-@login_required
-def lojas_dados(request, name):
-    R
 
 
 
