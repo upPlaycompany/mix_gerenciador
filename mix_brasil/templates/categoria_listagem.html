@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Listagem de categorias</h2>
+{% endblock title %}
+
+{% block content %}
+<table class="table">
+    <thead>
+    <tr>
+        <th>Nome da loja</th>
+        <th>Imagem da loja</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for docs in lista %}
+    <tr>
+        <td>{{ docs.name }}</td>
+        {% if docs.image != "''" %}
+
+        <td>
+            {% for img in docs.image %}
+            <span><img src="{{ img|cut:"'"}}"></span>
+            <span></span>
+            {% endfor %}
+        </td>
+            {% else %}
+        <td><strong>Sem imagem</strong></td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
