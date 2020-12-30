@@ -5,22 +5,13 @@
 {% endblock title %}
 
 {% block content %}
-<table class="table">
-    <thead>
-    <tr>
-        <th>Nome da loja</th>
-        <th>Descrição da loja</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for docs in lista %}
-    <tr>
-        <td>{{ docs.name }}</td>
-        <td>{{ docs.descricao }}</td>
-
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
+{% for docs in lista %}
+<span><div class="card card-box">
+    <img class="card-img-top" src="{{ docs.img }}" alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">{{ docs.name }}</h5>
+    </div>
+</div>
+    <br></span>
+{% endfor %}
 {% endblock %}
