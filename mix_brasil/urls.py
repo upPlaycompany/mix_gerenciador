@@ -27,22 +27,6 @@ urlpatterns = [
 
     path('categoria_listagem/', views.categoria_listagem, name='categoria_listagem'),
 
-    path('academia_suplementos_lojas/', views.academia_suplementos_lojas, name='academia_suplementos_lojas'),
-
-    path('agencia_viagens_lojas/', views.agencia_viagens_lojas, name='agencia_viagens_lojas'),
-
-    path('automoveis_lojas/', views.automoveis_lojas, name='automoveis_lojas'),
-
-    path('brinquedos_lojas/', views.brinquedos_lojas, name='brinquedos_lojas'),
-
-    path('cama_mesa_banho_lojas/', views.cama_mesa_banho_lojas, name='cama_mesa_banho_lojas'),
-
-    path('cosmetico_beleza_lojas/', views.cosmetico_beleza_lojas, name='cosmetico_beleza_lojas'),
-
-    path('decoracao_lojas/', views.decoracao_lojas, name='decoracao_lojas'),
-
-    path('eletronicos_lojas/', views.eletronicos_lojas, name='eletronicos_lojas'),
-
-
+    path('lojas_listagem/<str:id>', views.lojas_listagem, name='lojas_listagem')
 
 ]

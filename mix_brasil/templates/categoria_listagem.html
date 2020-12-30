@@ -9,21 +9,14 @@
     <thead>
     <tr>
         <th>Nome da loja</th>
-        <th>Imagem da loja</th>
+        <th>Ações</th>
     </tr>
     </thead>
     <tbody>
-    {% for docs in lista %}
+    {% for docs, doz in lista, lista_id %}
     <tr>
         <td>{{ docs.name }}</td>
-        {% if docs.image != "''" %}
-
-        <td>
-                <span><img src="{{ docs.image|cut:"'"}}"></span>
-        </td>
-            {% else %}
-        <td><strong>Sem imagem</strong></td>
-        {% endif %}
+        <td><a href="{% url 'lojas_listagem' id=doz.id %}"></a></td>
     </tr>
     {% endfor %}
     </tbody>

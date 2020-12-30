@@ -60,56 +60,17 @@ def deslogar(request):
 @login_required
 def categoria_listagem(request):
     categorias = db.collection('categorias').stream()
+    doz = [x.id for x in categorias]
     docs = [x.to_dict() for x in categorias]
-    return render(request,'categoria_listagem.html', {'lista': docs})
+    return render(request,'categoria_listagem.html', {'lista': docs, 'lista_id': doz})
 
 @login_required
-def academia_suplementos_lojas(request):
-    academia = db.collection('categorias/academia_sumplementos/lojas').stream()
-    docs = [x.to_dict() for x in academia]
-    return render(request, 'academia_suplementos_lojas.html', {'lista': docs})
+def lojas_listagem(request, id):
+    lojas = db.collection(f'categorias/{id}/lojas').stream()
+    docs = [x.to_dict() for x in lojas]
+    return render(request, 'lojas_listagem.html', {'lista': docs})
 
-@login_required
-def agencia_viagens_lojas(request):
-    viagens = db.collection('categorias/agencia_viagens/lojas').stream()
-    docs = [x.to_dict() for x in viagens]
-    return render(request, 'agencia_viagens_lojas.html', {'lista': docs})
 
-@login_required
-def automoveis_lojas(request):
-    automoveis = db.collection('categorias/automoveis/lojas').stream()
-    docs = [x.to_dict() for x in automoveis]
-    return render(request,'automoveis_lojas.html', {'lista': docs})
-
-@login_required
-def brinquedos_lojas(request):
-    brinquedos = db.collection('categorias/brinquedos/lojas').stream()
-    docs = [x.to_dict() for x in brinquedos]
-    return render(request, 'brinquedos_lojas.html', {'lista': docs})
-
-@login_required
-def cama_mesa_banho_lojas(request):
-    cama = db.collection('categorias/cama_mesa_banho/lojas').stream()
-    docs = [x.to_dict() for x in cama]
-    return render(request,'cama_mesa_banho_lojas.html', {'lista': docs})
-
-@login_required
-def cosmetico_beleza_lojas(request):
-    cosmetico = db.collection('categorias/cosmetico_beleza/lojas').stream()
-    docs = [x.to_dict() for x in cosmetico]
-    return render(request, 'cosmetico_beleza_lojas.html', {'lista': docs})
-
-@login_required
-def decoracao_lojas(request):
-    decoracao = db.collection('categorias/decoracao/lojas').stream()
-    docs = [x.to_dict() for x in decoracao]
-    return render(request, 'decoracao_lojas.html', {'lista': docs})
-
-@login_required
-def eletronicos_lojas(request):
-    eletronicos = db.collection('categorias/eletronicos/lojas').stream()
-    docs = [x.to_dict() for x in eletronicos]
-    return render(request, 'eletronicos_lojas.html', {'lista': docs})
 
 
 
