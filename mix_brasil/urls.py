@@ -27,6 +27,8 @@ urlpatterns = [
 
     path('categoria_listagem/', views.categoria_listagem, name='categoria_listagem'),
 
-    path('lojas_listagem/<str:id>', views.lojas_listagem, name='lojas_listagem')
+    path('lojas_listagem/<str:id>', views.lojas_listagem, name='lojas_listagem'),
+
+    path('lojas_dados/<str:id>', views.lojas_dados, name='lojas_dados')
 
 ]
