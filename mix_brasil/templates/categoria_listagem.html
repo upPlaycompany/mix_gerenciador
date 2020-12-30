@@ -13,10 +13,10 @@
     </tr>
     </thead>
     <tbody>
-    {% for docs, doz in lista, lista_id %}
+    {% for docs, doz in lista %}
     <tr>
         <td>{{ docs.name }}</td>
-        <td><a href="{% url 'lojas_listagem' id=doz.id %}"></a></td>
+        <td><a href="{% url 'lojas_listagem' id=doz %}">{{ doz }}</a></td>
     </tr>
     {% endfor %}
     </tbody>

@@ -61,8 +61,9 @@ def deslogar(request):
 def categoria_listagem(request):
     categorias = db.collection('categorias').stream()
     doz = [x.id for x in categorias]
-    docs = [x.to_dict() for x in categorias]
-    return render(request,'categoria_listagem.html', {'lista': docs, 'lista_id': doz})
+    ident = db.collection('categorias').stream()
+    docs = [x.to_dict() for x in ident]
+    return render(request,'categoria_listagem.html', {'lista': docs, 'lista': doz})
 
 @login_required
 def lojas_listagem(request, id):
