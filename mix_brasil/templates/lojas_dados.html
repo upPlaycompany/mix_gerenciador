@@ -5,22 +5,42 @@
 {% endblock title %}
 
 {% block content %}
-<div class="row">
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Dados da loja</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for abc in lista %}
-        <tr>
-            <td>{{ abc.name }}
-            </td>
-            <td>{{ abc.descricao }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
+{% for abc in lista %}
+<form>
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label>Nome da loja</label>
+                <input type="text" class="form-control" name="name" value="{{ docs.name }}">
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label>Descrição da loja</label>
+                <input type="text" class="form-control" name="descricao" value="{{ docs.descricao }}">
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Preço padrão da loja</label>
+                <input type="text" class="form-control" name="price" value="{{ docs.price }}">
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Destacar loja no app?</label>
+                <select class="form-control" name="destaque">
+                    <option selected>Selecione...</option>
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+</form>
+{% endfor %}
 {% endblock %}
