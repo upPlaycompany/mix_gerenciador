@@ -42,8 +42,8 @@
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
                 <label>Imagens da loja</label><br>
-                {% for image in abc.img %}
                 <div class="row">
+                    {% for image in abc.img %}
                     <img style="width: 50%" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
                     {% endfor %}
                 </div>
