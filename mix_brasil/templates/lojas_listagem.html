@@ -5,13 +5,15 @@
 {% endblock title %}
 
 {% block content %}
-{% for docs in lista %}
-<div class="card card-box">
-    <img style="width: 100px;" class="card-img-top" src="{{ docs.img.0|cut:"'" }}">
-    <div class="card-body">
-        <a href="{% url 'lojas_dados' id=docs.categoria name=docs.name %}"><h5 class="card-title">{{ docs.name }}</h5></a>
+<div class="card-deck mb-30">
+	{% for docs in lista %}
+    <div class="card">
+        <img class="card-img-top" src="{{ docs.img.0|cut:"'" }}">
+        <div class="card-body">
+			<a href="{% url 'lojas_dados' id=docs.categoria name=docs.name %}"><h5 class="card-title">{{ docs.name }}</h5></a>
+        </div>
     </div>
+	{% endfor %}
 </div>
-    <br>
-{% endfor %}
+
 {% endblock %}
