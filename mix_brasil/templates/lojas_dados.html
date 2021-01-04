@@ -39,12 +39,12 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-4 col-sm-12">
+        <div class="col-md-12 col-sm-12">
             <div class="form-group">
                 <label>Imagens da loja</label><br>
                 {% for image in abc.img %}
                 <div class="row">
-                    <span><img style="width: 50%" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}"></span>
+                    <img style="width: 50%" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
                     {% endfor %}
                 </div>
             </div>
