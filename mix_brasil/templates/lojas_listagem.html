@@ -9,9 +9,7 @@
 <span><div class="card card-box">
     <img class="card-img-top" src="{{ docs.img.0|cut:"'" }}">
     <div class="card-body">
-        {% for ide in order %}
-        <a href="{% url 'lojas_dados' id=ide name=docs.name %}"><h5 class="card-title">{{ docs.name }}</h5></a>
-        {% endfor %}
+        <a href="{% url 'lojas_dados' id=docs.categoria name=docs.name %}"><h5 class="card-title">{{ docs.name }}</h5></a>
     </div>
 </div>
     <br></span>

@@ -70,8 +70,10 @@ def lojas_listagem(request, id):
     lojas2 = db.collection(f'categorias/{id}/lojas').stream()
     docs2 = [y.to_dict() for y in lojas2]
     a = len(docs)
+    categoria = {'categoria':f'{id}'}
     [docs[x].update(docs2[x]) for x in range(a)]
-    return render(request, 'lojas_listagem.html', {'lista': docs, 'order': id})
+    [docs[x].update(categoria) for x in range(a)]
+    return render(request, 'lojas_listagem.html', {'lista': docs})
 
 @login_required
 def lojas_dados(request, id, name):
