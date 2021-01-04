@@ -43,8 +43,10 @@
             <div class="form-group">
                 <label>Imagens da loja</label><br>
                 {% for image in abc.img %}
-                <span><img style="width: 50%" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}"></span>
-                {% endfor %}
+                <div class="row">
+                    <span><img style="width: 50%" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}"></span>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
