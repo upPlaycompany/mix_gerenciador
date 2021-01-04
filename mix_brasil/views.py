@@ -72,7 +72,7 @@ def lojas_listagem(request, id):
     docs2 = [y.to_dict() for y in lojas2]
     a = len(docs)
     [docs[x].update(docs2[x]) for x in range(a)]
-    return render(request, 'lojas_listagem.html', {'lista': docs},{'order': ide})
+    return render(request, 'lojas_listagem.html', {'lista': docs, 'order': ide})
 
 @login_required
 def lojas_dados(request, id, name):
