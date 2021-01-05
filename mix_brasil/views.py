@@ -83,7 +83,7 @@ def lojas_dados(request, id, nome, cod):
     abc = [x.to_dict() for x in dados]
     dados2 = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{nome}').stream()
     dec = [{'id':x.id} for x in dados2]
-    a = len(dados2)
+    a = len(dec)
     categoria = {'categoria': f'{id}'}
     [dec[x].update(abc[x]) for x in range(a)]
     [dec[x].update(categoria) for x in range(a)]
