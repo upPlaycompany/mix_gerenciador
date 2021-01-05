@@ -133,7 +133,7 @@ def remover_imagens_loja(request, id, name, cod):
         att = formform.update({
             'img':firestore.ArrayRemove([f'{imagem}'])
         })
-        return redirect('remover_imagens_loja')
+        return redirect('remover_imagens_loja_sucesso')
     return render(request, 'remover_imagens_loja.html', {'lista': docs})
 
 @login_required
