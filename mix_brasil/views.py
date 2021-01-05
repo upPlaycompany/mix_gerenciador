@@ -55,6 +55,26 @@ def deslogar(request):
     logout(request)
     return HttpResponseRedirect("/")
 
+@login_required
+def criar_loja(request, id):
+    dados = db.collection(f'categorias/{id}/lojas').document()
+    if request.method == 'POST':
+        name = request.POST['name']
+        descricao = request.POST['descricao']
+        price = request.POST['price']
+        destaque = 'false'
+        dados.set({
+            'name':f'{name}',
+            'descricao':f'{descricao}',
+            'price':f'{price}',
+            'destaque':f'{destaque}'
+        })
+        return redirect('criar_loja_sucesso')
+    return render(request, 'criar_loja.html')
+
+@login_required
+def criar_loja_sucesso(request):
+    return render(request,'criar_loja_sucesso.html')
 
 
 @login_required
