@@ -57,7 +57,7 @@
             <div class="form-group">
                 <span><button type="submit" class="btn btn-success">Atualizar dados</button></span>
                 <span><a href="{% url 'adicionar_imagens_loja' id=dec.categoria cod=dec.id %}"><button type="button" class="btn btn-info">Adicionar imagens à loja</button></a></span>
-                <span><button type="button" class="btn btn-warning">Excluir imagens da loja</button></span>
+                <span><a href="{% url 'remover_imagens_loja' id=dec.categoria name=dec.name cod=dec.id %}" <button type="button" class="btn btn-warning">Excluir imagens da loja</button></span>
                 <span><button type="button" class="btn btn-danger">Excluir loja</button></span>
             </div>
         </div>
