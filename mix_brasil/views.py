@@ -56,6 +56,10 @@ def deslogar(request):
     return HttpResponseRedirect("/")
 
 @login_required
+def atualizar_loja_sucesso(request):
+    return render(request, 'atualizar_loja_sucesso.html')
+
+@login_required
 def categoria_listagem(request):
     categorias = db.collection('categorias').stream()
     doz = [x.id for x in categorias]
@@ -77,6 +81,8 @@ def lojas_listagem(request, id):
 
 @login_required
 def lojas_dados(request, id, nome, cod):
+    dados = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{nome}').stream()
+    abc = [x.to_dict() for x in dados]
     if request.method == 'POST':
         name = request.POST['name']
         descricao = request.POST['descricao']
@@ -91,9 +97,10 @@ def lojas_dados(request, id, nome, cod):
                 'destaque':f'{destaque}'
             }
         )
-        dados = db.collection(f'categorias/{id}/lojas').where('name','==',f'{nome}').stream()
-        abc = [x.to_dict() for x in dados]
+        return redirect('atualizar_loja_sucesso')
     return render(request,'lojas_dados.html', {'lista':abc})
+
+
 
 
 
