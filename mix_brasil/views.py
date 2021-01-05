@@ -66,7 +66,7 @@ def criar_loja(request, id):
         dados.set({
             'name':f'{name}',
             'descricao':f'{descricao}',
-            'price':f'{price}',
+            'price':{price},
             'destaque':f'{destaque}'
         })
         return redirect('criar_loja_sucesso')
