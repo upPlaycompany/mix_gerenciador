@@ -12,10 +12,12 @@
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
                 <div class="row">
+                    {% with total=docs.img.count %}
                     {% for image in docs.img %}
                     <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
-                    <h1>{{image.id}}</h1>
+                    <h1>{{ total }}</h1>
                     {% endfor %}
+                    {% endwith %}
                 </div>
             </div>
         </div>
@@ -24,7 +26,8 @@
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
                 <label>Digite o número da imagem que deseja deletar</label>
-                <input type="text" class="form-control" name="imagem" placeholder="Digite o número da imagem que deseja deletar">
+                <input type="text" class="form-control" name="imagem"
+                       placeholder="Digite o número da imagem que deseja deletar">
             </div>
         </div>
     </div>
