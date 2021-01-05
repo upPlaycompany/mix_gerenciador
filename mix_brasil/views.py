@@ -76,9 +76,23 @@ def lojas_listagem(request, id):
     return render(request, 'lojas_listagem.html', {'lista': docs})
 
 @login_required
-def lojas_dados(request, id, name):
-    dados = db.collection(f'categorias/{id}/lojas').where('name','==',f'{name}').stream()
-    abc = [x.to_dict() for x in dados]
+def lojas_dados(request, id, nome, cod):
+    if request.method == 'POST':
+        name = request.POST['name']
+        descricao = request.POST['descricao']
+        price = request.POST['price']
+        destaque = request.POST['destaque']
+        formform = db.collection(f'categorias/{id}/lojas').where('name','==',f'{nome}').document(f'{cod}')
+        att = formform.update(
+            {
+                'name':f'{name}',
+                'descricao':f'{descricao}',
+                'price':f'{price}',
+                'destaque':f'{destaque}'
+            }
+        )
+        dados = db.collection(f'categorias/{id}/lojas').where('name','==',f'{nome}').stream()
+        abc = [x.to_dict() for x in dados]
     return render(request,'lojas_dados.html', {'lista':abc})
 
 
