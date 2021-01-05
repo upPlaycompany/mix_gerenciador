@@ -125,7 +125,7 @@ def adicionar_imagens_loja_sucesso(request):
 
 @login_required
 def remover_imagens_loja(request, id, name, cod):
-    dados = db.collection(f'categorias/{id}/lojas').where('name','==',f'{name}')
+    dados = db.collection(f'categorias/{id}/lojas').where('name','==',f'{name}').stream()
     docs = [x.to_dict() for x in dados]
     if request.method == 'POST':
         imagem = request.POST['imagem']
