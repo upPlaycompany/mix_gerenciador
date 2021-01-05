@@ -136,5 +136,9 @@ def remover_imagens_loja(request, id, name, cod):
         return redirect('remover_imagens_loja')
     return render(request, 'remover_imagens_loja.html', {'lista': docs})
 
+@login_required
+def remover_imagens_loja_sucesso(request):
+    return render(request, 'remover_imagens_loja_sucesso.html')
+
 
 
