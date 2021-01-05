@@ -5,7 +5,6 @@
 {% endblock title %}
 
 {% block content %}
-{% for abc in lista %}
 <form method="post">
     {% csrf_token %}
     <div class="row">
@@ -26,5 +25,4 @@
     </div>
 </form>
 
-{% endfor %}
 {% endblock %}
