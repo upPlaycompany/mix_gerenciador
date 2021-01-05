@@ -88,7 +88,7 @@ def lojas_dados(request, id, nome, cod):
         descricao = request.POST['descricao']
         price = request.POST['price']
         destaque = request.POST['destaque']
-        formform = db.collection(f'categorias/{id}/lojas').where('name','==',f'{nome}').document(f'{cod}')
+        formform = db.collection(f'categorias/{id}/lojas').document(f'{cod}')
         att = formform.update(
             {
                 'name':f'{name}',
