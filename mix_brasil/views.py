@@ -55,9 +55,7 @@ def deslogar(request):
     logout(request)
     return HttpResponseRedirect("/")
 
-@login_required
-def atualizar_loja_sucesso(request):
-    return render(request, 'atualizar_loja_sucesso.html')
+
 
 @login_required
 def categoria_listagem(request):
@@ -107,6 +105,10 @@ def lojas_dados(request, id, nome, cod):
     return render(request,'lojas_dados.html', {'lista':abc})
 
 @login_required
+def atualizar_loja_sucesso(request):
+    return render(request, 'atualizar_loja_sucesso.html')
+
+@login_required
 def adicionar_imagens_loja(request, id, cod):
     if request.method == 'POST':
         img = request.POST['img']
@@ -114,8 +116,12 @@ def adicionar_imagens_loja(request, id, cod):
         att = formform.update({
             'img': firestore.ArrayUnion([f'{img}'])
         })
-        return redirect('categoria_listagem')
+        return redirect('adicionar_imagens_loja_sucesso')
     return render(request, 'adicionar_imagens_loja.html')
+
+@login_required
+def adicionar_imagens_loja_sucesso(request):
+    return render(request, 'adicionar_imagens_loja_sucesso.html')
 
 
 
