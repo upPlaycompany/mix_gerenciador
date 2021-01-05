@@ -30,6 +30,6 @@ urlpatterns = [
     path('lojas_listagem/<str:id>', views.lojas_listagem, name='lojas_listagem'),
 
     path('lojas_dados/<str:nome>/<str:id>/<str:cod>', views.lojas_dados, name='lojas_dados'),
-    path('atualizar_lojas_sucesso/', views.atualizar_lojas_sucesso, name='atualizar_lojas_sucesso')
+    path('atualizar_loja_sucesso/', views.atualizar_loja_sucesso, name='atualizar_loja_sucesso')
 
 ]
