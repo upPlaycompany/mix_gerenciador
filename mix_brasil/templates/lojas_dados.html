@@ -5,20 +5,20 @@
 {% endblock title %}
 
 {% block content %}
-{% for abc in lista %}
+{% for dec in lista %}
 <form method="post">
     {% csrf_token %}
     <div class="row">
         <div class="col-md-4 col-sm-12">
             <div class="form-group">
                 <label>Nome da loja</label>
-                <input type="text" class="form-control" name="name" value="{{ abc.name }}">
+                <input type="text" class="form-control" name="name" value="{{ dec.name }}">
             </div>
         </div>
         <div class="col-md-6 col-sm-12">
             <div class="form-group">
                 <label>Descrição da loja</label>
-                <input type="text" class="form-control" name="descricao" value="{{ abc.descricao }}">
+                <input type="text" class="form-control" name="descricao" value="{{ dec.descricao }}">
             </div>
         </div>
 
@@ -27,7 +27,7 @@
         <div class="col-md-4 col-sm-12">
             <div class="form-group">
                 <label>Preço padrão da loja</label>
-                <input type="text" class="form-control" name="price" value="{{ abc.price }}">
+                <input type="text" class="form-control" name="price" value="{{ dec.price }}">
             </div>
         </div>
         <div class="col-md-6 col-sm-12">
@@ -44,7 +44,7 @@
             <div class="form-group">
                 <label>Imagens da loja</label><br>
                 <div class="row">
-                    {% for image in abc.img %}
+                    {% for image in dec.img %}
                     <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
                     {% endfor %}
                 </div>
@@ -56,13 +56,12 @@
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
                 <span><button type="submit" class="btn btn-success">Atualizar dados</button></span>
-                <span><a href="{% url 'adicionar_imagens_loja' id=abc.categoria cod=abc.id %}"><button type="button" class="btn btn-info">Adicionar imagens à loja</button></a></span>
+                <span><a href="{% url 'adicionar_imagens_loja' id=dec.categoria cod=dec.id %}"><button type="button" class="btn btn-info">Adicionar imagens à loja</button></a></span>
                 <span><button type="button" class="btn btn-warning">Excluir imagens da loja</button></span>
                 <span><button type="button" class="btn btn-danger">Excluir loja</button></span>
             </div>
         </div>
     </div>
 </form>
-
 {% endfor %}
 {% endblock %}

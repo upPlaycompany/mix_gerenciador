@@ -102,7 +102,7 @@ def lojas_dados(request, id, nome, cod):
             }
         )
         return redirect('atualizar_loja_sucesso')
-    return render(request,'lojas_dados.html', {'lista':abc})
+    return render(request,'lojas_dados.html', {'lista':dec})
 
 @login_required
 def atualizar_loja_sucesso(request):
