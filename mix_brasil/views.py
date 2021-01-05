@@ -140,5 +140,14 @@ def remover_imagens_loja(request, id, name, cod):
 def remover_imagens_loja_sucesso(request):
     return render(request, 'remover_imagens_loja_sucesso.html')
 
+@login_required
+def remover_loja(request, id, cod):
+    if request.method == 'POST':
+        dados = db.collection(f'categorias/{id}/lojas').document(f'{cod}').delete()
+        return redirect('remover_loja_sucesso')
+    return render(request,'remover_loja.html')
 
+@login_required
+def remover_loja_sucesso(request):
+    return render(request,'remover_loja_sucesso.html')
 
