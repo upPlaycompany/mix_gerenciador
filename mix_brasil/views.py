@@ -123,7 +123,18 @@ def adicionar_imagens_loja(request, id, cod):
 def adicionar_imagens_loja_sucesso(request):
     return render(request, 'adicionar_imagens_loja_sucesso.html')
 
-
+@login_required
+def remover_imagens_loja(request, id, name, cod):
+    dados = db.collection(f'categorias/{id}/lojas').where('name','==',f'{name}')
+    docs = [x.to_dict() for x in dados]
+    if request.method == 'POST':
+        imagem = request.POST['imagem']
+        formform = db.collection(f'categorias/{id}/lojas').document(f'{cod}')
+        att = formform.update({
+            'img':firestore.ArrayRemove([f'{imagem}'])
+        })
+        return redirect('remover_imagens_loja')
+    return render(request, 'remover_imagens_loja.html', {'lista': docs})
 
 
 
