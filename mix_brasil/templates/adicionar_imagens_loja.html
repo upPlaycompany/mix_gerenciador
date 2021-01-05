@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Adicionar imagem a loja</h2>
+{% endblock title %}
+
+{% block content %}
+{% for abc in lista %}
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <label>Adicionar imagem através de link</label>
+                <input type="text" class="form-control" name="img" placeholder="Insira o link da imagem que deseja adicionar">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <span><button type="submit" class="btn btn-success">Atualizar dados</button></span>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endfor %}
+{% endblock %}

@@ -83,6 +83,12 @@ def lojas_listagem(request, id):
 def lojas_dados(request, id, nome, cod):
     dados = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{nome}').stream()
     abc = [x.to_dict() for x in dados]
+    dados2 = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{nome}').stream()
+    dec = [{'id':x.id} for x in dados2]
+    a = len(dados2)
+    categoria = {'categoria': f'{id}'}
+    [dec[x].update(abc[x]) for x in range(a)]
+    [dec[x].update(categoria) for x in range(a)]
     if request.method == 'POST':
         name = request.POST['name']
         descricao = request.POST['descricao']
@@ -100,10 +106,16 @@ def lojas_dados(request, id, nome, cod):
         return redirect('atualizar_loja_sucesso')
     return render(request,'lojas_dados.html', {'lista':abc})
 
-
-
-
-
+@login_required
+def adicionar_imagens_loja(request, id, cod):
+    if request.method == 'POST':
+        img = request.POST['img']
+        formform = db.collection(f'categorias/{id}/lojas').document(f'{cod}')
+        att = formform.update({
+            'img': firestore.ArrayUnion([f'{img}'])
+        })
+        return redirect('categoria_listagem')
+    return render(request, 'adicionar_imagens_loja.html')
 
 
 
