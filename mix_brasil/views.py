@@ -115,7 +115,7 @@ def lojas_listagem(request, id):
     lojas2 = db.collection(f'categorias/{id}/lojas').stream()
     docs2 = [y.to_dict() for y in lojas2]
     a = len(docs)
-    dzz = [id]
+    dzz = [{'categoria':f'{id}'}]
     categoria = {'categoria':f'{id}'}
     [docs[x].update(docs2[x]) for x in range(a)]
     [docs[x].update(categoria) for x in range(a)]
