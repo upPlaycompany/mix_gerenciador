@@ -17,11 +17,11 @@
 </div>
 
 {% endfor %}
-{% for categoria in order %}
+{% for dzz in order %}
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="form-group">
-            <span><a href="{% url 'criar_loja' id=categoria.id %}"><button type="button" class="btn btn-success">Criar loja</button></a></span>
+            <span><a href="{% url 'criar_loja' id=dzz.id %}"><button type="button" class="btn btn-success">Criar loja</button></a></span>
         </div>
     </div>
 </div>
