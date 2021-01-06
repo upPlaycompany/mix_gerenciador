@@ -2,7 +2,21 @@
 
 
 {% block content %}
+<div class="pre-loader">
+    <div class="pre-loader-box">
+        <div class="loader-logo"><img src="{% static 'src/images/logo-mix.png' %}" alt=""></div>
+        <div class='loader-progress' id="progress_div">
+            <div class='bar' id='bar1'></div>
+        </div>
+        <div class='percent' id='percent1'>0%</div>
+        <div class="loading-text">
+            Carregando...
+        </div>
+    </div>
+</div>
 <h2>Seja bem vindo ao gerenciador do Mix Brasil!</h2>
+<br>
+<br>
 <h3>Todas as funcionalidades estão na barra de navegação à esquerda!</h3>
 
 {% endblock %}
