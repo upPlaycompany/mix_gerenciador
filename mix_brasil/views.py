@@ -97,8 +97,6 @@ def criar_loja(request, id):
                     'ofertas_destaque': firestore.ArrayUnion([""]),
                     'price': n['price']
                 })
-            else:
-                des = None
         return redirect('criar_loja_sucesso')
     return render(request, 'criar_loja.html')
 
@@ -144,16 +142,42 @@ def lojas_dados(request, id, nome, cod):
         price = request.POST['price']
         destaque = request.POST['destaque']
         promocao = request.POST['promocao']
+        price = float(price)
+        if destaque == 'true':
+            des = True
+        else:
+            des = False
         formform = db.collection(f'categorias/{id}/lojas').document(f'{cod}')
-        att = formform.update(
+
+        formform.update(
             {
                 'name':f'{name}',
                 'descricao':f'{descricao}',
-                'price':f'{price}',
-                'destaque':f'{destaque}',
+                'price': price,
+                'destaque': des,
                 'promocao':f'{promocao}'
             }
         )
+        if des == True:
+            desdes = db.collection(f'categorias/{id}/lojas').where('name','==',f'{name}').stream()
+            da = [{'id':x.id} for x in desdes]
+            dasdas = db.collection(f'categorias/{id}/lojas').where('name','==',f'{name}').stream()
+            dw = [x.to_dict() for x in dasdas]
+            a = len(da)
+            categoria = {'categoria': f'{id}'}
+            [da[x].update(dw[x]) for x in range(a)]
+            [da[x].update(categoria) for x in range(a)]
+            didi = db.collection('destaques_home').document()
+            didi.set({
+                'cid': f"{n['categoria']}",
+                'cupons': firestore.ArrayUnion([""]),
+                'img': firestore.ArrayUnion([""]),
+                'lid': f"{n['id']}",
+                'name': f"{n['name']}",
+                'ofertas': firestore.ArrayUnion([""]),
+                'ofertas_destaque': firestore.ArrayUnion([""]),
+                'price': n['price']
+            })
         return redirect('atualizar_loja_sucesso')
     return render(request,'lojas_dados.html', {'lista':dec})
 
