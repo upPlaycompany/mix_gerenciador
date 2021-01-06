@@ -66,7 +66,7 @@ def criar_loja(request, id):
         dados.set({
             'name':f'{name}',
             'descricao':f'{descricao}',
-            'price':{price},
+            'price': int({price}),
             'destaque':f'{destaque}',
             'promocao': "",
             'img': firestore.ArrayUnion([""])
@@ -84,7 +84,7 @@ def criar_loja(request, id):
             des.set({
                 'cid':f"{n['categoria']}",
                 'cupons': firestore.ArrayUnion([""]),
-                'img': firestore.ArrauUnion([""]),
+                'img': firestore.ArrayUnion([""]),
                 'lid': f"{n['id']}",
                 'name':f"{n['name']}",
                 'ofertas': firestore.ArrayUnion([""]),
