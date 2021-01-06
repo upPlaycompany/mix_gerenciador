@@ -66,7 +66,7 @@ def criar_loja(request, id):
         dados.set({
             'name':f'{name}',
             'descricao':f'{descricao}',
-            'price': int({price}),
+            'price': price,
             'destaque':f'{destaque}',
             'promocao': "",
             'img': firestore.ArrayUnion([""])
