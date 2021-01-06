@@ -63,7 +63,7 @@ def criar_loja(request, id):
         descricao = request.POST['descricao']
         price = request.POST['price']
         destaque = 'false'
-        price = double(price)
+        price = float(price)
         dados.set({
             'name':f'{name}',
             'descricao':f'{descricao}',
