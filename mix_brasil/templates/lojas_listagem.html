@@ -7,7 +7,6 @@
 {% block content %}
 {% for docs in lista %}
 <div class="card-deck mb-20">
-
     <div class="card" style="width: 300px">
         <img style="width: 300px" class="card-img-top" src="{{ docs.img.0|cut:"'" }}">
         <div class="card-body">
@@ -15,7 +14,6 @@
                 docs.name }}</h5></a>
         </div>
     </div>
-
 </div>
 
 {% endfor %}
