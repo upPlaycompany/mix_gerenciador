@@ -119,7 +119,7 @@ def lojas_listagem(request, id):
     [docs[x].update(docs2[x]) for x in range(a)]
     [docs[x].update(categoria) for x in range(a)]
 
-    return render(request, 'lojas_listagem.html', {'lista': docs,'order':id})
+    return render(request, 'lojas_listagem.html', {'lista': docs},{'order':categoria})
 
 @login_required
 def lojas_dados(request, id, nome, cod):
