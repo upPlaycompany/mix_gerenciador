@@ -11,17 +11,21 @@
     <div class="card" style="width: 300px">
         <img style="width: 300px" class="card-img-top" src="{{ docs.img.0|cut:"'" }}">
         <div class="card-body">
-			<a href="{% url 'lojas_dados' id=docs.categoria nome=docs.name cod=docs.id %}"><h5 class="card-title">{{ docs.name }}</h5></a>
+            <a href="{% url 'lojas_dados' id=docs.categoria nome=docs.name cod=docs.id %}"><h5 class="card-title">{{
+                docs.name }}</h5></a>
         </div>
     </div>
 
 </div>
+
+{% endfor %}
+{% for id in order %}
 <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <div class="form-group">
-                <span><a href="{% url 'criar_loja' id=docs.categoria %}"><button type="button" class="btn btn-success">Criar loja</button></a></span>
-            </div>
+    <div class="col-md-12 col-sm-12">
+        <div class="form-group">
+            <span><a href="{% url 'criar_loja' id=id %}"><button type="button" class="btn btn-success">Criar loja</button></a></span>
         </div>
     </div>
+</div>
 {% endfor %}
 {% endblock %}
