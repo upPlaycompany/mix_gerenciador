@@ -62,13 +62,13 @@ def criar_loja(request, id):
         name = request.POST['name']
         descricao = request.POST['descricao']
         price = request.POST['price']
-        destaque = 'false'
+        destaque = False
         price = float(price)
         dados.set({
             'name':f'{name}',
             'descricao':f'{descricao}',
             'price': price,
-            'destaque':f'{destaque}',
+            'destaque': destaque,
             'promocao': "",
             'img': firestore.ArrayUnion([""])
         })
