@@ -73,7 +73,8 @@ def criar_loja(request, id):
         })
         info = db.collection(f'categorias/{id}/lojas').where('name','==',f'{name}').stream()
         ff = [{'id':x.id} for x in info]
-        gg = [x.to_dict() for x in info]
+        info2 = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{name}').stream()
+        gg = [x.to_dict() for x in info2]
         a = len(ff)
         categoria = {'categoria': f'{id}'}
         [ff[x].update(gg[x]) for x in range(a)]
