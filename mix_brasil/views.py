@@ -135,13 +135,15 @@ def lojas_dados(request, id, nome, cod):
         descricao = request.POST['descricao']
         price = request.POST['price']
         destaque = request.POST['destaque']
+        promocao = request.POST['promocao']
         formform = db.collection(f'categorias/{id}/lojas').document(f'{cod}')
         att = formform.update(
             {
                 'name':f'{name}',
                 'descricao':f'{descricao}',
                 'price':f'{price}',
-                'destaque':f'{destaque}'
+                'destaque':f'{destaque}',
+                'promocao':f'{promocao}'
             }
         )
         return redirect('atualizar_loja_sucesso')
