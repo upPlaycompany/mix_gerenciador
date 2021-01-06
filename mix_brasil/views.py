@@ -69,6 +69,25 @@ def criar_loja(request, id):
             'price':{price},
             'destaque':f'{destaque}'
         })
+        info = db.collection(f'categorias/{id}/lojas').where('name','==',f'{name}').stream()
+        ff = [{'id':x.id} for x in info]
+        gg = [x.to_dict() for x in info]
+        a = len(ff)
+        categoria = {'categoria': f'{id}'}
+        [ff[x].update(gg[x]) for x in range(a)]
+        [ff[x].update(categoria) for x in range(a)]
+        for n in ff:
+            des = db.collection('destaques_home').document()
+            des.set({
+                'cid':f"{n['categoria']}",
+                'cupons': firestore.ArrayUnion([""]),
+                'img': firestore.ArrauUnion([""]),
+                'lid': f"{n['id']}",
+                'name':f"{n['name']}",
+                'ofertas': firestore.ArrayUnion([""]),
+                'ofertas_destaque': firestore.ArrayUnion([""]),
+                'price': f"{n['price']}"
+            })
         return redirect('criar_loja_sucesso')
     return render(request, 'criar_loja.html')
 
