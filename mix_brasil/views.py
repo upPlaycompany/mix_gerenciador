@@ -62,13 +62,17 @@ def criar_loja(request, id):
         name = request.POST['name']
         descricao = request.POST['descricao']
         price = request.POST['price']
-        destaque = False
+        destaque = request.POST['destaque']
+        if destaque == 'true':
+            dex = True
+        else:
+            dex = False
         price = float(price)
         dados.set({
             'name':f'{name}',
             'descricao':f'{descricao}',
             'price': price,
-            'destaque': destaque,
+            'destaque': dex,
             'promocao': "",
             'img': firestore.ArrayUnion([""])
         })
@@ -81,17 +85,20 @@ def criar_loja(request, id):
         [ff[x].update(gg[x]) for x in range(a)]
         [ff[x].update(categoria) for x in range(a)]
         for n in ff:
-            des = db.collection('destaques_home').document()
-            des.set({
-                'cid':f"{n['categoria']}",
-                'cupons': firestore.ArrayUnion([""]),
-                'img': firestore.ArrayUnion([""]),
-                'lid': f"{n['id']}",
-                'name':f"{n['name']}",
-                'ofertas': firestore.ArrayUnion([""]),
-                'ofertas_destaque': firestore.ArrayUnion([""]),
-                'price': f"{n['price']}"
-            })
+            if destaque == 'true':
+                des = db.collection('destaques_home').document()
+                des.set({
+                    'cid':f"{n['categoria']}",
+                    'cupons': firestore.ArrayUnion([""]),
+                    'img': firestore.ArrayUnion([""]),
+                    'lid': f"{n['id']}",
+                    'name':f"{n['name']}",
+                    'ofertas': firestore.ArrayUnion([""]),
+                    'ofertas_destaque': firestore.ArrayUnion([""]),
+                    'price': n['price']
+                })
+            else:
+                des = None
         return redirect('criar_loja_sucesso')
     return render(request, 'criar_loja.html')
 
