@@ -67,7 +67,9 @@ def criar_loja(request, id):
             'name':f'{name}',
             'descricao':f'{descricao}',
             'price':{price},
-            'destaque':f'{destaque}'
+            'destaque':f'{destaque}',
+            'promocao': "",
+            'img': firestore.ArrayUnion([""])
         })
         info = db.collection(f'categorias/{id}/lojas').where('name','==',f'{name}').stream()
         ff = [{'id':x.id} for x in info]
