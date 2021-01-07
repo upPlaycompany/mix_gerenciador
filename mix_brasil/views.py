@@ -1,5 +1,6 @@
 import pyrebase
 import os
+import datetime
 from .models import *
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -195,7 +196,9 @@ def adicionar_imagens_loja(request, id, cod):
         arquivo = sto.blob(f'{img}')
         arquivo.upload_from_filename(f"/app/mix_brasil/settings/imagem/{img}")
         url = arquivo.generate_signed_url(
-            version="v2", method="GET",
+            version="v2",
+            expiration=datetime.timedelta(weeks=200),
+            method="GET",
         )
         url = str(url)
         formform = db.collection(f'categorias/{id}/lojas').document(f'{cod}')
