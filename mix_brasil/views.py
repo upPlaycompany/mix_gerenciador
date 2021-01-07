@@ -193,7 +193,7 @@ def adicionar_imagens_loja(request, id, cod):
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
         imagem_mix.save()
         imag = IMAGEM_MIX.objects.filter(imagem=f'{img}')
-        arquivo = sto.blob(imag)
+        arquivo = sto.blob(str(imag.imagem))
         arquivo.upload_from_filename(imag)
         url = arquivo.generate_signed_url(
             version="v0", method="GET",
