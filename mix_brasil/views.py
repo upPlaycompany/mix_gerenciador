@@ -168,16 +168,17 @@ def lojas_dados(request, id, nome, cod):
             [da[x].update(dw[x]) for x in range(a)]
             [da[x].update(categoria) for x in range(a)]
             didi = db.collection('destaques_home').document()
-            didi.set({
-                'cid': f"{n['categoria']}",
-                'cupons': firestore.ArrayUnion([""]),
-                'img': firestore.ArrayUnion([""]),
-                'lid': f"{n['id']}",
-                'name': f"{n['name']}",
-                'ofertas': firestore.ArrayUnion([""]),
-                'ofertas_destaque': firestore.ArrayUnion([""]),
-                'price': n['price']
-            })
+            for n in da:
+                didi.set({
+                    'cid': f"{n['categoria']}",
+                    'cupons': firestore.ArrayUnion([""]),
+                    'img': firestore.ArrayUnion([""]),
+                    'lid': f"{n['id']}",
+                    'name': f"{n['name']}",
+                    'ofertas': firestore.ArrayUnion([""]),
+                    'ofertas_destaque': firestore.ArrayUnion([""]),
+                    'price': n['price']
+                })
         elif des == False:
             desdes = db.collection(f'destaques_home').where('lid', '==', f'{cod}').stream()
             da = [{'id': x.id} for x in desdes]
