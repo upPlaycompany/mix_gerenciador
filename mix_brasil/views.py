@@ -187,7 +187,8 @@ def atualizar_loja_sucesso(request):
 @login_required
 def adicionar_imagens_loja(request, id, cod):
     if request.method == 'POST':
-        img = request.FILES['img']
+        img = request.POST['img']
+        img = str(os.chdir(os.path.dirname(os.path.abspath(img))))
         arquivo = sto.blob(img)
         arquivo.upload_from_filename(img)
         url = arquivo.generate_signed_url(
