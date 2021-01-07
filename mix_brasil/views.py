@@ -191,6 +191,7 @@ def atualizar_loja_sucesso(request):
 def adicionar_imagens_loja(request, id, cod):
     if request.method == 'POST':
         img = request.FILES['img']
+        imag = str(img)
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
         imagem_mix.save()
         arquivo = sto.blob(f'{img}')
@@ -205,7 +206,8 @@ def adicionar_imagens_loja(request, id, cod):
         formform.update({
             'img': firestore.ArrayUnion([f'{url}'])
         })
-        os.remove(os.path.abspath(img))
+        IMAGEM_MIX.objects.all().delete()
+        os.remove(f"/app/mix_brasil/settings/imagem/{img}")
         return redirect('adicionar_imagens_loja_sucesso')
     return render(request, 'adicionar_imagens_loja.html')
 
