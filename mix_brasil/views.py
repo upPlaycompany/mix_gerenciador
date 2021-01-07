@@ -1,5 +1,6 @@
 import pyrebase
 import os
+from .models import *
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -188,8 +189,10 @@ def atualizar_loja_sucesso(request):
 @login_required
 def adicionar_imagens_loja(request, id, cod):
     if request.method == 'POST':
-        img = request.POST['img']
-        imag = str(os.path.realpath(img))
+        img = request.FILES['img']
+        imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
+        imagem_mix.save()
+        imag = IMAGEM_MIX.objects.filter(imagem=f'{img}')
         arquivo = sto.blob(imag)
         arquivo.upload_from_filename(imag)
         url = arquivo.generate_signed_url(
@@ -200,6 +203,7 @@ def adicionar_imagens_loja(request, id, cod):
         formform.update({
             'img': firestore.ArrayUnion([f'{url}'])
         })
+        os.remove(os.path.abspath(img))
         return redirect('adicionar_imagens_loja_sucesso')
     return render(request, 'adicionar_imagens_loja.html')
 

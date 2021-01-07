@@ -122,3 +122,5 @@ STATICFILES_DIRS = [
 ]
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mix_brasil/imagem')
+MEDIA_URL = '/tabela/'
