@@ -5,13 +5,13 @@
 {% endblock title %}
 
 {% block content %}
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
                 <label>Selecionar imagem</label>
-                <input type="file" class="form-control" name="img">
+                <input type="image" class="form-control" name="img">
             </div>
         </div>
     </div>
