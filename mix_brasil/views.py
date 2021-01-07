@@ -20,7 +20,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 import pandas as pd
 import pprint
 
-cred = credentials.Certificate("/app/mix_brasil/credencial.json")
+cred = credentials.Certificate("C:/Users/cellp/PycharmProjects/mix-brasil/mix_brasil/mix_brasil/credencial.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 sto = storage.bucket('mix-brasil.appspot.com')
