@@ -1,5 +1,6 @@
 import pyrebase
 from django.shortcuts import render
+from google.cloud import storage
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 import firebase_admin
@@ -34,6 +35,8 @@ auth = pyrebase.auth()
 cred = credentials.Certificate("/app/mix_brasil/credencial.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
+sto = storage.Client()
+buck = sto.bucket('mix-brasil.appspot.com')
 
 def logar(request):
     next = request.GET.get('next', '/index/')
@@ -188,7 +191,6 @@ def lojas_dados(request, id, nome, cod):
             [da[x].update(dw[x]) for x in range(a)]
             for n in da:
                 db.collection('destaques_home').document(f"{n['id']}").delete()
-
         return redirect('atualizar_loja_sucesso')
     return render(request,'lojas_dados.html', {'lista':dec})
 
@@ -200,9 +202,15 @@ def atualizar_loja_sucesso(request):
 def adicionar_imagens_loja(request, id, cod):
     if request.method == 'POST':
         img = request.POST['img']
+        arquivo = buck.blob(img)
+        arquivo.upload_from_filename(img)
+        url = arquivo.generate_signed_url(
+            version="v0", method="GET",
+        )
+        url = str(url)
         formform = db.collection(f'categorias/{id}/lojas').document(f'{cod}')
         formform.update({
-            'img': firestore.ArrayUnion([f'{img}'])
+            'img': firestore.ArrayUnion([f'{url}'])
         })
         return redirect('adicionar_imagens_loja_sucesso')
     return render(request, 'adicionar_imagens_loja.html')
