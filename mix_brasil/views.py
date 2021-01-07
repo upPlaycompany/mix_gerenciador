@@ -189,7 +189,8 @@ def atualizar_loja_sucesso(request):
 @login_required
 def adicionar_imagens_loja(request, id, cod):
     if request.method == 'POST':
-        img = request.FILES['img']
+        img = request.POST['img']
+        img = request.FILES[img]
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
         imagem_mix.save()
         abc = IMAGEM_MIX.objects.all().filter(imagem=img)
