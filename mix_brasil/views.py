@@ -189,8 +189,9 @@ def atualizar_loja_sucesso(request):
 @login_required
 def adicionar_imagens_loja(request, id, cod):
     if request.method == 'POST':
-        img = request.POST['img']
-        imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
+        imag = request.FILES['img']
+        img = str(imag)
+        imagem_mix = IMAGEM_MIX.objects.create(imagem=imag)
         imagem_mix.save()
         arquivo = sto.blob(img)
         arquivo.upload_from_filename(f"app\mix_brasil\settings\imagem\{img}")
