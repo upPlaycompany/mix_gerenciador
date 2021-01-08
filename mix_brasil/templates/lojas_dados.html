@@ -62,7 +62,7 @@
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Cidade</label>
-                {% if dec.cidade.nome == '' %}
+                {% if not dec.cidade.nome %}
                 <input type="text" class="form-control" name="cidade" value="{{ dec.cidade }}">
                 {% else %}
                 <input type="text" class="form-control" name="cidade" value="{{ dec.cidade.nome }}">
