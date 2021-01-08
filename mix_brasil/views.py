@@ -103,7 +103,7 @@ def criar_loja(request, id):
                     'estado': f"{n['estado']['sigla']}"
                 })
         return redirect('criar_loja_sucesso')
-    return render(request, 'criar_loja.html',{'lista': cde})
+    return render(request, 'criar_loja.html',{'lista': ff})
 
 @login_required
 def criar_loja_sucesso(request):

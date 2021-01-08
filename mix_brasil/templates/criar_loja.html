@@ -22,8 +22,9 @@
     </div>
 </form>
 <br>
-{% for ff in lista %}
+
 <form method="post">
+    {% for ff in lista %}
     {% csrf_token %}
     <div class="row">
         <div class="col-md-4 col-sm-12">
@@ -67,6 +68,7 @@
             </div>
         </div>
     </div>
+    {% endfor %}
 </form>
-{% endfor %}
+
 {% endblock %}
