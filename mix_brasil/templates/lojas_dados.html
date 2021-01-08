@@ -62,7 +62,7 @@
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Cidade</label>
-                {% if cep != '' %}
+                {% if dec.cidade == '' %}
                 <input type="text" class="form-control" name="cidade" value="{{ dec.cidade.nome }}">
                 {% else %}
                 <input type="text" class="form-control" name="cidade" value="{{ dec.cidade }}">
@@ -72,7 +72,7 @@
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Estado</label>
-                {% if cep != '' %}
+                {% if dec.estado == ''
                 <input type="text" class="form-control" name="estado" value="{{ dec.estado.sigla }}">
                 {% else %}
                 <input type="text" class="form-control" name="estado" value="{{ dec.estado }}">
