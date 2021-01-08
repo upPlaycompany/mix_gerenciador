@@ -62,20 +62,20 @@
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Cidade</label>
-                {% if dec.cidade == '' %}
-                <input type="text" class="form-control" name="cidade" value="{{ dec.cidade.nome }}">
-                {% else %}
+                {% if dec.cidade.nome == '' %}
                 <input type="text" class="form-control" name="cidade" value="{{ dec.cidade }}">
+                {% else %}
+                <input type="text" class="form-control" name="cidade" value="{{ dec.cidade.nome }}">
                 {% endif %}
             </div>
         </div>
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Estado</label>
-                {% if dec.estado == '' %}
-                <input type="text" class="form-control" name="estado" value="{{ dec.estado.sigla }}">
-                {% else %}
+                {% if dec.estado.sigla == '' %}
                 <input type="text" class="form-control" name="estado" value="{{ dec.estado }}">
+                {% else %}
+                <input type="text" class="form-control" name="estado" value="{{ dec.estado.sigla }}">
                 {% endif %}
             </div>
         </div>
