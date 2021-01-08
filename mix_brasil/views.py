@@ -143,6 +143,7 @@ def lojas_dados(request, id, nome, cod):
         promocao = request.POST['promocao']
         cidade = request.POST['cidade']
         estado = request.POST['estado']
+        price.replace(',','.')
         price = float(price)
         if destaque == 'true':
             des = True
