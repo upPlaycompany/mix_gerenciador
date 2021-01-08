@@ -59,20 +59,18 @@
                 </select>
             </div>
         </div>
-        {% for cde in city %}
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Cidade</label>
-                <input type="text" class="form-control" name="cidade" value="{{ cde.cidade.nome }}">
+                <input type="text" class="form-control" name="cidade" value="{{ dec.cidade.nome }}">
             </div>
         </div>
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Estado</label>
-                <input type="text" class="form-control" name="estado" value="{{ cde.estado.sigla }}">
+                <input type="text" class="form-control" name="estado" value="{{ dec.estado.sigla }}">
             </div>
         </div>
-        {% endfor %}
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">

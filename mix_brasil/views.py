@@ -121,6 +121,11 @@ def lojas_listagem(request, id):
 
 @login_required
 def lojas_dados(request, id, nome, cod):
+    cep = request.GET.get("cep")
+    url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+    headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+    link = requests.get(url, headers=headers, verify=False)
+    cde = link.json()
     dados = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{nome}').stream()
     abc = [x.to_dict() for x in dados]
     dados2 = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{nome}').stream()
@@ -129,11 +134,7 @@ def lojas_dados(request, id, nome, cod):
     categoria = {'categoria': f'{id}'}
     [dec[x].update(abc[x]) for x in range(a)]
     [dec[x].update(categoria) for x in range(a)]
-    cep = request.GET.get("cep")
-    url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
-    headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
-    link = requests.get(url, headers=headers, verify=False)
-    cde = link.json()
+    [dec[x].update(cde) for x in range(a)]
     if request.method == 'POST':
         name = request.POST['name']
         descricao = request.POST['descricao']
