@@ -169,6 +169,7 @@ def lojas_dados(request, id, nome, cod):
             categoria = {'categoria': f'{id}'}
             [da[x].update(dw[x]) for x in range(a)]
             [da[x].update(categoria) for x in range(a)]
+            [da[x].update(cde[x]) for x in range(a)]
             didi = db.collection('destaques_home').document()
             for n in da:
                 didi.set({
@@ -191,7 +192,7 @@ def lojas_dados(request, id, nome, cod):
             for n in da:
                 db.collection('destaques_home').document(f"{n['id']}").delete()
         return redirect('atualizar_loja_sucesso')
-    return render(request,'lojas_dados.html', {'lista':dec, 'city': cde})
+    return render(request,'lojas_dados.html', {'lista': dec})
 
 @login_required
 def atualizar_loja_sucesso(request):
