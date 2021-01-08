@@ -50,18 +50,16 @@ def deslogar(request):
 
 @login_required
 def criar_loja(request, id):
-    cep = request.GET.get("cep")
-    url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
-    headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
-    link = requests.get(url, headers=headers, verify=False)
-    cde = link.json()
     if request.method == 'POST':
         name = request.POST['name']
         descricao = request.POST['descricao']
         price = request.POST['price']
         destaque = request.POST['destaque']
-        cidade = request.POST['cidade']
-        estado = request.POST['estado']
+        cep = request.POST['cep']
+        url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+        headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+        link = requests.get(url, headers=headers, verify=False)
+        cde = link.json()
         if destaque == 'true':
             dex = True
         else:
@@ -75,8 +73,8 @@ def criar_loja(request, id):
             'destaque': dex,
             'promocao': "",
             'img': firestore.ArrayUnion([""]),
-            'cidade':f'{cidade}',
-            'estado': f'{estado}'
+            'cidade':f"{cde['cidade']['nome']}",
+            'estado': f"{cde['estado']['sigla']}"
         })
         info = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{name}').stream()
         ff = [{'id': x.id} for x in info]
@@ -103,7 +101,7 @@ def criar_loja(request, id):
                     'estado': f"{n['estado']['sigla']}"
                 })
         return redirect('criar_loja_sucesso')
-    return render(request, 'criar_loja.html',{'lista': ff})
+    return render(request, 'criar_loja.html')
 
 @login_required
 def criar_loja_sucesso(request):
