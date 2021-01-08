@@ -1,6 +1,7 @@
 import pyrebase
 import os
 import datetime
+import requests
 from .models import *
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
