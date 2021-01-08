@@ -5,7 +5,26 @@
 {% endblock title %}
 
 {% block content %}
+
 {% for dec in lista %}
+<form method="post" name="vvv">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label>Buscar CEP</label>
+                <input type="text" class="form-control" name="cep">
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <span><button type="submit" class="btn btn-success">Buscar</button></span>
+            </div>
+        </div>
+    </div>
+</form>
+<br>
+
 <form method="post">
     {% csrf_token %}
     <div class="row">
@@ -40,6 +59,20 @@
                 </select>
             </div>
         </div>
+        {% for cde in city %}
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Cidade</label>
+                <input type="text" class="form-control" name="estado" value="{{ cde.cidade.nome }}">
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Estado</label>
+                <input type="text" class="form-control" name="estado" value="{{ cde.estado.sigla }}">
+            </div>
+        </div>
+        {% endfor %}
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
@@ -65,9 +98,12 @@
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
                 <span><button type="submit" class="btn btn-success">Atualizar dados</button></span>
-                <span><a href="{% url 'adicionar_imagens_loja' id=dec.categoria cod=dec.id %}"><button type="button" class="btn btn-info">Adicionar imagens à loja</button></a></span>
-                <span><a href="{% url 'remover_imagens_loja' id=dec.categoria name=dec.name cod=dec.id %}"><button type="button" class="btn btn-warning">Excluir imagens da loja</button></a></span>
-                <span><a href="{% url 'remover_loja' id=dec.categoria cod=dec.id %}"><button type="button" class="btn btn-danger">Excluir loja</button></a></span>
+                <span><a href="{% url 'adicionar_imagens_loja' id=dec.categoria cod=dec.id %}"><button type="button"
+                                                                                                       class="btn btn-info">Adicionar imagens à loja</button></a></span>
+                <span><a href="{% url 'remover_imagens_loja' id=dec.categoria name=dec.name cod=dec.id %}"><button
+                        type="button" class="btn btn-warning">Excluir imagens da loja</button></a></span>
+                <span><a href="{% url 'remover_loja' id=dec.categoria cod=dec.id %}"><button type="button"
+                                                                                             class="btn btn-danger">Excluir loja</button></a></span>
             </div>
         </div>
     </div>

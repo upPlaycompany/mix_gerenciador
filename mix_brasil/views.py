@@ -128,12 +128,20 @@ def lojas_dados(request, id, nome, cod):
     categoria = {'categoria': f'{id}'}
     [dec[x].update(abc[x]) for x in range(a)]
     [dec[x].update(categoria) for x in range(a)]
+    if request.method == 'POST' and vvv:
+        cep = request.POST['cep']
+        url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+        headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+        link = requests.get(url, headers=headers)
+        cde = link.json()
     if request.method == 'POST':
         name = request.POST['name']
         descricao = request.POST['descricao']
         price = request.POST['price']
         destaque = request.POST['destaque']
         promocao = request.POST['promocao']
+        cidade = request.POST['cidade']
+        estado = request.POST[estado]
         price = float(price)
         if destaque == 'true':
             des = True
@@ -147,7 +155,9 @@ def lojas_dados(request, id, nome, cod):
                 'descricao': f'{descricao}',
                 'price': price,
                 'destaque': des,
-                'promocao': f'{promocao}'
+                'promocao': f'{promocao}',
+                'cidade': f'{cidade}',
+                'estado': f'{estado}'
             }
         )
         if des == True:
@@ -181,7 +191,7 @@ def lojas_dados(request, id, nome, cod):
             for n in da:
                 db.collection('destaques_home').document(f"{n['id']}").delete()
         return redirect('atualizar_loja_sucesso')
-    return render(request,'lojas_dados.html', {'lista':dec})
+    return render(request,'lojas_dados.html', {'lista':dec, 'city': cde})
 
 @login_required
 def atualizar_loja_sucesso(request):
