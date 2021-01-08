@@ -129,12 +129,11 @@ def lojas_dados(request, id, nome, cod):
     categoria = {'categoria': f'{id}'}
     [dec[x].update(abc[x]) for x in range(a)]
     [dec[x].update(categoria) for x in range(a)]
-    if request.method == 'POST' and request.POST['cep']:
-        cep = request.POST['cep']
-        url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
-        headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
-        link = requests.get(url, headers=headers, verify=False)
-        cde = link.json()
+    cep = request.GET.get("cep")
+    url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+    headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+    link = requests.get(url, headers=headers, verify=False)
+    cde = link.json()
     if request.method == 'POST':
         name = request.POST['name']
         descricao = request.POST['descricao']
