@@ -143,7 +143,7 @@ def lojas_dados(request, id, nome, cod):
         promocao = request.POST['promocao']
         cidade = request.POST['cidade']
         estado = request.POST['estado']
-        price.replace(',','.')
+        price = price.replace(',','.')
         price = float(price)
         if destaque == 'true':
             des = True
@@ -204,7 +204,6 @@ def atualizar_loja_sucesso(request):
 def adicionar_imagens_loja(request, id, cod):
     if request.method == 'POST':
         img = request.FILES['img']
-        imag = str(img)
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
         imagem_mix.save()
         arquivo = sto.blob(f'categorias/{id}/{cod}/{img}')
