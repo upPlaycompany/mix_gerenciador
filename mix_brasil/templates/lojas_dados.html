@@ -7,7 +7,7 @@
 {% block content %}
 
 {% for dec in lista %}
-<form method="get">
+<form method="post" name="">
     {% csrf_token %}
     <div class="row">
         <div class="col-md-4 col-sm-12">
@@ -63,7 +63,7 @@
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Cidade</label>
-                <input type="text" class="form-control" name="estado" value="{{ cde.cidade.nome }}">
+                <input type="text" class="form-control" name="cidade" value="{{ cde.cidade.nome }}">
             </div>
         </div>
         <div class="col-md-3 col-sm-12">
