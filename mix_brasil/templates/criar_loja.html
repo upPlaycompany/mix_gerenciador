@@ -5,6 +5,24 @@
 {% endblock title %}
 
 {% block content %}
+<form method="get">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label>Buscar CEP</label>
+                <input type="text" class="form-control" name="cep">
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <span><button type="submit" class="btn btn-success">Buscar</button></span>
+            </div>
+        </div>
+    </div>
+</form>
+<br>
+{% for cde in lista %}
 <form method="post">
     {% csrf_token %}
     <div class="row">
@@ -23,10 +41,22 @@
 
     </div>
     <div class="row">
-        <div class="col-md-6 col-sm-12">
+        <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Preço padrão da loja</label>
                 <input type="text" class="form-control" name="price" placeholder="Insira o preço padrão da loja">
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Cidade</label>
+                <input type="text" class="form-control" name="cidade" value="{{ cde.cidade.nome }}">
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Estado</label>
+                <input type="text" class="form-control" name="estado" value="{{ cde.estado.sigla }}">
             </div>
         </div>
     </div>
@@ -38,4 +68,5 @@
         </div>
     </div>
 </form>
+{% endfor %}
 {% endblock %}

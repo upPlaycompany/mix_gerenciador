@@ -51,11 +51,18 @@ def deslogar(request):
 @login_required
 def criar_loja(request, id):
     dados = db.collection(f'categorias/{id}/lojas').document()
+    cep = request.GET.get("cep")
+    url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+    headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+    link = requests.get(url, headers=headers, verify=False)
+    cde = link.json()
     if request.method == 'POST':
         name = request.POST['name']
         descricao = request.POST['descricao']
         price = request.POST['price']
         destaque = request.POST['destaque']
+        cidade = request.POST['cidade']
+        estado = request.POST['estado']
         if destaque == 'true':
             dex = True
         else:
@@ -67,7 +74,9 @@ def criar_loja(request, id):
             'price': price,
             'destaque': dex,
             'promocao': "",
-            'img': firestore.ArrayUnion([""])
+            'img': firestore.ArrayUnion([""]),
+            'cidade':f'{cidade}',
+            'estado': f'{estado}'
         })
         info = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{name}').stream()
         ff = [{'id': x.id} for x in info]
@@ -77,6 +86,7 @@ def criar_loja(request, id):
         categoria = {'categoria': f'{id}'}
         [ff[x].update(gg[x]) for x in range(a)]
         [ff[x].update(categoria) for x in range(a)]
+        [ff[x].update(cde) for x in range(a)]
         for n in ff:
             if destaque == 'true':
                 des = db.collection('destaques_home').document()
@@ -88,10 +98,12 @@ def criar_loja(request, id):
                     'name': f"{n['name']}",
                     'ofertas': firestore.ArrayUnion([""]),
                     'ofertas_destaque': firestore.ArrayUnion([""]),
-                    'price': n['price']
+                    'price': n['price'],
+                    'cidade': f"{n['cidade']['nome']}",
+                    'estado': f"{n['estado']['sigla']}"
                 })
         return redirect('criar_loja_sucesso')
-    return render(request, 'criar_loja.html')
+    return render(request, 'criar_loja.html',{'lista': cde})
 
 @login_required
 def criar_loja_sucesso(request):
