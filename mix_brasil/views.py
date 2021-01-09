@@ -196,14 +196,14 @@ def lojas_dados(request, id, nome, cod):
                     'price': n['price']
                 })
         elif des == False:
-            desdes = db.collection(f'destaques_home').where('lid', '==', f'{cod}').stream()
+            desdes = db.collection(f'destaque_home').where('lid', '==', f'{cod}').stream()
             da = [{'id': x.id} for x in desdes]
-            dasdas = db.collection(f'destaques_home').where('lid', '==', f'{cod}').stream()
+            dasdas = db.collection(f'destaque_home').where('lid', '==', f'{cod}').stream()
             dw = [x.to_dict() for x in dasdas]
             a = len(da)
             [da[x].update(dw[x]) for x in range(a)]
             for n in da:
-                db.collection('destaques_home').document(f"{n['id']}").delete()
+                db.collection('destaque_home').document(f"{n['id']}").delete()
         else:
             desdes = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{name}').stream()
             da = [{'id': x.id} for x in desdes]
