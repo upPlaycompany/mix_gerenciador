@@ -56,16 +56,17 @@ def criar_loja(request, id):
         price = request.POST['price']
         destaque = request.POST['destaque']
         cep = request.POST['cep']
-        url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
-        headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
-        link = requests.get(url, headers=headers, verify=False)
-        cde = link.json()
+
         if destaque == 'true':
             dex = True
         else:
             dex = False
         price = float(price)
         dados = db.collection(f'categorias/{id}/lojas').document()
+        url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+        headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+        link = requests.get(url, headers=headers, verify=False)
+        cde = link.json()
         dados.set({
             'name': f'{name}',
             'descricao': f'{descricao}',
