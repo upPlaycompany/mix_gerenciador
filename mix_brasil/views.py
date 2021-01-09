@@ -183,7 +183,7 @@ def lojas_dados(request, id, nome, cod):
             [da[x].update(dw[x]) for x in range(a)]
             [da[x].update(categoria) for x in range(a)]
             [da[x].update(cde) for x in range(a)]
-            didi = db.collection('destaques_home').document()
+            didi = db.collection('destaque_home').document()
             for n in da:
                 didi.set({
                     'cid': f"{n['categoria']}",
