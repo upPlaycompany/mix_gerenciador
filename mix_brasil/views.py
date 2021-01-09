@@ -204,6 +204,16 @@ def lojas_dados(request, id, nome, cod):
             [da[x].update(dw[x]) for x in range(a)]
             for n in da:
                 db.collection('destaques_home').document(f"{n['id']}").delete()
+        else:
+            desdes = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{name}').stream()
+            da = [{'id': x.id} for x in desdes]
+            dasdas = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{name}').stream()
+            dw = [x.to_dict() for x in dasdas]
+            a = len(da)
+            categoria = {'categoria': f'{id}'}
+            [da[x].update(dw[x]) for x in range(a)]
+            [da[x].update(categoria) for x in range(a)]
+            [da[x].update(cde[x]) for x in range(a)]
         return redirect('atualizar_loja_sucesso')
     return render(request,'lojas_dados.html', {'lista': dec})
 
