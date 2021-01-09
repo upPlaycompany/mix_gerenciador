@@ -193,7 +193,9 @@ def lojas_dados(request, id, nome, cod):
                     'name': f"{n['name']}",
                     'ofertas': firestore.ArrayUnion([""]),
                     'ofertas_destaque': firestore.ArrayUnion([""]),
-                    'price': n['price']
+                    'price': n['price'],
+                    'cidade':n['cidade']['nome'],
+                    'estado': n['estado']['sigla']
                 })
         elif des == False:
             desdes = db.collection(f'destaque_home').where('lid', '==', f'{cod}').stream()
