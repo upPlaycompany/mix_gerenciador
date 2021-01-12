@@ -61,6 +61,7 @@ def criar_loja(request, id):
             dex = True
         else:
             dex = False
+        price = price.replace(',','.')
         price = float(price)
         dados = db.collection(f'categorias/{id}/lojas').document()
         url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
@@ -88,7 +89,7 @@ def criar_loja(request, id):
         [ff[x].update(cde) for x in range(a)]
         for n in ff:
             if destaque == 'true':
-                des = db.collection('destaques_home').document()
+                des = db.collection('destaque_home').document()
                 des.set({
                     'cid': f"{n['categoria']}",
                     'cupons': firestore.ArrayUnion([""]),
@@ -277,3 +278,185 @@ def remover_loja(request, id, cod):
 def remover_loja_sucesso(request):
     return render(request,'remover_loja_sucesso.html')
 
+@login_required
+def criar_desapego(request, id):
+     if request.method == 'POST':
+         anunciante = request.POST['anunciante']
+         descricao = request.POST['descricao']
+         name = request.POST['name']
+         number = request.POST['number']
+         price = request.POST['price']
+         promocao = request.POST['promocao']
+         destaque = request.POST['destaque']
+         cep = request.POST['cep']
+         if destaque == 'true':
+             dex = True
+         else:
+             dex = False
+         price = price.replace(',','.')
+         price = float(price)
+         count = db.collection(f'desapego/{id}/desapegos').stream()
+         xxx = len([x.id for x in count])
+         dados = db.collection(f'desapego/{id}/desapegos').document()
+         url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+         headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+         link = requests.get(url, headers=headers, verify=False)
+         cde = link.json()
+         dados.set({
+             'anunciante':f'{anunciante}',
+             'descricao':f'{descricao}',
+             'name':f'{name}',
+             'number':f'{number}',
+             'price':price,
+             'promocao':f'{promocao}',
+             'destaque': dex,
+             'cidade':f"{cde['cidade']['nome']}",
+             'estado': f"{cde['estado']['sigla']}",
+             'pos': int(xxx + 1),
+             'img': firestore.ArrayUnion([""])
+         })
+         info = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
+         ff = [{'id': x.id} for x in info]
+         info2 = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
+         gg = [x.to_dict() for x in info2]
+         a = len(ff)
+         categoria = {'categoria': f'{id}'}
+         [ff[x].update(gg[x]) for x in range(a)]
+         [ff[x].update(categoria) for x in range(a)]
+         [ff[x].update(cde) for x in range(a)]
+         for n in ff:
+             if destaque == 'true':
+                 des = db.collection('destaque_desapego').document()
+                 des.set({
+                     'cid': f"{n['categoria']}",
+                     'img': firestore.ArrayUnion([""]),
+                     'did': f"{n['id']}",
+                     'name': f"{n['name']}",
+                     'price': n['price'],
+                     'number': f"{n['number']}",
+                     'cidade': f"{n['cidade']['nome']}",
+                     'estado': f"{n['estado']['sigla']}",
+                 })
+         return redirect('criar_loja_sucesso')
+     return render(request,'criar_desapego.html')
+
+@login_required
+def criar_desapego_sucesso(request):
+    return render(request,'criar_desapego_sucesso.html')
+
+@login_required
+def categoria_desapego_listagem(request):
+    desapegos = db.collection('desapego').stream()
+    doz = [x.id for x in desapegos]
+    ident = db.collection('desapego').stream()
+    docs = [x.to_dict() for x in ident]
+    return render(request, 'categoria_desapego_listagem.html', {'lista': docs, 'lista_id': doz})
+
+@login_required
+def desapegos_listagem(request, id):
+    desapegos = db.collection(f'desapego/{id}/desapegos').stream()
+    docs = [{'id': x.id} for x in desapegos]
+    lojas2 = db.collection(f'desapego/{id}/desapegos').stream()
+    docs2 = [y.to_dict() for y in lojas2]
+    a = len(docs)
+    dzz = [{'categoria': f'{id}'}]
+    categoria = {'categoria': f'{id}'}
+    [docs[x].update(docs2[x]) for x in range(a)]
+    [docs[x].update(categoria) for x in range(a)]
+    return render(request, 'desapegos_listagem.html', {'lista': docs, 'order': dzz})
+
+@login_required
+def desapegos_dados(request, id, nome, cod):
+    cep = request.GET.get("cep")
+    url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+    headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+    link = requests.get(url, headers=headers, verify=False)
+    cde = link.json()
+    dados = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{nome}').stream()
+    abc = [x.to_dict() for x in dados]
+    dados2 = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{nome}').stream()
+    dec = [{'id': x.id} for x in dados2]
+    a = len(dec)
+    categoria = {'categoria': f'{id}'}
+    [dec[x].update(abc[x]) for x in range(a)]
+    [dec[x].update(categoria) for x in range(a)]
+    [dec[x].update(cde) for x in range(a)]
+    if request.method == 'POST':
+        name = request.POST['name']
+        descricao = request.POST['descricao']
+        price = request.POST['price']
+        destaque = request.POST['destaque']
+        promocao = request.POST['promocao']
+        cidade = request.POST['cidade']
+        estado = request.POST['estado']
+        anunciante = request.POST['estado']
+        number = request.POST['number']
+        price = price.replace(',', '.')
+        price = float(price)
+        if destaque == 'true':
+            des = True
+        else:
+            des = False
+        formform = db.collection(f'desapego/{id}/desapegos').document(f'{cod}')
+
+        formform.update(
+            {
+                'name':f'{name}',
+                'descricao': f'{descricao}',
+                'price': price,
+                'destaque': des,
+                'promocao': f'{promocao}',
+                'cidade': f'{cidade}',
+                'estado': f'{estado}',
+                'anunciante': f'{anunciante}',
+                'number': f'{number}'
+            }
+        )
+        if des == True:
+            desdes = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
+            da = [{'id': x.id} for x in desdes]
+            dasdas = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
+            dw = [x.to_dict() for x in dasdas]
+            a = len(da)
+            categoria = {'categoria': f'{id}'}
+            [da[x].update(dw[x]) for x in range(a)]
+            [da[x].update(categoria) for x in range(a)]
+            [da[x].update(cde) for x in range(a)]
+            didi = db.collection('destaque_desapego').document()
+            for n in da:
+                didi.set({
+                    'cid': f"{n['categoria']}",
+                    'img': firestore.ArrayUnion([""]),
+                    'did': f"{n['id']}",
+                    'name': f"{n['name']}",
+                    'price': n['price'],
+                    'cidade':n['cidade']['nome'],
+                    'estado': n['estado']['sigla'],
+                    'anunciante': f"{n['anunciante']}",
+                    'number': f"{n['number']}"
+                })
+        elif des == False:
+            desdes = db.collection(f'destaque_desapego').where('lid', '==', f'{cod}').stream()
+            da = [{'id': x.id} for x in desdes]
+            dasdas = db.collection(f'destaque_desapego').where('lid', '==', f'{cod}').stream()
+            dw = [x.to_dict() for x in dasdas]
+            a = len(da)
+            [da[x].update(dw[x]) for x in range(a)]
+            for n in da:
+                db.collection('destaque_desapego').document(f"{n['id']}").delete()
+        else:
+            desdes = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
+            da = [{'id': x.id} for x in desdes]
+            dasdas = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
+            dw = [x.to_dict() for x in dasdas]
+            a = len(da)
+            categoria = {'categoria': f'{id}'}
+            [da[x].update(dw[x]) for x in range(a)]
+            [da[x].update(categoria) for x in range(a)]
+            [da[x].update(cde[x]) for x in range(a)]
+        return redirect('atualizar_desapego_sucesso')
+    return render(request,'desapegos_dados.html', {'lista': dec})
+
+@login_required
+def atualizar_desapego_sucesso(request):
+    return render(request, 'atualizar_desapego_sucesso')

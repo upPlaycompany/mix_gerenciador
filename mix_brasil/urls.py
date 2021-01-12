@@ -26,9 +26,7 @@ urlpatterns = [
     path('index/', views.index, name='index'),
 
     path('categoria_listagem/', views.categoria_listagem, name='categoria_listagem'),
-
     path('lojas_listagem/<str:id>', views.lojas_listagem, name='lojas_listagem'),
-
     path('lojas_dados/<str:nome>/<str:id>/<str:cod>', views.lojas_dados, name='lojas_dados'),
     path('atualizar_loja_sucesso/', views.atualizar_loja_sucesso, name='atualizar_loja_sucesso'),
     path('criar_loja/<str:id>/', views.criar_loja, name='criar_loja'),
@@ -38,6 +36,12 @@ urlpatterns = [
     path('remover_imagens_loja/<str:id>/<str:name>/<str:cod>/', views.remover_imagens_loja, name='remover_imagens_loja'),
     path('remover_imagens_loja_sucesso/', views.remover_imagens_loja_sucesso, name='remover_imagens_loja_sucesso'),
     path('remover_loja/<str:id>/<str:cod>/', views.remover_loja, name='remover_loja'),
-    path('remover_loja_sucesso/', views.remover_loja_sucesso, name='remover_loja_sucesso')
+    path('remover_loja_sucesso/', views.remover_loja_sucesso, name='remover_loja_sucesso'),
 
+    path('criar_desapego/<str:id>/', views.criar_desapego, name='criar_desapego'),
+    path('criar_desapego_sucesso/', views.criar_desapego_sucesso, name='criar_desapego_sucesso'),
+    path('categoria_desapego_listagem/', views.categoria_desapego_listagem, name='categoria_desapego_listagem'),
+    path('desapegos_listagem/<str:id>/', views.desapegos_listagem, name='desapegos_listagem'),
+    path('desapegos_dados/<str:id>/<str:nome>/<str:cod>/', views.desapegos_dados, name='desapegos_dados'),
+    path('atualizar_desapego_sucesso/', views.atualizar_desapego_sucesso, name='atualizar_desapego_sucesso')
 ]

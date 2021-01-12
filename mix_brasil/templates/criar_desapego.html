@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Criar loja</h2>
+{% endblock title %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label>Nome do anunciante</label>
+                <input type="text" class="form-control" name="anunciante" placeholder="Insira o nome do anunciante">
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label>Descrição da loja</label>
+                <input type="text" class="form-control" name="descricao" placeholder="Insira a descrição do desapego">
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Preço padrão da loja</label>
+                <input type="text" class="form-control" name="price" placeholder="Insira o preço do desapego">
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>CEP</label>
+                <input type="text" class="form-control" name="cep" placeholder="Insira o CEP da loja">
+            </div>
+        </div>
+         <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                 <label>Destacar loja no app?</label>
+                <select class="form-control" name="destaque">
+                    <option selected>Selecione...</option>
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
+                </select>
+            </div>
+        </div>
+    </div>
+     <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label>Nome da fornecedora</label>
+                <input type="text" class="form-control" name="name" placeholder="Insira o nome da fornecedora">
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label>Número do anunciante</label>
+                <input type="text" class="form-control" name="number" placeholder="Insira o número do anunciante">
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <label>Adicionar promoção</label>
+                <input type="text" class="form-control" name="promocao" placeholder="Insira uma promoção">
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <span><button type="submit" class="btn btn-success">Criar desapego</button></span>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Listagem de desapegos</h2>
+{% endblock title %}
+
+{% block content %}
+
+<div class="card-deck mb-20">
+    {% for docs in lista %}
+    <div class="card" style="width: 250px">
+        <img style="width: 300px" class="card-img-top" src="{{ docs.img.0|cut:"'" }}">
+        <div class="card-body">
+            <a href="{% url 'desapego_dados' id=docs.categoria nome=docs.name cod=docs.id %}"><h5 class="card-title">{{ docs.name }}</h5></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+{% for dzz in order %}
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="form-group">
+            <span><a href="{% url 'criar_desapego' id=dzz.categoria %}"><button type="button" class="btn btn-success">Criar loja</button></a></span>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
