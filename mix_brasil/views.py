@@ -459,7 +459,7 @@ def desapegos_dados(request, id, nome, cod):
 
 @login_required
 def atualizar_desapego_sucesso(request):
-    return render(request, 'atualizar_desapego_sucesso')
+    return render(request, 'atualizar_desapego_sucesso.html')
 
 @login_required
 def adicionar_imagens_desapego(request, id, cod):
