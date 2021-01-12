@@ -460,3 +460,58 @@ def desapegos_dados(request, id, nome, cod):
 @login_required
 def atualizar_desapego_sucesso(request):
     return render(request, 'atualizar_desapego_sucesso')
+
+@login_required
+def adicionar_imagens_desapego(request, id, cod):
+    if request.method == 'POST':
+        img = request.FILES['img']
+        imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
+        imagem_mix.save()
+        arquivo = sto.blob(f'desapego/{id}/{cod}/{img}')
+        arquivo.upload_from_filename(f"/app/mix_brasil/settings/imagem/{img}")
+        url = arquivo.generate_signed_url(
+            expiration=datetime.timedelta(weeks=200),
+            method="GET",
+        )
+        url = str(url)
+        formform = db.collection(f'desapego/{id}/desapegos').document(f'{cod}')
+        formform.update({
+            'img': firestore.ArrayUnion([f'{url}'])
+        })
+        IMAGEM_MIX.objects.all().delete()
+        os.remove(f"/app/mix_brasil/settings/imagem/{img}")
+        return redirect('adicionar_imagens_desapego_sucesso')
+    return render(request, 'adicionar_imagens_desapego.html')
+
+@login_required
+def adicionar_imagens_desapego_sucesso(request):
+    return render(request, 'adicionar_imagens_desapego_sucesso.html')
+
+@login_required
+def remover_imagens_desapego(request, id, name, cod):
+    dados = db.collection(f'desapego/{id}/desapegos').where('name','==',f'{name}').stream()
+    docs = [x.to_dict() for x in dados]
+    if request.method == 'POST':
+        imagem = request.POST['imagem']
+        formform = db.collection(f'desapego/{id}/desapegos').document(f'{cod}')
+        formform.update({
+            'img':firestore.ArrayRemove([f'{imagem}'])
+        })
+        return redirect('remover_imagens_desapego_sucesso')
+    return render(request, 'remover_imagens_desapego.html', {'lista': docs})
+
+@login_required
+def remover_imagens_desapego_sucesso(request):
+    return render(request, 'remover_imagens_desapego_sucesso.html')
+
+@login_required
+def remover_desapego(request, id, cod):
+    if request.method == 'POST':
+        db.collection(f'desapego/{id}/desapegos').document(f'{cod}').delete()
+        return redirect('remover_desapego_sucesso')
+    return render(request,'remover_desapego.html')
+
+@login_required
+def remover_desapego_sucesso(request):
+    return render(request,'remover_desapego_sucesso.html')
+

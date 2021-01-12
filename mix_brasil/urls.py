@@ -43,5 +43,11 @@ urlpatterns = [
     path('categoria_desapego_listagem/', views.categoria_desapego_listagem, name='categoria_desapego_listagem'),
     path('desapegos_listagem/<str:id>/', views.desapegos_listagem, name='desapegos_listagem'),
     path('desapegos_dados/<str:id>/<str:nome>/<str:cod>/', views.desapegos_dados, name='desapegos_dados'),
-    path('atualizar_desapego_sucesso/', views.atualizar_desapego_sucesso, name='atualizar_desapego_sucesso')
+    path('atualizar_desapego_sucesso/', views.atualizar_desapego_sucesso, name='atualizar_desapego_sucesso'),
+    path('adicionar_imagens_desapego/<str:id>/<str:cod>/', views.adicionar_imagens_desapego, name='adicionar_imagens_desapego'),
+    path('adicionar_imagens_desapego_sucesso/', views.adicionar_imagens_desapego_sucesso, name='adicionar_imagens_desapego_sucesso'),
+    path('remover_imagens_desapego/<str:id>/<str:name>/<str:cod>/', views.remover_imagens_desapego, name='remover_imagens_desapego'),
+    path('remover_imagens_desapego_sucesso/', views.remover_imagens_desapego_sucesso, name='remover_imagens_desapego_sucesso'),
+    path('remover_desapego/<str:id>/<str:cod>/', views.remover_desapego, name='remover_desapego'),
+    path('remover_desapego_sucesso/', views.remover_desapego_sucesso, name='remover_desapego_sucesso'),
 ]

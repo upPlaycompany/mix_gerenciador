@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Dados do desapego</h2>
+{% endblock title %}
+
+{% block content %}
+
+{% for dec in lista %}
+<form method="get">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label>Buscar CEP</label>
+                <input type="text" class="form-control" name="cep">
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <span><button type="submit" class="btn btn-success">Buscar</button></span>
+            </div>
+        </div>
+    </div>
+</form>
+<br>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label>Nome do fornecedor</label>
+                <input type="text" class="form-control" name="name" value="{{ dec.name }}">
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label>Descrição do desapego</label>
+                <input type="text" class="form-control" name="descricao" value="{{ dec.descricao }}">
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label>Anunciante</label>
+                <input type="text" class="form-control" name="anunciante" value="{{ dec.anunciante }}">
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label>Número</label>
+                <input type="text" class="form-control" name="number" value="{{ dec.number }}">
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Preço do desapego</label>
+                <input type="text" class="form-control" name="price" value="{{ dec.price }}">
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Destacar desapego no app?</label>
+                <select class="form-control" name="destaque">
+                    <option selected>Selecione...</option>
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Cidade</label>
+                {% if not dec.cidade.nome %}
+                <input type="text" class="form-control" name="cidade" value="{{ dec.cidade }}">
+                {% else %}
+                <input type="text" class="form-control" name="cidade" value="{{ dec.cidade.nome }}">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Estado</label>
+                {% if not dec.estado.sigla %}
+                <input type="text" class="form-control" name="estado" value="{{ dec.estado }}">
+                {% else %}
+                <input type="text" class="form-control" name="estado" value="{{ dec.estado.sigla }}">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <label>Adicionar promoção</label>
+                <input type="text" class="form-control" name="promocao" value="{{ dec.promocao }}">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <label>Imagens do desapego</label><br>
+                <div class="row">
+                    {% for image in dec.img %}
+                    <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <span><button type="submit" class="btn btn-success">Atualizar dados</button></span>
+                <span><a href="{% url 'adicionar_imagens_desapego' id=dec.categoria cod=dec.id %}"><button type="button"
+                                                                                                       class="btn btn-info">Adicionar imagens ao desapego</button></a></span>
+                <span><a href="{% url 'remover_imagens_desapego' id=dec.categoria name=dec.name cod=dec.id %}"><button
+                        type="button" class="btn btn-warning">Excluir imagens do desapego</button></a></span>
+                <span><a href="{% url 'remover_desapego' id=dec.categoria cod=dec.id %}"><button type="button"
+                                                                                             class="btn btn-danger">Excluir desapego</button></a></span>
+            </div>
+        </div>
+    </div>
+</form>
+{% endfor %}
+{% endblock %}

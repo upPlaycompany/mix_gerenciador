@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Copie o link da imagem que deseja remover</h2>
+{% endblock title %}
+
+{% block content %}
+{% for docs in lista %}
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <div class="row">
+                    {% for image in docs.img %}
+                    <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <label>Escreva o link da imagem que deseja deletar</label>
+                <input type="text" class="form-control" name="imagem"
+                       placeholder="Escreva o link da imagem que deseja deletar">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <span><button type="submit" class="btn btn-danger">Remover imagem</button></span>
+            </div>
+        </div>
+    </div>
+</form>
+{% endfor %}
+{% endblock %}
