@@ -430,7 +430,7 @@ def desapegos_dados(request, id, nome, cod):
                     'did': f"{n['id']}",
                     'name': f"{n['name']}",
                     'price': n['price'],
-                    'cidade':n['cidade']['nome'],
+                    'cidade': n['cidade']['nome'],
                     'estado': n['estado']['sigla'],
                     'anunciante': f"{n['anunciante']}",
                     'number': f"{n['number']}"
