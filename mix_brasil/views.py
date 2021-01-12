@@ -271,6 +271,7 @@ def remover_imagens_loja_sucesso(request):
 def remover_loja(request, id, cod):
     if request.method == 'POST':
         db.collection(f'categorias/{id}/lojas').document(f'{cod}').delete()
+        db.collection('destaque_home').where('lid','==',f'{cod}').delete()
         return redirect('remover_loja_sucesso')
     return render(request,'remover_loja.html')
 
@@ -508,6 +509,7 @@ def remover_imagens_desapego_sucesso(request):
 def remover_desapego(request, id, cod):
     if request.method == 'POST':
         db.collection(f'desapego/{id}/desapegos').document(f'{cod}').delete()
+        db.collection('destaque_desapego').where('did','==',f'{cod}').delete()
         return redirect('remover_desapego_sucesso')
     return render(request,'remover_desapego.html')
 
