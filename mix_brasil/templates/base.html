@@ -37,6 +37,7 @@
 		gtag('config', 'UA-119386393-1');
 
 
+
     </script>
 </head>
 <body>
@@ -48,7 +49,7 @@
 
     </div>
     <div class="header-right">
-         <div class="user-info-dropdown">
+        <div class="user-info-dropdown">
             <div class="dropdown">
                 <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 						<span class="user-icon">
@@ -177,14 +178,22 @@
         <div class="sidebar-menu">
             <ul id="accordion-menu">
                 <li class="dropdown">
-						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-list3"></span><span class="mtext">Categorias</span>
-						</a>
-						<ul class="submenu">
-							<li><a href="{% url 'categoria_listagem' %}">Listagem</a></li>
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="micon dw dw-list3"></span><span class="mtext">Lojas</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'categoria_listagem' %}">Listagem de categorias</a></li>
 
-						</ul>
-					</li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="micon dw dw-list3"></span><span class="mtext">Desapegos</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'categoria_desapego_listagem' %}">Listagem de categorias</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
