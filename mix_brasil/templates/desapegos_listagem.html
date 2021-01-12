@@ -11,7 +11,7 @@
     <div class="card" style="width: 250px">
         <img style="width: 300px" class="card-img-top" src="{{ docs.img.0|cut:"'" }}">
         <div class="card-body">
-            <a href="{% url 'desapego_dados' id=docs.categoria nome=docs.name cod=docs.id %}"><h5 class="card-title">{{ docs.name }}</h5></a>
+            <a href="{% url 'desapegos_dados' id=docs.categoria nome=docs.name cod=docs.id %}"><h5 class="card-title">{{ docs.name }}</h5></a>
         </div>
     </div>
     {% endfor %}
