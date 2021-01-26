@@ -176,19 +176,19 @@ def remover_usuario_sucesso(request):
     return render(request, 'remover_usuario_sucesso.html')
 
 @login_required
-def adicionar_imagem_perfil(request, id, cod):
+def adicionar_imagem_perfil(request, id):
     if request.method == 'POST':
         img = request.FILES['img']
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
         imagem_mix.save()
-        arquivo = sto.blob(f'userImg/{id}/{cod}/{img}')
+        arquivo = sto.blob(f'userImg/{id}/{img}')
         arquivo.upload_from_filename(f"/app/mix_brasil/settings/imagem/{img}")
         url = arquivo.generate_signed_url(
             expiration=datetime.timedelta(weeks=200),
             method="GET",
         )
         url = str(url)
-        formform = db.collection(f'users').document(f'{cod}')
+        formform = db.collection(f'users').document(f'{id}')
         formform.update({
             'img': url
         })
