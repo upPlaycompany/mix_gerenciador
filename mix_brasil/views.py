@@ -127,8 +127,8 @@ def usuario_dados(request, id):
     abc = dad.to_dict()
     a = len(abc)
     ident = {'ident': f'{id}'}
-    [abc[x].update(ident) for x in range(a)]
-    [abc[x].update(cde) for x in range(a)]
+    abc[x].update(ident)
+    abc[x].update(cde)
     if request.method == 'POST':
         name = request.POST['name']
         phone = request.POST['phone']
