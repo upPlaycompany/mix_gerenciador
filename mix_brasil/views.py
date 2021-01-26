@@ -124,15 +124,11 @@ def usuario_dados(request, id):
     cde = link.json()
     dados = db.collection(f'users').document(f'{id}')
     dad = dados.get()
-    abc = x.to_dict()
-    dados2 = db.collection(f'users').document(f'{id}')
-    dad2 = dados2.get()
-    dec = [{'id': x.id} for x in dad2]
-    a = len(dec)
+    abc = dad.to_dict()
+    a = len(abc)
     ident = {'ident': f'{id}'}
-    [dec[x].update(abc[x]) for x in range(a)]
-    [dec[x].update(ident) for x in range(a)]
-    [dec[x].update(cde) for x in range(a)]
+    [abc[x].update(ident) for x in range(a)]
+    [abc[x].update(cde) for x in range(a)]
     if request.method == 'POST':
         name = request.POST['name']
         phone = request.POST['phone']
@@ -144,7 +140,7 @@ def usuario_dados(request, id):
         state = request.POST['state']
         street = request.POST['street']
         zipCode = request.POST['zipCode']
-        formform = db.collection(f'users').document(f'{cod}')
+        formform = db.collection(f'users').document(f'{id}')
         formform.update(
             {
                 'name': f'{name}',
@@ -162,7 +158,7 @@ def usuario_dados(request, id):
             }
         )
         return redirect('atualizar_usuario_sucesso')
-    return render(request, 'usuario_dados.html', {'lista': dec})
+    return render(request, 'usuario_dados.html', {'lista': abc})
 
 
 @login_required
