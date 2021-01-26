@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Dados do usuário</h2>
+{% endblock title %}
+
+{% block content %}
+
+{% for dec in lista %}
+<form method="get">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label>Buscar CEP</label>
+                <input type="text" class="form-control" name="cep">
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <span><button type="submit" class="btn btn-success">Buscar</button></span>
+            </div>
+        </div>
+    </div>
+</form>
+<br>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Nome</label>
+                <input type="text" class="form-control" name="name" value="{{ dec.name }}">
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Celular</label>
+                <input type="text" class="form-control" name="whatsapp" value="{{ dec.phone }}">
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label>E-mail</label>
+                <input type="text" class="form-control" name="email" value="{{ dec.email }}">
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Cidade</label>
+                {% if not dec.cidade.nome %}
+                <input type="text" class="form-control" name="city" value="{{ dec.address.city }}">
+                {% else %}
+                <input type="text" class="form-control" name="city" value="{{ dec.cidade.nome }}">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Distrito</label>
+                {% if not dec.bairro %}
+                <input type="text" class="form-control" name="district" value="{{ dec.address.district }}">
+                {% else %}
+                <input type="text" class="form-control" name="district" value="{{ dec.bairro }}">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Latitude</label>
+                {% if not dec.latitude %}
+                <input type="text" class="form-control" name="lat" value="{{ dec.address.lat }}">
+                {% else %}
+                <input type="text" class="form-control" name="lat" value="{{ dec.latitude }}">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Longitude</label>
+                {{% if not dec.longitude %}
+                <input type="text" class="form-control" name="long" value="{{ dec.address.long }}">
+                {% else %}
+                <input type="text" class="form-control" name="long" value="{{ dec.longitude }}">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Estado</label>
+                {{% if not dec.estado.sigla %}
+                <input type="text" class="form-control" name="state" value="{{ dec.address.state }}">
+                {% else %}
+                <input type="text" class="form-control" name="state" value="{{ dec.estado.sigla }}">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Logradouro</label>
+                {{% if not dec.logradouro %}
+                <input type="text" class="form-control" name="street" value="{{ dec.address.street }}">
+                {% else %}
+                <input type="text" class="form-control" name="street" value="{{ dec.logradouro }}">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>CEP</label>
+               {{% if not dec.cep %}
+                <input type="text" class="form-control" name="zipCode" value="{{ dec.address.zipCode }}">
+                {% else %}
+                <input type="text" class="form-control" name="zipCode" value="{{ dec.cep }}">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <label>Imagem do perfil</label><br>
+                <div class="row">
+                    <img style="width: 300px;" class="card-img-top" src="{{ dec.img }}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <span><button type="submit" class="btn btn-success">Atualizar dados</button></span>
+                <span><a href="{% url 'adicionar_imagem_perfil' id=dec.ident cod=dec.id %}"><button type="button"
+                                                                                                       class="btn btn-info">Adicionar ou atualizar imagem ao perfil</button></a></span>
+                <span><a href="{% url 'remover_usuario' id=dec.ident cod=dec.id %}"><button type="button"
+                                                                                             class="btn btn-danger">Excluir usuário</button></a></span>
+            </div>
+        </div>
+    </div>
+</form>
+{% endfor %}
+{% endblock %}

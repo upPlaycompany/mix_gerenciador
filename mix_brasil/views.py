@@ -48,17 +48,21 @@ def logar(request):
             return redirect('login_erro')
     return render(request, 'login.html', {'redirect_to': next})
 
+
 def login_erro(request):
     return render(request, 'login_erro.html')
+
 
 @login_required
 def index(request):
     return render(request, 'index.html')
 
+
 @login_required
 def deslogar(request):
     logout(request)
     return HttpResponseRedirect("/")
+
 
 def criar_usuario(request):
     if request.method == 'POST':
@@ -78,11 +82,11 @@ def criar_usuario(request):
             'phone': f'{phone}',
             'email': f'{email}',
             'img': None,
-            'address':{
+            'address': {
                 'city': f"{cde['cidade']['nome']}",
                 'district': f"{cde['bairro']}",
                 'lat': f"{cde['latitude']}",
-                'long':f"{cde['longitude']}",
+                'long': f"{cde['longitude']}",
                 'state': f"{cde['estado']['sigla']}",
                 'street': f"{cde['logradouro']}",
                 'zipCode': f"{cde['cep']}"
@@ -95,11 +99,12 @@ def criar_usuario(request):
         user.is_staff = False
         user.save()
         return redirect('criar_usuario_sucesso')
-    return render(request,'criar_usuario.html')
+    return render(request, 'criar_usuario.html')
 
 
 def criar_usuario_sucesso(request):
     return render(request, 'criar_usuario_sucesso.html')
+
 
 @login_required
 def usuario_listagem(request):
@@ -108,6 +113,7 @@ def usuario_listagem(request):
     ident = db.collection('users').stream()
     docs = [x.to_dict() for x in ident]
     return render(request, 'usuario_listagem.html', {'lista': docs, 'lista_id': doz})
+
 
 @login_required
 def usuario_dados(request, id):
@@ -130,23 +136,60 @@ def usuario_dados(request, id):
         phone = request.POST['phone']
         email = request.POST['email']
         city = request.POST['city']
+        district = request.POST['district']
+        lat = request.POST['lat']
+        long = request.POST['long']
         state = request.POST['state']
+        street = request.POST['street']
+        zipCode = request.POST['zipCode']
         formform = db.collection(f'users').document(f'{cod}')
         formform.update(
             {
                 'name': f'{name}',
                 'phone': f'{phone}',
                 'email': f'{email}',
-                'city': f'{city}',
-                'state': f'{state}'
+                'address': {
+                    'city': f"{city}",
+                    'district': f"{district}",
+                    'lat': f"{lat}",
+                    'long': f"{long}",
+                    'state': f"{state}",
+                    'street': f"{street}",
+                    'zipCode': f"{zipCode}"
+                }
             }
         )
+
         return redirect('atualizar_usuario_sucesso')
     return render(request, 'usuario_dados.html', {'lista': dec})
+
 
 @login_required
 def atualizar_usuario_sucesso(request):
     return render(request, 'atualizar_usuario_sucesso.html')
+
+
+@login_required
+def adicionar_imagem_perfil(request, id, cod):
+    if request.method == 'POST':
+        img = request.FILES['img']
+        imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
+        imagem_mix.save()
+        arquivo = sto.blob(f'userImg/{id}/{cod}/{img}')
+        arquivo.upload_from_filename(f"/app/mix_brasil/settings/imagem/{img}")
+        url = arquivo.generate_signed_url(
+            expiration=datetime.timedelta(weeks=200),
+            method="GET",
+        )
+        url = str(url)
+        formform = db.collection(f'users').document(f'{cod}')
+        formform.update({
+            'img': url
+        })
+        IMAGEM_MIX.objects.all().delete()
+        os.remove(f"/app/mix_brasil/settings/imagem/{img}")
+        return redirect('adicionar_imagem_perfil_sucesso')
+    return render(request, 'adicionar_imagem_perfil.html')
 
 
 @login_required
@@ -163,7 +206,7 @@ def criar_loja(request, id):
             dex = True
         else:
             dex = False
-        price = price.replace(',','.')
+        price = price.replace(',', '.')
         price = float(price)
         dados = db.collection(f'categorias/{id}/lojas').document()
         url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
@@ -178,7 +221,7 @@ def criar_loja(request, id):
             'destaque': dex,
             'promocao': "",
             'img': firestore.ArrayUnion([""]),
-            'cidade':f"{cde['cidade']['nome']}",
+            'cidade': f"{cde['cidade']['nome']}",
             'estado': f"{cde['estado']['sigla']}"
         })
         info = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{name}').stream()
@@ -208,9 +251,10 @@ def criar_loja(request, id):
         return redirect('criar_loja_sucesso')
     return render(request, 'criar_loja.html')
 
+
 @login_required
 def criar_loja_sucesso(request):
-    return render(request,'criar_loja_sucesso.html')
+    return render(request, 'criar_loja_sucesso.html')
 
 
 @login_required
@@ -220,6 +264,7 @@ def categoria_listagem(request):
     ident = db.collection('categorias').stream()
     docs = [x.to_dict() for x in ident]
     return render(request, 'categoria_listagem.html', {'lista': docs, 'lista_id': doz})
+
 
 @login_required
 def lojas_listagem(request, id):
@@ -233,6 +278,7 @@ def lojas_listagem(request, id):
     [docs[x].update(docs2[x]) for x in range(a)]
     [docs[x].update(categoria) for x in range(a)]
     return render(request, 'lojas_listagem.html', {'lista': docs, 'order': dzz})
+
 
 @login_required
 def lojas_dados(request, id, nome, cod):
@@ -259,7 +305,7 @@ def lojas_dados(request, id, nome, cod):
         promocao = request.POST['promocao']
         cidade = request.POST['cidade']
         estado = request.POST['estado']
-        price = price.replace(',','.')
+        price = price.replace(',', '.')
         price = float(price)
         if destaque == 'true':
             des = True
@@ -269,7 +315,7 @@ def lojas_dados(request, id, nome, cod):
 
         formform.update(
             {
-                'name':f'{name}',
+                'name': f'{name}',
                 'whatsapp': f'{whatsapp}',
                 'descricao': f'{descricao}',
                 'price': price,
@@ -300,7 +346,7 @@ def lojas_dados(request, id, nome, cod):
                     'ofertas': firestore.ArrayUnion([""]),
                     'ofertas_destaque': firestore.ArrayUnion([""]),
                     'price': n['price'],
-                    'cidade':n['cidade']['nome'],
+                    'cidade': n['cidade']['nome'],
                     'estado': n['estado']['sigla']
                 })
         elif des == False:
@@ -323,11 +369,13 @@ def lojas_dados(request, id, nome, cod):
             [da[x].update(categoria) for x in range(a)]
             [da[x].update(cde[x]) for x in range(a)]
         return redirect('atualizar_loja_sucesso')
-    return render(request,'lojas_dados.html', {'lista': dec})
+    return render(request, 'lojas_dados.html', {'lista': dec})
+
 
 @login_required
 def atualizar_loja_sucesso(request):
     return render(request, 'atualizar_loja_sucesso.html')
+
 
 @login_required
 def adicionar_imagens_loja(request, id, cod):
@@ -351,104 +399,112 @@ def adicionar_imagens_loja(request, id, cod):
         return redirect('adicionar_imagens_loja_sucesso')
     return render(request, 'adicionar_imagens_loja.html')
 
+
 @login_required
 def adicionar_imagens_loja_sucesso(request):
     return render(request, 'adicionar_imagens_loja_sucesso.html')
 
+
 @login_required
 def remover_imagens_loja(request, id, name, cod):
-    dados = db.collection(f'categorias/{id}/lojas').where('name','==',f'{name}').stream()
+    dados = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{name}').stream()
     docs = [x.to_dict() for x in dados]
     if request.method == 'POST':
         imagem = request.POST['imagem']
         formform = db.collection(f'categorias/{id}/lojas').document(f'{cod}')
         formform.update({
-            'img':firestore.ArrayRemove([f'{imagem}'])
+            'img': firestore.ArrayRemove([f'{imagem}'])
         })
         return redirect('remover_imagens_loja_sucesso')
     return render(request, 'remover_imagens_loja.html', {'lista': docs})
+
 
 @login_required
 def remover_imagens_loja_sucesso(request):
     return render(request, 'remover_imagens_loja_sucesso.html')
 
+
 @login_required
 def remover_loja(request, id, cod):
     if request.method == 'POST':
         db.collection(f'categorias/{id}/lojas').document(f'{cod}').delete()
-        db.collection('destaque_home').where('lid','==',f'{cod}').delete()
+        db.collection('destaque_home').where('lid', '==', f'{cod}').delete()
         return redirect('remover_loja_sucesso')
-    return render(request,'remover_loja.html')
+    return render(request, 'remover_loja.html')
+
 
 @login_required
 def remover_loja_sucesso(request):
-    return render(request,'remover_loja_sucesso.html')
+    return render(request, 'remover_loja_sucesso.html')
+
 
 @login_required
 def criar_desapego(request, id):
-     if request.method == 'POST':
-         anunciante = request.POST['anunciante']
-         descricao = request.POST['descricao']
-         name = request.POST['name']
-         number = request.POST['number']
-         price = request.POST['price']
-         promocao = request.POST['promocao']
-         destaque = request.POST['destaque']
-         cep = request.POST['cep']
-         if destaque == 'true':
-             dex = True
-         else:
-             dex = False
-         price = price.replace(',','.')
-         price = float(price)
-         count = db.collection(f'desapego/{id}/desapegos').stream()
-         xxx = len([x.id for x in count])
-         dados = db.collection(f'desapego/{id}/desapegos').document()
-         url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
-         headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
-         link = requests.get(url, headers=headers, verify=False)
-         cde = link.json()
-         dados.set({
-             'anunciante':f'{anunciante}',
-             'descricao':f'{descricao}',
-             'name':f'{name}',
-             'number':f'{number}',
-             'price':price,
-             'promocao':f'{promocao}',
-             'destaque': dex,
-             'cidade':f"{cde['cidade']['nome']}",
-             'estado': f"{cde['estado']['sigla']}",
-             'pos': int(xxx + 1),
-             'img': firestore.ArrayUnion([""])
-         })
-         info = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
-         ff = [{'id': x.id} for x in info]
-         info2 = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
-         gg = [x.to_dict() for x in info2]
-         a = len(ff)
-         categoria = {'categoria': f'{id}'}
-         [ff[x].update(gg[x]) for x in range(a)]
-         [ff[x].update(categoria) for x in range(a)]
-         [ff[x].update(cde) for x in range(a)]
-         for n in ff:
-             if destaque == 'true':
-                 des = db.collection('destaque_desapego').document()
-                 des.set({
-                     'cid': f"{n['categoria']}",
-                     'img': firestore.ArrayUnion([""]),
-                     'did': f"{n['id']}",
-                     'name': f"{n['name']}",
-                     'price': n['price'],
-                     'number': f"{n['number']}",
-                     'cidade': f"{n['cidade']['nome']}",
-                     'estado': f"{n['estado']['sigla']}",
-                 })
-         return redirect('criar_loja_sucesso')
-     return render(request,'criar_desapego.html')
+    if request.method == 'POST':
+        anunciante = request.POST['anunciante']
+        descricao = request.POST['descricao']
+        name = request.POST['name']
+        number = request.POST['number']
+        price = request.POST['price']
+        promocao = request.POST['promocao']
+        destaque = request.POST['destaque']
+        cep = request.POST['cep']
+        if destaque == 'true':
+            dex = True
+        else:
+            dex = False
+        price = price.replace(',', '.')
+        price = float(price)
+        count = db.collection(f'desapego/{id}/desapegos').stream()
+        xxx = len([x.id for x in count])
+        dados = db.collection(f'desapego/{id}/desapegos').document()
+        url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+        headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+        link = requests.get(url, headers=headers, verify=False)
+        cde = link.json()
+        dados.set({
+            'anunciante': f'{anunciante}',
+            'descricao': f'{descricao}',
+            'name': f'{name}',
+            'number': f'{number}',
+            'price': price,
+            'promocao': f'{promocao}',
+            'destaque': dex,
+            'cidade': f"{cde['cidade']['nome']}",
+            'estado': f"{cde['estado']['sigla']}",
+            'pos': int(xxx + 1),
+            'img': firestore.ArrayUnion([""])
+        })
+        info = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
+        ff = [{'id': x.id} for x in info]
+        info2 = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
+        gg = [x.to_dict() for x in info2]
+        a = len(ff)
+        categoria = {'categoria': f'{id}'}
+        [ff[x].update(gg[x]) for x in range(a)]
+        [ff[x].update(categoria) for x in range(a)]
+        [ff[x].update(cde) for x in range(a)]
+        for n in ff:
+            if destaque == 'true':
+                des = db.collection('destaque_desapego').document()
+                des.set({
+                    'cid': f"{n['categoria']}",
+                    'img': firestore.ArrayUnion([""]),
+                    'did': f"{n['id']}",
+                    'name': f"{n['name']}",
+                    'price': n['price'],
+                    'number': f"{n['number']}",
+                    'cidade': f"{n['cidade']['nome']}",
+                    'estado': f"{n['estado']['sigla']}",
+                })
+        return redirect('criar_loja_sucesso')
+    return render(request, 'criar_desapego.html')
+
 
 @login_required
 def criar_desapego_sucesso(request):
-    return render(request,'criar_desapego_sucesso.html')
+    return render(request, 'criar_desapego_sucesso.html')
+
 
 @login_required
 def categoria_desapego_listagem(request):
@@ -457,6 +513,7 @@ def categoria_desapego_listagem(request):
     ident = db.collection('desapego').stream()
     docs = [x.to_dict() for x in ident]
     return render(request, 'categoria_desapego_listagem.html', {'lista': docs, 'lista_id': doz})
+
 
 @login_required
 def desapegos_listagem(request, id):
@@ -470,6 +527,7 @@ def desapegos_listagem(request, id):
     [docs[x].update(docs2[x]) for x in range(a)]
     [docs[x].update(categoria) for x in range(a)]
     return render(request, 'desapegos_listagem.html', {'lista': docs, 'order': dzz})
+
 
 @login_required
 def desapegos_dados(request, id, nome, cod):
@@ -506,7 +564,7 @@ def desapegos_dados(request, id, nome, cod):
         formform = db.collection(f'desapego/{id}/desapegos').document(f'{cod}')
         formform.update(
             {
-                'name':f'{name}',
+                'name': f'{name}',
                 'descricao': f'{descricao}',
                 'price': price,
                 'destaque': des,
@@ -560,11 +618,13 @@ def desapegos_dados(request, id, nome, cod):
             [da[x].update(categoria) for x in range(a)]
             [da[x].update(cde[x]) for x in range(a)]
         return redirect('atualizar_desapego_sucesso')
-    return render(request,'desapegos_dados.html', {'lista': dec})
+    return render(request, 'desapegos_dados.html', {'lista': dec})
+
 
 @login_required
 def atualizar_desapego_sucesso(request):
     return render(request, 'atualizar_desapego_sucesso.html')
+
 
 @login_required
 def adicionar_imagens_desapego(request, id, cod):
@@ -588,36 +648,40 @@ def adicionar_imagens_desapego(request, id, cod):
         return redirect('adicionar_imagens_desapego_sucesso')
     return render(request, 'adicionar_imagens_desapego.html')
 
+
 @login_required
 def adicionar_imagens_desapego_sucesso(request):
     return render(request, 'adicionar_imagens_desapego_sucesso.html')
 
+
 @login_required
 def remover_imagens_desapego(request, id, name, cod):
-    dados = db.collection(f'desapego/{id}/desapegos').where('name','==',f'{name}').stream()
+    dados = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
     docs = [x.to_dict() for x in dados]
     if request.method == 'POST':
         imagem = request.POST['imagem']
         formform = db.collection(f'desapego/{id}/desapegos').document(f'{cod}')
         formform.update({
-            'img':firestore.ArrayRemove([f'{imagem}'])
+            'img': firestore.ArrayRemove([f'{imagem}'])
         })
         return redirect('remover_imagens_desapego_sucesso')
     return render(request, 'remover_imagens_desapego.html', {'lista': docs})
+
 
 @login_required
 def remover_imagens_desapego_sucesso(request):
     return render(request, 'remover_imagens_desapego_sucesso.html')
 
+
 @login_required
 def remover_desapego(request, id, cod):
     if request.method == 'POST':
         db.collection(f'desapego/{id}/desapegos').document(f'{cod}').delete()
-        db.collection('destaque_desapego').where('did','==',f'{cod}').delete()
+        db.collection('destaque_desapego').where('did', '==', f'{cod}').delete()
         return redirect('remover_desapego_sucesso')
-    return render(request,'remover_desapego.html')
+    return render(request, 'remover_desapego.html')
+
 
 @login_required
 def remover_desapego_sucesso(request):
-    return render(request,'remover_desapego_sucesso.html')
-
+    return render(request, 'remover_desapego_sucesso.html')
