@@ -125,8 +125,7 @@ def usuario_dados(request, id):
     dados = db.collection(f'users').document(f'{id}')
     dad = dados.get()
     abc = dad.to_dict()
-    a = len(abc)
-    ident = {'ident': f'{id}'}
+    ident = {'id': f'{id}'}
     abc.update(ident)
     abc.update(cde)
     if request.method == 'POST':
