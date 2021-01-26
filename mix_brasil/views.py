@@ -40,7 +40,7 @@ def logar(request):
             if user is not None:
                 login(request, user)
                 return HttpResponseRedirect(next)
-        elif options == 'user':
+        elif options == 'user' and user.is_superuser == False:
             if user is not None:
                 login(request, user)
                 return HttpResponseRedirect(next_user)
