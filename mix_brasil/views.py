@@ -162,9 +162,21 @@ def usuario_dados(request, id):
         return redirect('atualizar_usuario_sucesso')
     return render(request, 'usuario_dados.html', {'lista': dec})
 
+
 @login_required
 def atualizar_usuario_sucesso(request):
     return render(request, 'atualizar_usuario_sucesso.html')
+
+@login_required
+def remover_usuario(request, id):
+    if request.method == 'POST':
+        db.collection(f'users').document(f'{id}').delete()
+        return redirect('remover_usuario_sucesso')
+    return render(request, 'remover_usuario.html')
+
+@login_required
+def remover_usuario_sucesso(request):
+    return render(request, 'remover_usuario_sucesso.html')
 
 @login_required
 def adicionar_imagem_perfil(request, id, cod):
