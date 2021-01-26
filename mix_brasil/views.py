@@ -52,7 +52,7 @@ def deslogar(request):
 def usuario_listagem(request):
     usuarios = db.collection('users').stream()
     doz = [x.id for x in usuarios]
-    ident = db.collection('usuarios').stream()
+    ident = db.collection('users').stream()
     docs = [x.to_dict() for x in ident]
     return render(request, 'usuario_listagem.html', {'lista': docs, 'lista_id': doz})
 

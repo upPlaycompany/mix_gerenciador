@@ -50,4 +50,6 @@ urlpatterns = [
     path('remover_imagens_desapego_sucesso/', views.remover_imagens_desapego_sucesso, name='remover_imagens_desapego_sucesso'),
     path('remover_desapego/<str:id>/<str:cod>/', views.remover_desapego, name='remover_desapego'),
     path('remover_desapego_sucesso/', views.remover_desapego_sucesso, name='remover_desapego_sucesso'),
+
+    path('usuario_listagem/', views.usuario_listagem, name='usuario_listagem'),
 ]
