@@ -130,6 +130,7 @@ def atualizar_usuario_sucesso(request):
 def criar_loja(request, id):
     if request.method == 'POST':
         name = request.POST['name']
+        whatsapp = request.POST['whatsapp']
         descricao = request.POST['descricao']
         price = request.POST['price']
         destaque = request.POST['destaque']
@@ -148,6 +149,7 @@ def criar_loja(request, id):
         cde = link.json()
         dados.set({
             'name': f'{name}',
+            'whatsapp': f'{whatsapp}',
             'descricao': f'{descricao}',
             'price': price,
             'destaque': dex,
@@ -227,6 +229,7 @@ def lojas_dados(request, id, nome, cod):
     [dec[x].update(cde) for x in range(a)]
     if request.method == 'POST':
         name = request.POST['name']
+        whatsapp = request.POST['whatsapp']
         descricao = request.POST['descricao']
         price = request.POST['price']
         destaque = request.POST['destaque']
@@ -244,6 +247,7 @@ def lojas_dados(request, id, nome, cod):
         formform.update(
             {
                 'name':f'{name}',
+                'whatsapp': f'{whatsapp}',
                 'descricao': f'{descricao}',
                 'price': price,
                 'destaque': des,

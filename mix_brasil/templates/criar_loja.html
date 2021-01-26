@@ -8,10 +8,16 @@
 <form method="post">
     {% csrf_token %}
     <div class="row">
-        <div class="col-md-4 col-sm-12">
+        <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Nome da loja</label>
                 <input type="text" class="form-control" name="name" placeholder="Insira o nome da loja">
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Whats app da loja</label>
+                <input type="text" class="form-control" name="whatsapp" placeholder="Insira o Whats App da loja">
             </div>
         </div>
         <div class="col-md-6 col-sm-12">
