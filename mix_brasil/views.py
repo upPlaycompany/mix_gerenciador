@@ -49,6 +49,14 @@ def deslogar(request):
     return HttpResponseRedirect("/")
 
 @login_required
+def usuario_listagem(request):
+    usuarios = db.collection('users').stream()
+    doz = [x.id for x in usuarios]
+    ident = db.collection('usuarios').stream()
+    docs = [x.to_dict() for x in ident]
+    return render(request, 'usuario_listagem.html', {'lista': docs, 'lista_id': doz})
+
+@login_required
 def criar_loja(request, id):
     if request.method == 'POST':
         name = request.POST['name']
