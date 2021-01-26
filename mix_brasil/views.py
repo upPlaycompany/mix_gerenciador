@@ -121,6 +121,10 @@ def usuario_dados(request, id):
         return redirect('atualizar_usuario_sucesso')
     return render(request, 'usuario_dados.html', {'lista': dec})
 
+@login_required
+def atualizar_usuario_sucesso(request):
+    return render(request, 'atualizar_usuario_sucesso.html')
+
 
 @login_required
 def criar_loja(request, id):
