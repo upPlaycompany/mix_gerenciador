@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<h2>Listagem de categorias</h2>
+<h2>Listagem de usuários</h2>
 {% endblock title %}
 
 {% block content %}
 <div class="row">
-<table class="table">
+<span><table class="table">
     <thead>
     <tr>
         <th>Nome de usuário</th>
@@ -20,7 +20,22 @@
     </tr>
     {% endfor %}
     </tbody>
-</table>
+</table></span>
 
+    <span><table class="table">
+    <thead>
+    <tr>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for doz in lista_id %}
+    <tr>
+        <td><a href="{% url 'usuario_dados' id=doz %}">Ver dados</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+    </span>
 </div>
 {% endblock %}
