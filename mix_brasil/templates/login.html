@@ -84,7 +84,7 @@
                                 </label>
                             </div>
                         </div>
-                        {% if options != admin and options != user %}
+                        {% if not options  %}
                         <div class="input-group custom">
                             <input type="text" class="form-control form-control-lg" name="username"
                                    placeholder="Nome de usuário" disabled>
