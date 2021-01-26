@@ -57,6 +57,22 @@
 						</div>
 						<form method="post">
                             {% csrf_token %}
+							<div class="select-role">
+								<div class="btn-group btn-group-toggle" data-toggle="buttons">
+									<label class="btn active">
+										<input type="radio" name="options" id="admin">
+										<div class="icon"><img src="{% static 'vendors/images/briefcase.svg' %}" class="svg" alt=""></div>
+										<span>Eu sou</span>
+										Administrador
+									</label>
+									<label class="btn">
+										<input type="radio" name="options" id="user">
+										<div class="icon"><img src="{% static 'vendors/images/person.svg' %}" class="svg" alt=""></div>
+										<span>I'm</span>
+										Usuário
+									</label>
+								</div>
+							</div>
 							<div class="input-group custom">
 								<input type="text" class="form-control form-control-lg" name="username" placeholder="Nome de usuário">
 								<div class="input-group-append custom">
