@@ -33,10 +33,19 @@ def logar(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
+        options = request.POST['options']
+
         user = authenticate(username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return HttpResponseRedirect(next)
+        if options == 'admin' and user.is_superuser == True:
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect(next)
+        elif options == 'user':
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect(next)
+        else:
+            return redirect('login_erro')
     return render(request, 'login.html', {'redirect_to': next})
 
 @login_required
@@ -70,6 +79,8 @@ def criar_usuario(request):
         })
         user = User.objects.create_user(username, email, password)
         user.first_name = name
+        user.is_superuser = False
+        user.is_staff = False
         user.save()
         return redirect('criar_usuario_sucesso')
     return render(request,'criar_usuario.html')
