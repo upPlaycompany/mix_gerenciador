@@ -399,7 +399,6 @@ def desapegos_dados(request, id, nome, cod):
         else:
             des = False
         formform = db.collection(f'desapego/{id}/desapegos').document(f'{cod}')
-
         formform.update(
             {
                 'name':f'{name}',
