@@ -78,8 +78,16 @@ def criar_usuario(request):
             'phone': f'{phone}',
             'email': f'{email}',
             'img': None,
-            'city': f"{cde['cidade']['nome']}",
-            'state': f"{cde['estado']['sigla']}"
+            'address':{
+                'city': f"{cde['cidade']['nome']}",
+                'district': f"{cde['bairro']}",
+                'lat': f"{cde['latitude']}",
+                'long':f"{cde['longitude']}",
+                'state': f"{cde['estado']['sigla']}",
+                'street': f"{cde['logradouro']}",
+                'zipCode': f"{cde['cep']}"
+            }
+
         })
         user = User.objects.create_user(username, email, password)
         user.first_name = name
