@@ -48,6 +48,9 @@ def logar(request):
             return redirect('login_erro')
     return render(request, 'login.html', {'redirect_to': next})
 
+def login_erro(request):
+    return render(request, 'login_erro.html')
+
 @login_required
 def index(request):
     return render(request, 'index.html')
