@@ -10,6 +10,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 from firebase_admin import storage
+from firebase_admin import auth
 import psycopg2
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -63,7 +64,6 @@ def deslogar(request):
     logout(request)
     return HttpResponseRedirect("/")
 
-
 def criar_usuario(request):
     if request.method == 'POST':
         name = request.POST['name']
@@ -76,7 +76,10 @@ def criar_usuario(request):
         headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
         link = requests.get(url, headers=headers, verify=False)
         cde = link.json()
-        dados = db.collection('users').document()
+        auth.create_user(
+                email=f'{email}', password=f'{password}')
+        ussu = auth.get_user_by_email(f'{email}')
+        dados = db.collection('users').document(ussu.uid)
         dados.set({
             'name': f'{name}',
             'phone': f'{phone}',
@@ -101,10 +104,8 @@ def criar_usuario(request):
         return redirect('criar_usuario_sucesso')
     return render(request, 'criar_usuario.html')
 
-
 def criar_usuario_sucesso(request):
     return render(request, 'criar_usuario_sucesso.html')
-
 
 @login_required
 def usuario_listagem(request):
@@ -113,7 +114,6 @@ def usuario_listagem(request):
     ident = db.collection('users').stream()
     docs = [x.to_dict() for x in ident]
     return render(request, 'usuario_listagem.html', {'lista': docs, 'lista_id': doz})
-
 
 @login_required
 def usuario_dados(request, id):
@@ -159,15 +159,12 @@ def usuario_dados(request, id):
                 }
             }
         )
-
         return redirect('atualizar_usuario_sucesso')
     return render(request, 'usuario_dados.html', {'lista': dec})
-
 
 @login_required
 def atualizar_usuario_sucesso(request):
     return render(request, 'atualizar_usuario_sucesso.html')
-
 
 @login_required
 def adicionar_imagem_perfil(request, id, cod):
@@ -190,7 +187,6 @@ def adicionar_imagem_perfil(request, id, cod):
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
         return redirect('adicionar_imagem_perfil_sucesso')
     return render(request, 'adicionar_imagem_perfil.html')
-
 
 @login_required
 def criar_loja(request, id):
@@ -251,11 +247,9 @@ def criar_loja(request, id):
         return redirect('criar_loja_sucesso')
     return render(request, 'criar_loja.html')
 
-
 @login_required
 def criar_loja_sucesso(request):
     return render(request, 'criar_loja_sucesso.html')
-
 
 @login_required
 def categoria_listagem(request):
@@ -264,7 +258,6 @@ def categoria_listagem(request):
     ident = db.collection('categorias').stream()
     docs = [x.to_dict() for x in ident]
     return render(request, 'categoria_listagem.html', {'lista': docs, 'lista_id': doz})
-
 
 @login_required
 def lojas_listagem(request, id):
@@ -278,7 +271,6 @@ def lojas_listagem(request, id):
     [docs[x].update(docs2[x]) for x in range(a)]
     [docs[x].update(categoria) for x in range(a)]
     return render(request, 'lojas_listagem.html', {'lista': docs, 'order': dzz})
-
 
 @login_required
 def lojas_dados(request, id, nome, cod):
@@ -312,7 +304,6 @@ def lojas_dados(request, id, nome, cod):
         else:
             des = False
         formform = db.collection(f'categorias/{id}/lojas').document(f'{cod}')
-
         formform.update(
             {
                 'name': f'{name}',
@@ -371,11 +362,9 @@ def lojas_dados(request, id, nome, cod):
         return redirect('atualizar_loja_sucesso')
     return render(request, 'lojas_dados.html', {'lista': dec})
 
-
 @login_required
 def atualizar_loja_sucesso(request):
     return render(request, 'atualizar_loja_sucesso.html')
-
 
 @login_required
 def adicionar_imagens_loja(request, id, cod):
@@ -399,11 +388,9 @@ def adicionar_imagens_loja(request, id, cod):
         return redirect('adicionar_imagens_loja_sucesso')
     return render(request, 'adicionar_imagens_loja.html')
 
-
 @login_required
 def adicionar_imagens_loja_sucesso(request):
     return render(request, 'adicionar_imagens_loja_sucesso.html')
-
 
 @login_required
 def remover_imagens_loja(request, id, name, cod):
@@ -418,11 +405,9 @@ def remover_imagens_loja(request, id, name, cod):
         return redirect('remover_imagens_loja_sucesso')
     return render(request, 'remover_imagens_loja.html', {'lista': docs})
 
-
 @login_required
 def remover_imagens_loja_sucesso(request):
     return render(request, 'remover_imagens_loja_sucesso.html')
-
 
 @login_required
 def remover_loja(request, id, cod):
@@ -432,11 +417,9 @@ def remover_loja(request, id, cod):
         return redirect('remover_loja_sucesso')
     return render(request, 'remover_loja.html')
 
-
 @login_required
 def remover_loja_sucesso(request):
     return render(request, 'remover_loja_sucesso.html')
-
 
 @login_required
 def criar_desapego(request, id):
@@ -500,11 +483,9 @@ def criar_desapego(request, id):
         return redirect('criar_loja_sucesso')
     return render(request, 'criar_desapego.html')
 
-
 @login_required
 def criar_desapego_sucesso(request):
     return render(request, 'criar_desapego_sucesso.html')
-
 
 @login_required
 def categoria_desapego_listagem(request):
@@ -513,7 +494,6 @@ def categoria_desapego_listagem(request):
     ident = db.collection('desapego').stream()
     docs = [x.to_dict() for x in ident]
     return render(request, 'categoria_desapego_listagem.html', {'lista': docs, 'lista_id': doz})
-
 
 @login_required
 def desapegos_listagem(request, id):
@@ -527,7 +507,6 @@ def desapegos_listagem(request, id):
     [docs[x].update(docs2[x]) for x in range(a)]
     [docs[x].update(categoria) for x in range(a)]
     return render(request, 'desapegos_listagem.html', {'lista': docs, 'order': dzz})
-
 
 @login_required
 def desapegos_dados(request, id, nome, cod):
@@ -620,11 +599,9 @@ def desapegos_dados(request, id, nome, cod):
         return redirect('atualizar_desapego_sucesso')
     return render(request, 'desapegos_dados.html', {'lista': dec})
 
-
 @login_required
 def atualizar_desapego_sucesso(request):
     return render(request, 'atualizar_desapego_sucesso.html')
-
 
 @login_required
 def adicionar_imagens_desapego(request, id, cod):
@@ -653,7 +630,6 @@ def adicionar_imagens_desapego(request, id, cod):
 def adicionar_imagens_desapego_sucesso(request):
     return render(request, 'adicionar_imagens_desapego_sucesso.html')
 
-
 @login_required
 def remover_imagens_desapego(request, id, name, cod):
     dados = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
@@ -667,11 +643,9 @@ def remover_imagens_desapego(request, id, name, cod):
         return redirect('remover_imagens_desapego_sucesso')
     return render(request, 'remover_imagens_desapego.html', {'lista': docs})
 
-
 @login_required
 def remover_imagens_desapego_sucesso(request):
     return render(request, 'remover_imagens_desapego_sucesso.html')
-
 
 @login_required
 def remover_desapego(request, id, cod):
@@ -680,7 +654,6 @@ def remover_desapego(request, id, cod):
         db.collection('destaque_desapego').where('did', '==', f'{cod}').delete()
         return redirect('remover_desapego_sucesso')
     return render(request, 'remover_desapego.html')
-
 
 @login_required
 def remover_desapego_sucesso(request):
