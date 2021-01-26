@@ -28,14 +28,6 @@
 		gtag('js', new Date());
 
 		gtag('config', 'UA-119386393-1');
-
-
-
-
-
-
-
-
     </script>
 </head>
 <body class="login-page">
@@ -76,7 +68,7 @@
                                     Administrador
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name="options" id="user" value="user">
+                                    <input type="radio" name="options" id="user" value="user" checked>
                                     <div class="icon"><img src="{% static 'vendors/images/person.svg' %}" class="svg"
                                                            alt=""></div>
                                     <span>Eu sou</span>
@@ -84,7 +76,6 @@
                                 </label>
                             </div>
                         </div>
-                        {% if not options  %}
                         <div class="input-group custom">
                             <input type="text" class="form-control form-control-lg" name="username"
                                    placeholder="Nome de usuário" disabled>
@@ -106,7 +97,6 @@
                                     <button type="submit" class="btn btn-primary btn-lg btn-block" disabled>Logar
                                     </button>
                                 </div>
-                                {% else %}
                                 <div class="input-group custom">
                                     <input type="text" class="form-control form-control-lg" name="username"
                                            placeholder="Nome de usuário">
@@ -128,7 +118,6 @@
                                             <button type="submit" class="btn btn-primary btn-lg btn-block">Logar
                                             </button>
                                         </div>
-                                        {% endif %}
                                         <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">
                                             OU
                                         </div>
