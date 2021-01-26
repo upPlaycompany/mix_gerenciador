@@ -124,7 +124,7 @@ def usuario_dados(request, id):
     cde = link.json()
     dados = db.collection(f'users').document(f'{id}')
     dad = dados.get()
-    abc = [x.to_dict() for x in dad]
+    abc = x.to_dict()
     dados2 = db.collection(f'users').document(f'{id}')
     dad2 = dados2.get()
     dec = [{'id': x.id} for x in dad2]
