@@ -122,10 +122,12 @@ def usuario_dados(request, id):
     headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
     link = requests.get(url, headers=headers, verify=False)
     cde = link.json()
-    dados = db.collection(f'users').document(f'{id}').get()
-    abc = [x.to_dict() for x in dados]
-    dados2 = db.collection(f'users').document(f'{id}').get()
-    dec = [{'id': x.id} for x in dados2]
+    dados = db.collection(f'users').document(f'{id}')
+    dad = dados.get()
+    abc = [x.to_dict() for x in dad]
+    dados2 = db.collection(f'users').document(f'{id}')
+    dad2 = dados2.get()
+    dec = [{'id': x.id} for x in dad2]
     a = len(dec)
     ident = {'ident': f'{id}'}
     [dec[x].update(abc[x]) for x in range(a)]
