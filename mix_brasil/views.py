@@ -30,11 +30,11 @@ sto = storage.bucket('mix-brasil.appspot.com')
 
 def logar(request):
     next = request.GET.get('next', '/index/')
+    next_user = request.GET.get('next_user', '/user_index/')
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
         options = request.POST['options']
-
         user = authenticate(username=username, password=password)
         if options == 'admin' and user.is_superuser == True:
             if user is not None:
@@ -43,7 +43,7 @@ def logar(request):
         elif options == 'user':
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect(next)
+                return HttpResponseRedirect(next_user)
         else:
             return redirect('login_erro')
     return render(request, 'login.html', {'redirect_to': next})
