@@ -48,6 +48,36 @@ def deslogar(request):
     logout(request)
     return HttpResponseRedirect("/")
 
+def criar_usuario(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        username = request.POST['username']
+        phone = request.POST['phone']
+        email = request.POST['email']
+        password = request.POST['password']
+        cep = request.POST['cep']
+        url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+        headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+        link = requests.get(url, headers=headers, verify=False)
+        cde = link.json()
+        dados.set({
+            'name': f'{name}',
+            'phone': f'{phone}',
+            'email': f'{email}',
+            'img': None,
+            'city': f"{cde['cidade']['nome']}",
+            'state': f"{cde['estado']['sigla']}"
+        })
+        user = User.objects.create_user(username, email, password)
+        user.first_name = name
+        user.save()
+        return redirect('criar_usuario_sucesso')
+    return render(request,'criar_usuario.html')
+
+
+def criar_usuario_sucesso(request):
+    return render(request, 'criar_usuario_sucesso.html')
+
 @login_required
 def usuario_listagem(request):
     usuarios = db.collection('users').stream()
@@ -55,6 +85,42 @@ def usuario_listagem(request):
     ident = db.collection('users').stream()
     docs = [x.to_dict() for x in ident]
     return render(request, 'usuario_listagem.html', {'lista': docs, 'lista_id': doz})
+
+@login_required
+def usuario_dados(request, id):
+    cep = request.GET.get("cep")
+    url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+    headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+    link = requests.get(url, headers=headers, verify=False)
+    cde = link.json()
+    dados = db.collection(f'users').where('name', '==', f'{nome}').stream()
+    abc = [x.to_dict() for x in dados]
+    dados2 = db.collection(f'users').where('name', '==', f'{nome}').stream()
+    dec = [{'id': x.id} for x in dados2]
+    a = len(dec)
+    ident = {'ident': f'{id}'}
+    [dec[x].update(abc[x]) for x in range(a)]
+    [dec[x].update(ident) for x in range(a)]
+    [dec[x].update(cde) for x in range(a)]
+    if request.method == 'POST':
+        name = request.POST['name']
+        phone = request.POST['phone']
+        email = request.POST['email']
+        city = request.POST['city']
+        state = request.POST['state']
+        formform = db.collection(f'users').document(f'{cod}')
+        formform.update(
+            {
+                'name': f'{name}',
+                'phone': f'{phone}',
+                'email': f'{email}',
+                'city': f'{city}',
+                'state': f'{state}'
+            }
+        )
+        return redirect('atualizar_usuario_sucesso')
+    return render(request, 'usuario_dados.html', {'lista': dec})
+
 
 @login_required
 def criar_loja(request, id):
