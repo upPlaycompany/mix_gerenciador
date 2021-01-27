@@ -82,7 +82,7 @@
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Longitude</label>
-                {{% if not abc.longitude %}}
+                {% if not abc.longitude %}
                 <input type="text" class="form-control" name="long" value="{{ abc.address.long }}">
                 {% else %}
                 <input type="text" class="form-control" name="long" value="{{ abc.longitude }}">
