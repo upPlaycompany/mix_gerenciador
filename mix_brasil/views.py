@@ -157,7 +157,7 @@ def usuario_dados(request, id):
             }
         )
         return redirect('atualizar_usuario_sucesso')
-    return render(request, 'usuario_dados.html', {'lista': abc})
+    return render(request, 'usuario_dados.html', abc)
 
 
 @login_required
