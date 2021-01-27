@@ -144,7 +144,7 @@ def usuario_dados(request, id):
         formform.update(
             {
                 'name': f'{name}',
-                'phone': f'{phone}',
+                'phone': f"{phone}",
                 'email': f'{email}',
                 'address': {
                     'city': f"{city}",
