@@ -169,6 +169,7 @@ def atualizar_usuario_sucesso(request):
 def remover_usuario(request, id, email):
     if request.method == 'POST':
         db.collection(f'users').document(f'{id}').delete()
+        auth.delete_user(uid=id)
         user = User.objects.get(email=f'{email}')
         user.delete()
         return redirect('remover_usuario_sucesso')
