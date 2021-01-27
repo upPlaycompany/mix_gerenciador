@@ -128,6 +128,7 @@ def usuario_dados(request, id):
     ident = {'id': f'{id}'}
     abc.update(ident)
     abc.update(cde)
+    abc = [abc]
     if request.method == 'POST':
         name = request.POST['name']
         phone = request.POST['phone']
@@ -157,7 +158,7 @@ def usuario_dados(request, id):
             }
         )
         return redirect('atualizar_usuario_sucesso')
-    return render(request, 'usuario_dados.html', abc)
+    return render(request, 'usuario_dados.html', {'lista': abc})
 
 
 @login_required

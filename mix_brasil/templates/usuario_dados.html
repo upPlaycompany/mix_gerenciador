@@ -24,26 +24,26 @@
     </div>
 </form>
 <br>
-{% for y in abc %}
+{% for abc in lista %}
 <form method="post">
     {% csrf_token %}
     <div class="row">
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Nome</label>
-                <input type="text" class="form-control" name="name" value="{{ y.name }}">
+                <input type="text" class="form-control" name="name" value="{{ abc.name }}">
             </div>
         </div>
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Celular</label>
-                <input type="text" class="form-control" name="whatsapp" value="{{ y.phone }}">
+                <input type="text" class="form-control" name="whatsapp" value="{{ abc.phone }}">
             </div>
         </div>
         <div class="col-md-6 col-sm-12">
             <div class="form-group">
                 <label>E-mail</label>
-                <input type="text" class="form-control" name="email" value="{{ y.email }}">
+                <input type="text" class="form-control" name="email" value="{{ abc.email }}">
             </div>
         </div>
 
@@ -52,40 +52,40 @@
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Cidade</label>
-                {% if not y.cidade.nome %}
-                <input type="text" class="form-control" name="city" value="{{ y.address.city }}">
+                {% if not abc.cidade.nome %}
+                <input type="text" class="form-control" name="city" value="{{ abc.address.city }}">
                 {% else %}
-                <input type="text" class="form-control" name="city" value="{{ y.cidade.nome }}">
+                <input type="text" class="form-control" name="city" value="{{ abc.cidade.nome }}">
                 {% endif %}
             </div>
         </div>
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Distrito</label>
-                {% if not y.bairro %}
-                <input type="text" class="form-control" name="district" value="{{ y.address.district }}">
+                {% if not abc.bairro %}
+                <input type="text" class="form-control" name="district" value="{{ abc.address.district }}">
                 {% else %}
-                <input type="text" class="form-control" name="district" value="{{ y.bairro }}">
+                <input type="text" class="form-control" name="district" value="{{ abc.bairro }}">
                 {% endif %}
             </div>
         </div>
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Latitude</label>
-                {% if not y.latitude %}
-                <input type="text" class="form-control" name="lat" value="{{ y.address.lat }}">
+                {% if not abc.latitude %}
+                <input type="text" class="form-control" name="lat" value="{{ abc.address.lat }}">
                 {% else %}
-                <input type="text" class="form-control" name="lat" value="{{ y.latitude }}">
+                <input type="text" class="form-control" name="lat" value="{{ abc.latitude }}">
                 {% endif %}
             </div>
         </div>
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Longitude</label>
-                {{% if not y.longitude %}
-                <input type="text" class="form-control" name="long" value="{{ y.address.long }}">
+                {{% if not abc.longitude %}
+                <input type="text" class="form-control" name="long" value="{{ abc.address.long }}">
                 {% else %}
-                <input type="text" class="form-control" name="long" value="{{ y.longitude }}">
+                <input type="text" class="form-control" name="long" value="{{ abc.longitude }}">
                 {% endif %}
             </div>
         </div>
@@ -94,30 +94,30 @@
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Estado</label>
-                {{% if not y.estado.sigla %}
-                <input type="text" class="form-control" name="state" value="{{ y.address.state }}">
+                {{% if not abc.estado.sigla %}
+                <input type="text" class="form-control" name="state" value="{{ abc.address.state }}">
                 {% else %}
-                <input type="text" class="form-control" name="state" value="{{ y.estado.sigla }}">
+                <input type="text" class="form-control" name="state" value="{{ abc.estado.sigla }}">
                 {% endif %}
             </div>
         </div>
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Logradouro</label>
-                {{% if not y.logradouro %}
-                <input type="text" class="form-control" name="street" value="{{ y.address.street }}">
+                {{% if not abc.logradouro %}
+                <input type="text" class="form-control" name="street" value="{{ abc.address.street }}">
                 {% else %}
-                <input type="text" class="form-control" name="street" value="{{ y.logradouro }}">
+                <input type="text" class="form-control" name="street" value="{{ abc.logradouro }}">
                 {% endif %}
             </div>
         </div>
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>CEP</label>
-               {{% if not y.cep %}
-                <input type="text" class="form-control" name="zipCode" value="{{ y.address.zipCode }}">
+               {{% if not abc.cep %}
+                <input type="text" class="form-control" name="zipCode" value="{{ abc.address.zipCode }}">
                 {% else %}
-                <input type="text" class="form-control" name="zipCode" value="{{ y.cep }}">
+                <input type="text" class="form-control" name="zipCode" value="{{ abc.cep }}">
                 {% endif %}
             </div>
         </div>
@@ -127,7 +127,7 @@
             <div class="form-group">
                 <label>Imagem do perfil</label><br>
                 <div class="row">
-                    <img style="width: 300px;" class="card-img-top" src="{{ y.img }}">
+                    <img style="width: 300px;" class="card-img-top" src="{{ abc.img }}">
                 </div>
             </div>
         </div>
@@ -136,8 +136,8 @@
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
                 <span><button type="submit" class="btn btn-success">Atualizar dados</button></span>
-                <span><a href="{% url 'adicionar_imagem_perfil' id=y.id %}"><button type="button" class="btn btn-info">Adicionar ou atualizar imagem ao perfil</button></a></span>
-                <span><a href="{% url 'remover_usuario' id=y.id %}"><button type="button" class="btn btn-danger">Excluir usuário</button></a></span>
+                <span><a href="{% url 'adicionar_imagem_perfil' id=abc.id %}"><button type="button" class="btn btn-info">Adicionar ou atualizar imagem ao perfil</button></a></span>
+                <span><a href="{% url 'remover_usuario' id=abc.id %}"><button type="button" class="btn btn-danger">Excluir usuário</button></a></span>
             </div>
         </div>
     </div>
