@@ -166,9 +166,11 @@ def atualizar_usuario_sucesso(request):
     return render(request, 'atualizar_usuario_sucesso.html')
 
 @login_required
-def remover_usuario(request, id):
+def remover_usuario(request, id, email):
     if request.method == 'POST':
         db.collection(f'users').document(f'{id}').delete()
+        user = User.objects.get(email=f'{email}')
+        user.delete()
         return redirect('remover_usuario_sucesso')
     return render(request, 'remover_usuario.html')
 
