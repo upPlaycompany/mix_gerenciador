@@ -168,10 +168,10 @@ def atualizar_usuario_sucesso(request):
 @login_required
 def remover_usuario(request, id, e):
     if request.method == 'POST':
-        db.collection(f'users').document(f'{id}').delete()
-        auth.delete_user(uid=id)
         user = User.objects.get(email=e)
         user.delete()
+        db.collection(f'users').document(f'{id}').delete()
+        auth.delete_user(uid=id)
         return redirect('remover_usuario_sucesso')
     return render(request, 'remover_usuario.html')
 
