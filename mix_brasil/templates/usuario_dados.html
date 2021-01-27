@@ -6,7 +6,7 @@
 
 {% block content %}
 
-{% for y in abc %}
+
 <form method="get">
     {% csrf_token %}
     <div class="row">
@@ -24,7 +24,7 @@
     </div>
 </form>
 <br>
-
+{% for y in abc %}
 <form method="post">
     {% csrf_token %}
     <div class="row">
