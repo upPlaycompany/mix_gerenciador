@@ -790,25 +790,26 @@ def user_criar_loja(request):
         [ff[x].update(cde) for x in range(a)]
         for y in ff:
             des = db.collection(f'users').where('email','==',f'{email}').stream()
-            pka = print(u'{}'.format(des.id))
-            fad = db.collection(f'users/{pka}/lojas').document()
-            fad.set({
-                'name': f'{name}',
-                'username': f'{username}',
-                'categoria': f'{categoria}',
-                'whatsapp': f'{whatsapp}',
-                'trabalhe_conosco': f'{trabalhe_conosco}',
-                'price': price,
-                'destaque': dex,
-                'promocao': "",
-                'img': firestore.ArrayUnion([""]),
-                'img_destacados': firestore.ArrayUnion([""]),
-                'img_ofertas': firestore.ArrayUnion([""]),
-                'img_cupons': firestore.ArrayUnion([""]),
-                'cidade': f"{cde['cidade']['nome']}",
-                'estado': f"{cde['estado']['sigla']}",
-                'uemail': f"{email}"
-            })
+            pka = [print(f'{x.id}') for x in des]
+            for y in pka:
+                fad = db.collection(f'users/{y}/lojas').document()
+                fad.set({
+                    'name': f'{name}',
+                    'username': f'{username}',
+                    'categoria': f'{categoria}',
+                    'whatsapp': f'{whatsapp}',
+                    'trabalhe_conosco': f'{trabalhe_conosco}',
+                    'price': price,
+                    'destaque': dex,
+                    'promocao': "",
+                    'img': firestore.ArrayUnion([""]),
+                    'img_destacados': firestore.ArrayUnion([""]),
+                    'img_ofertas': firestore.ArrayUnion([""]),
+                    'img_cupons': firestore.ArrayUnion([""]),
+                    'cidade': f"{cde['cidade']['nome']}",
+                    'estado': f"{cde['estado']['sigla']}",
+                    'uemail': f"{email}"
+                })
         return redirect('user_criar_loja_sucesso')
     return render(request, 'user_criar_loja.html')
 
