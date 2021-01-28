@@ -61,6 +61,8 @@ def index(request):
 
 @login_required
 def user_index(request):
+    if request.user.is_superuser == True or request.user.is_staff == True:
+        return redirect('index')
     return render(request, 'user_index.html')
 
 
@@ -225,11 +227,10 @@ def criar_loja(request, id):
     if request.method == 'POST':
         name = request.POST['name']
         whatsapp = request.POST['whatsapp']
-        descricao = request.POST['descricao']
+        trabalhe_conosco = request.POST['trabalhe_conosco']
         price = request.POST['price']
         destaque = request.POST['destaque']
         cep = request.POST['cep']
-
         if destaque == 'true':
             dex = True
         else:
@@ -244,13 +245,16 @@ def criar_loja(request, id):
         dados.set({
             'name': f'{name}',
             'whatsapp': f'{whatsapp}',
-            'descricao': f'{descricao}',
+            'trabalhe_conosco': f'{trabalhe_conosco}',
             'price': price,
             'destaque': dex,
             'promocao': "",
             'img': firestore.ArrayUnion([""]),
+            'img_destacados': firestore.ArrayUnion([""]),
+            'img_ofertas': firestore.ArrayUnion([""]),
+            'img_cupons': firestore.ArrayUnion([""]),
             'cidade': f"{cde['cidade']['nome']}",
-            'estado': f"{cde['estado']['sigla']}"
+            'estado': f"{cde['estado']['sigla']}",
         })
         info = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{name}').stream()
         ff = [{'id': x.id} for x in info]
@@ -281,10 +285,14 @@ def criar_loja(request, id):
 
 @login_required
 def criar_loja_sucesso(request):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     return render(request, 'criar_loja_sucesso.html')
 
 @login_required
 def categoria_listagem(request):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     categorias = db.collection('categorias').stream()
     doz = [x.id for x in categorias]
     ident = db.collection('categorias').stream()
@@ -293,6 +301,8 @@ def categoria_listagem(request):
 
 @login_required
 def lojas_listagem(request, id):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     lojas = db.collection(f'categorias/{id}/lojas').stream()
     docs = [{'id': x.id} for x in lojas]
     lojas2 = db.collection(f'categorias/{id}/lojas').stream()
@@ -306,6 +316,8 @@ def lojas_listagem(request, id):
 
 @login_required
 def lojas_dados(request, id, nome, cod):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     cep = request.GET.get("cep")
     url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
     headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
@@ -323,7 +335,7 @@ def lojas_dados(request, id, nome, cod):
     if request.method == 'POST':
         name = request.POST['name']
         whatsapp = request.POST['whatsapp']
-        descricao = request.POST['descricao']
+        trabalhe_conosco = request.POST['trabalhe_conosco']
         price = request.POST['price']
         destaque = request.POST['destaque']
         promocao = request.POST['promocao']
@@ -340,7 +352,7 @@ def lojas_dados(request, id, nome, cod):
             {
                 'name': f'{name}',
                 'whatsapp': f'{whatsapp}',
-                'descricao': f'{descricao}',
+                'trabalhe_conosco': f'{trabalhe_conosco}',
                 'price': price,
                 'destaque': des,
                 'promocao': f'{promocao}',
@@ -396,10 +408,14 @@ def lojas_dados(request, id, nome, cod):
 
 @login_required
 def atualizar_loja_sucesso(request):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     return render(request, 'atualizar_loja_sucesso.html')
 
 @login_required
 def adicionar_imagens_loja(request, id, cod):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     if request.method == 'POST':
         img = request.FILES['img']
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
@@ -422,10 +438,14 @@ def adicionar_imagens_loja(request, id, cod):
 
 @login_required
 def adicionar_imagens_loja_sucesso(request):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     return render(request, 'adicionar_imagens_loja_sucesso.html')
 
 @login_required
 def remover_imagens_loja(request, id, name, cod):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     dados = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{name}').stream()
     docs = [x.to_dict() for x in dados]
     if request.method == 'POST':
@@ -439,10 +459,14 @@ def remover_imagens_loja(request, id, name, cod):
 
 @login_required
 def remover_imagens_loja_sucesso(request):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     return render(request, 'remover_imagens_loja_sucesso.html')
 
 @login_required
 def remover_loja(request, id, cod):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     if request.method == 'POST':
         db.collection(f'categorias/{id}/lojas').document(f'{cod}').delete()
         db.collection('destaque_home').where('lid', '==', f'{cod}').delete()
@@ -451,10 +475,14 @@ def remover_loja(request, id, cod):
 
 @login_required
 def remover_loja_sucesso(request):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     return render(request, 'remover_loja_sucesso.html')
 
 @login_required
 def criar_desapego(request, id):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     if request.method == 'POST':
         anunciante = request.POST['anunciante']
         descricao = request.POST['descricao']
@@ -517,10 +545,14 @@ def criar_desapego(request, id):
 
 @login_required
 def criar_desapego_sucesso(request):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     return render(request, 'criar_desapego_sucesso.html')
 
 @login_required
 def categoria_desapego_listagem(request):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     desapegos = db.collection('desapego').stream()
     doz = [x.id for x in desapegos]
     ident = db.collection('desapego').stream()
@@ -529,6 +561,8 @@ def categoria_desapego_listagem(request):
 
 @login_required
 def desapegos_listagem(request, id):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     desapegos = db.collection(f'desapego/{id}/desapegos').stream()
     docs = [{'id': x.id} for x in desapegos]
     lojas2 = db.collection(f'desapego/{id}/desapegos').stream()
@@ -542,6 +576,8 @@ def desapegos_listagem(request, id):
 
 @login_required
 def desapegos_dados(request, id, nome, cod):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     cep = request.GET.get("cep")
     url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
     headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
@@ -633,10 +669,14 @@ def desapegos_dados(request, id, nome, cod):
 
 @login_required
 def atualizar_desapego_sucesso(request):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     return render(request, 'atualizar_desapego_sucesso.html')
 
 @login_required
 def adicionar_imagens_desapego(request, id, cod):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     if request.method == 'POST':
         img = request.FILES['img']
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
@@ -660,10 +700,14 @@ def adicionar_imagens_desapego(request, id, cod):
 
 @login_required
 def adicionar_imagens_desapego_sucesso(request):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     return render(request, 'adicionar_imagens_desapego_sucesso.html')
 
 @login_required
 def remover_imagens_desapego(request, id, name, cod):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     dados = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
     docs = [x.to_dict() for x in dados]
     if request.method == 'POST':
@@ -677,10 +721,14 @@ def remover_imagens_desapego(request, id, name, cod):
 
 @login_required
 def remover_imagens_desapego_sucesso(request):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     return render(request, 'remover_imagens_desapego_sucesso.html')
 
 @login_required
 def remover_desapego(request, id, cod):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     if request.method == 'POST':
         db.collection(f'desapego/{id}/desapegos').document(f'{cod}').delete()
         db.collection('destaque_desapego').where('did', '==', f'{cod}').delete()
@@ -689,4 +737,83 @@ def remover_desapego(request, id, cod):
 
 @login_required
 def remover_desapego_sucesso(request):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     return render(request, 'remover_desapego_sucesso.html')
+
+
+#PARTE DE USUARIO
+@login_required
+def user_criar_loja(request):
+    if request.user.is_superuser == True or request.user.is_staff == True:
+        return redirect('index')
+    if request.method == 'POST':
+        email = request.user.email
+        name = request.POST['name']
+        categoria = request.POST['categoria']
+        whatsapp = request.POST['whatsapp']
+        trabalhe_conosco = request.POST['trabalhe_conosco']
+        price = request.POST['price']
+        cep = request.POST['cep']
+        dex = False
+        price = price.replace(',', '.')
+        price = float(price)
+        dados = db.collection(f'categorias/{categoria}/lojas').document()
+        url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+        headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+        link = requests.get(url, headers=headers, verify=False)
+        cde = link.json()
+        dados.set({
+            'name': f'{name}',
+            'categoria': f'{categoria}',
+            'whatsapp': f'{whatsapp}',
+            'trabalhe_conosco': f'{trabalhe_conosco}',
+            'price': price,
+            'destaque': dex,
+            'promocao': "",
+            'img': firestore.ArrayUnion([""]),
+            'img_destacados': firestore.ArrayUnion([""]),
+            'img_ofertas': firestore.ArrayUnion([""]),
+            'img_cupons': firestore.ArrayUnion([""]),
+            'cidade': f"{cde['cidade']['nome']}",
+            'estado': f"{cde['estado']['sigla']}",
+            'uemail': f"{email}"
+        })
+        info = db.collection(f'categorias/{categoria}/lojas').where('name', '==', f'{name}').stream()
+        ff = [{'id': x.id} for x in info]
+        info2 = db.collection(f'categorias/{categoria}/lojas').where('name', '==', f'{name}').stream()
+        gg = [x.to_dict() for x in info2]
+        a = len(ff)
+        categoria = {'categoria': f'{categoria}'}
+        [ff[x].update(gg[x]) for x in range(a)]
+        [ff[x].update(categoria) for x in range(a)]
+        [ff[x].update(cde) for x in range(a)]
+        for y in ff:
+            des = db.collection(f'users').where('email','==',f'{email}').stream()
+            pka = print(u'{}'.format(des.id))
+            fad = db.collection(f'users/{pka}/lojas').document()
+            fad.set({
+                'name': f'{name}',
+                'username': f'{username}',
+                'categoria': f'{categoria}',
+                'whatsapp': f'{whatsapp}',
+                'trabalhe_conosco': f'{trabalhe_conosco}',
+                'price': price,
+                'destaque': dex,
+                'promocao': "",
+                'img': firestore.ArrayUnion([""]),
+                'img_destacados': firestore.ArrayUnion([""]),
+                'img_ofertas': firestore.ArrayUnion([""]),
+                'img_cupons': firestore.ArrayUnion([""]),
+                'cidade': f"{cde['cidade']['nome']}",
+                'estado': f"{cde['estado']['sigla']}",
+                'uemail': f"{email}"
+            })
+        return redirect('user_criar_loja_sucesso')
+    return render(request, 'user_criar_loja.html')
+
+@login_required
+def user_criar_loja_sucesso(request):
+    if request.user.is_superuser == True or request.user.is_staff == True:
+        return redirect('index')
+    return render(request,'user_criar_loja_sucesso.html')

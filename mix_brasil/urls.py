@@ -65,4 +65,6 @@ urlpatterns = [
 
 
     path('user_index/', views.user_index, name='user_index'),
+    path('user_criar_loja/', views.user_criar_loja, name='user_criar_loja'),
+    path('user_criar_loja_sucesso/', views.user_criar_loja_sucesso, name='user_criar_loja_sucesso')
 ]

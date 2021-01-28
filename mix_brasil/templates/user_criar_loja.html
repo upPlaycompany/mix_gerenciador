@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<h2>Criar loja</h2>
+<h2>Criar loja como usuário</h2>
 {% endblock title %}
 
 {% block content %}
@@ -23,9 +23,10 @@
         <div class="col-md-6 col-sm-12">
             <div class="form-group">
                 <label>Insira aqui vagas de emprego da loja</label>
-                <input type="text" class="form-control" name="trabalhe_conosco" placeholder="Insira a descrição da loja">
+                <input type="text" class="form-control" name="trabalhe_conosco" placeholder="Insira a descrição da loja" >
             </div>
         </div>
+
 
     </div>
     <div class="row">
@@ -43,11 +44,23 @@
         </div>
          <div class="col-md-3 col-sm-12">
             <div class="form-group">
-                 <label>Destacar loja no app?</label>
+                 <label>Selecione a categoria da loja</label>
                 <select class="form-control" name="destaque">
                     <option selected>Selecione...</option>
-                    <option value="true">Sim</option>
-                    <option value="false">Não</option>
+                    <option value="academia_sumplementos">Academias e suplementos</option>
+                    <option value="agencia_viagens">Agências de viagens</option>
+                    <option value="brinquedos">Brinquedos</option>
+                    <option value="cama_mesa_banho">Cama, mesa e banho</option>
+                    <option value="cosmetico_beleza">Cosmético e beleza</option>
+                    <option value="decoracao">Decoração</option>
+                    <option value="eletronicos">Eletrônicos</option>
+                    <option value="modulados">Modulados</option>
+                    <option value="musica_hobbies">Música e hobbies</option>
+                    <option value="oticas">Óticas</option>
+                    <option value="petshops">Petshops</option>
+                    <option value="roupas_acessorios">Roupas e acessórios</option>
+                    <option value="saude">Saúde</option>
+                    <option value="servicos_gerais">Serviços gerais</option>
                 </select>
             </div>
         </div>
