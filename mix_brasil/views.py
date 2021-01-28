@@ -795,7 +795,6 @@ def user_criar_loja(request):
                 fad = db.collection(f'users/{y}/lojas').document()
                 fad.set({
                     'name': f'{name}',
-                    'username': f'{username}',
                     'categoria': f'{categoria}',
                     'whatsapp': f'{whatsapp}',
                     'trabalhe_conosco': f'{trabalhe_conosco}',
