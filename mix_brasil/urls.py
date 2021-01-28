@@ -26,6 +26,8 @@ urlpatterns = [
 
     path('index/', views.index, name='index'),
 
+
+
     path('categoria_listagem/', views.categoria_listagem, name='categoria_listagem'),
     path('lojas_listagem/<str:id>', views.lojas_listagem, name='lojas_listagem'),
     path('lojas_dados/<str:nome>/<str:id>/<str:cod>', views.lojas_dados, name='lojas_dados'),
@@ -59,5 +61,8 @@ urlpatterns = [
     path('usuario_listagem/', views.usuario_listagem, name='usuario_listagem'),
     path('adicionar_imagem_perfil/<str:id>/', views.adicionar_imagem_perfil, name='adicionar_imagem_perfil'),
     path('remover_usuario/<str:id>/<str:e>/', views.remover_usuario, name='remover_usuario'),
-    path('remover_usuario_sucesso/', views.remover_usuario_sucesso, name='remover_usuario_sucesso')
+    path('remover_usuario_sucesso/', views.remover_usuario_sucesso, name='remover_usuario_sucesso'),
+
+
+    path('user_index/', views.user_index, name='user_index'),
 ]

@@ -37,11 +37,11 @@ def logar(request):
         password = request.POST['password']
         options = request.POST['options']
         user = authenticate(username=username, password=password)
-        if options == 'admin' and user.is_superuser == True:
+        if options == 'admin' and user.is_superuser == True and user.is_staff == True:
             if user is not None:
                 login(request, user)
                 return HttpResponseRedirect(next)
-        elif options == 'user' and user.is_superuser == False:
+        elif options == 'user' and user.is_superuser == False and user.is_staff == False:
             if user is not None:
                 login(request, user)
                 return HttpResponseRedirect(next_user)
@@ -57,6 +57,10 @@ def login_erro(request):
 @login_required
 def index(request):
     return render(request, 'index.html')
+
+@login_required
+def user_index(request):
+    return render(request, 'user_index.html')
 
 
 @login_required
