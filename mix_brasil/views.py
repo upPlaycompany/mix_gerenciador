@@ -53,9 +53,10 @@ def logar(request):
 def login_erro(request):
     return render(request, 'login_erro.html')
 
-
 @login_required
 def index(request):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     return render(request, 'index.html')
 
 @login_required
@@ -113,6 +114,8 @@ def criar_usuario_sucesso(request):
 
 @login_required
 def usuario_listagem(request):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     usuarios = db.collection('users').stream()
     doz = [x.id for x in usuarios]
     ident = db.collection('users').stream()
@@ -121,6 +124,8 @@ def usuario_listagem(request):
 
 @login_required
 def usuario_dados(request, id):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     cep = request.GET.get("cep")
     url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
     headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
@@ -167,10 +172,14 @@ def usuario_dados(request, id):
 
 @login_required
 def atualizar_usuario_sucesso(request):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     return render(request, 'atualizar_usuario_sucesso.html')
 
 @login_required
 def remover_usuario(request, id, e):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     if request.method == 'POST':
         user = User.objects.get(email=e)
         user.delete()
@@ -181,10 +190,14 @@ def remover_usuario(request, id, e):
 
 @login_required
 def remover_usuario_sucesso(request):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     return render(request, 'remover_usuario_sucesso.html')
 
 @login_required
 def adicionar_imagem_perfil(request, id):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     if request.method == 'POST':
         img = request.FILES['img']
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
@@ -207,6 +220,8 @@ def adicionar_imagem_perfil(request, id):
 
 @login_required
 def criar_loja(request, id):
+    if request.user.is_superuser == False or request.user.is_staff == False:
+        return redirect('user_index')
     if request.method == 'POST':
         name = request.POST['name']
         whatsapp = request.POST['whatsapp']
