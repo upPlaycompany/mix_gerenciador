@@ -213,7 +213,53 @@
                     </ul>
                 </li>
             </ul>
-            {% endif %}
+            {% elif request.user.is_superuser == True or request.user.is_staff == True %}
+            <ul id="accordion-menu">
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="micon dw dw-list3"></span><span class="mtext">Lojas</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'categoria_listagem' %}">Listagem de categorias</a></li>
+
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="micon dw dw-list3"></span><span class="mtext">Desapegos</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'categoria_desapego_listagem' %}">Listagem de categorias</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="micon dw dw-list3"></span><span class="mtext">Usuários</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'usuario_listagem' %}">Listagem de usuários</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="micon dw dw-list3"></span><span class="mtext">Notificações</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#">Consulta</a></li>
+                    </ul>
+                </li>
+            </ul>
+            {% else %}
+            <ul id="accordion-menu">
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="micon dw dw-list3"></span><span class="mtext">Lojas</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#">Criar ou gerenciar loja</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
