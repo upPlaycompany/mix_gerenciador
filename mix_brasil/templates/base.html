@@ -86,6 +86,7 @@
             <i class="icon-copy ion-close-round"></i>
         </div>
     </div>
+
     <div class="right-sidebar-body customscroll">
         <div class="right-sidebar-body-content">
             <h4 class="weight-600 font-18 pb-10">Fundo do cabeçalho</h4>
@@ -176,6 +177,7 @@
     </div>
     <div class="menu-block customscroll">
         <div class="sidebar-menu">
+            {% if request.user.is_superuser == True and request.user.is_staff == True %}
             <ul id="accordion-menu">
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
@@ -211,6 +213,7 @@
                     </ul>
                 </li>
             </ul>
+            {% endif %}
         </div>
     </div>
 </div>
