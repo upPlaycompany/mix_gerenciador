@@ -865,6 +865,9 @@ def user_loja_dados_sucesso(request):
 def user_adicionar_imagem(request, cat, id):
     if request.user.is_superuser == True or request.user.is_staff == True:
         return redirect('index')
+    email = request.user.email
+    ac = db.collection(f"categorias/{cat}/lojas").where('uemail','==',f'{email}').stream()
+    ad = [{'id': x.id} for x in ac]
     if request.method == 'POST':
         img = request.FILES['img']
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
@@ -876,7 +879,7 @@ def user_adicionar_imagem(request, cat, id):
             method="GET",
         )
         url = str(url)
-        formform = db.collection(f'categorias/{cat}/lojas').document(f'{id}')
+        formform = db.collection(f'categorias/{cat}/lojas').document(ad[0]['id'])
         formform.update({
             'img': firestore.ArrayUnion([f'{url}'])
         })
