@@ -68,5 +68,7 @@ urlpatterns = [
     path('user_criar_loja/', views.user_criar_loja, name='user_criar_loja'),
     path('user_criar_loja_sucesso/', views.user_criar_loja_sucesso, name='user_criar_loja_sucesso'),
     path('user_loja_dados/', views.user_loja_dados, name='user_loja_dados'),
-    path('user_loja_dados_sucesso/', views.user_loja_dados_sucesso, name='user_loja_dados_sucesso')
+    path('user_loja_dados_sucesso/', views.user_loja_dados_sucesso, name='user_loja_dados_sucesso'),
+    path('user_adicionar_imagem/<str:cat>/<str:id>/', views.user_adicionar_imagem, name='user_adicionar_imagem'),
+    path('user_adicionar_imagem_sucesso/', views.user_adicionar_imagem_sucesso, name='user_adicionar_imagem_sucesso')
 ]

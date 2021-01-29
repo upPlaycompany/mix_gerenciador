@@ -860,3 +860,31 @@ def user_loja_dados(request):
 @login_required
 def user_loja_dados_sucesso(request):
     return render(request, 'user_loja_dados_sucesso.html')
+
+@login_required
+def user_adicionar_imagem(request, cat, id):
+    if request.user.is_superuser == True or request.user.is_staff == True:
+        return redirect('index')
+    if request.method == 'POST':
+        img = request.FILES['img']
+        imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
+        imagem_mix.save()
+        arquivo = sto.blob(f'categorias/{cat}/{id}/{img}')
+        arquivo.upload_from_filename(f"/app/mix_brasil/settings/imagem/{img}")
+        url = arquivo.generate_signed_url(
+            expiration=datetime.timedelta(weeks=200),
+            method="GET",
+        )
+        url = str(url)
+        formform = db.collection(f'categorias/{cat}/lojas').document(f'{id}')
+        formform.update({
+            'img': firestore.ArrayUnion([f'{url}'])
+        })
+        IMAGEM_MIX.objects.all().delete()
+        os.remove(f"/app/mix_brasil/settings/imagem/{img}")
+        return redirect('user_adicionar_imagem_sucesso')
+    return render(request, 'user_adicionar_imagem_sucesso.html')
+
+@login_required
+def user_adicionar_imagem_sucesso(request):
+    return render(request, 'user_adicionar_imagem_sucesso.html')
