@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Atualizar dados</h2>
+{% endblock title %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Nome da loja</label>
+                <input type="text" class="form-control" name="name" placeholder="Insira o nome da loja">
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Whats app da loja</label>
+                <input type="text" class="form-control" name="whatsapp" placeholder="Insira o Whats App da loja">
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label>Insira aqui vagas de emprego da loja</label>
+                <input type="text" class="form-control" name="trabalhe_conosco" placeholder="Insira a descrição da loja">
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>Preço padrão da loja</label>
+                <input type="text" class="form-control" name="price" placeholder="Insira o preço padrão da loja">
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                <label>CEP</label>
+                <input type="text" class="form-control" name="cep" placeholder="Insira o CEP da loja">
+            </div>
+        </div>
+         <div class="col-md-3 col-sm-12">
+            <div class="form-group">
+                 <label>Destacar loja no app?</label>
+                <select class="form-control" name="destaque">
+                    <option selected>Selecione...</option>
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <span><button type="submit" class="btn btn-success">Criar loja</button></span>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

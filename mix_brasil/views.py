@@ -788,12 +788,11 @@ def user_criar_loja(request):
         [ff[x].update(gg[x]) for x in range(a)]
         [ff[x].update(categoria) for x in range(a)]
         [ff[x].update(cde) for x in range(a)]
-        for y in ff:
-            des = db.collection(f'users').where('email','==',f'{email}').stream()
-            pka = [print(f'{x.id}') for x in des]
-            for y in pka:
-                fad = db.collection(f'users/{y}/lojas').document()
-                fad.set({
+        des = db.collection(f'users').where('email','==',f'{email}').stream()
+        pka = [print(f'{x.id}') for x in des]
+        for y in pka:
+            fad = db.collection(f'users/{y}/lojas').document()
+            fad.set({
                     'name': f'{name}',
                     'categoria': f'{categoria}',
                     'whatsapp': f'{whatsapp}',
@@ -808,7 +807,7 @@ def user_criar_loja(request):
                     'cidade': f"{cde['cidade']['nome']}",
                     'estado': f"{cde['estado']['sigla']}",
                     'uemail': f"{email}"
-                })
+            })
         return redirect('user_criar_loja_sucesso')
     return render(request, 'user_criar_loja.html')
 
@@ -817,3 +816,47 @@ def user_criar_loja_sucesso(request):
     if request.user.is_superuser == True or request.user.is_staff == True:
         return redirect('index')
     return render(request,'user_criar_loja_sucesso.html')
+
+@login_required
+def user_loja_dados(request):
+    email = request.user.email
+    dados = db.collection('users').where('email','==',f'{email}').stream()
+    d = [{'id': x.id} for x in dados]
+    dados2 = db.collection('users').where('email','==',f'{email}').stream()
+    d2 = [x.to_dict() for x in dados2]
+    xay = len(d)
+    [d[x].update(d2[x]) for x in range(xay)]
+    cep = request.GET.get("cep")
+    url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+    headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+    link = requests.get(url, headers=headers, verify=False)
+    cde = link.json()
+    if request.method == 'POST':
+        name = request.POST['name']
+        categoria = request.POST['categoria']
+        whatsapp = request.POST['whatsapp']
+        trabalhe_conosco = request.POST['trabalhe_conosco']
+        price = request.POST['price']
+        promocao = request.POST['promocao']
+        price = price.replace(',', '.')
+        price = float(price)
+        for x in d:
+            con = db.collection(f"users/{x['id']}/lojas").where('uemail','==',f'{email}').stream()
+            abc = print('{}'.format(con.id))
+            can = db.collection(f"users/{x['id']}/lojas").document(f'{abc}')
+            can.update({
+                'name': f'{name}',
+                'categoria': f'{categoria}',
+                'whatsapp': f'{whatsapp}',
+                'trabalhe_conosco': f'{trabalhe_conosco}',
+                'price': price,
+                'promocao': f"{promocao}",
+                'cidade': f"{cde['cidade']['nome']}",
+                'estado': f"{cde['estado']['sigla']}",
+            })
+            return redirect('user_loja_dados_sucesso.html')
+    return render(request, 'user_loja_dados.html', {'lista': d})
+
+@login_required
+def user_loja_dados_sucesso(request):
+    return render(request, 'user_loja_dados_sucesso.html')
