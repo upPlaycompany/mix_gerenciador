@@ -854,7 +854,7 @@ def user_loja_dados(request):
                 'cidade': f"{cidade}",
                 'estado': f"{estado}",
         })
-        return redirect('user_loja_dados_sucesso.html')
+        return redirect('user_loja_dados_sucesso')
     return render(request, 'user_loja_dados.html', {'lista': abc})
 
 @login_required
