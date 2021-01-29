@@ -819,18 +819,19 @@ def user_criar_loja_sucesso(request):
 
 @login_required
 def user_loja_dados(request):
-    email = request.user.email
-    dados = db.collection('users').where('email','==',f'{email}').stream()
-    d = [{'id': x.id} for x in dados]
-    dados2 = db.collection('users').where('email','==',f'{email}').stream()
-    d2 = [x.to_dict() for x in dados2]
-    xay = len(d)
-    [d[x].update(d2[x]) for x in range(xay)]
     cep = request.GET.get("cep")
     url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
     headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
     link = requests.get(url, headers=headers, verify=False)
     cde = link.json()
+    email = request.user.email
+    dados = db.collection('users').where('email','==',f'{email}').stream()
+    dec = [{'id': x.id} for x in dados]
+    dados2 = db.collection('users').where('email','==',f'{email}').stream()
+    d2 = [x.to_dict() for x in dados2]
+    xay = len(d)
+    [dec[x].update(d2[x]) for x in range(xay)]
+    [dec[x].update(cde) for x in range(xay)]
     if request.method == 'POST':
         name = request.POST['name']
         categoria = request.POST['categoria']
@@ -838,6 +839,8 @@ def user_loja_dados(request):
         trabalhe_conosco = request.POST['trabalhe_conosco']
         price = request.POST['price']
         promocao = request.POST['promocao']
+        cidade = request.POST['cidade']
+        estado = request.POST['estado']
         price = price.replace(',', '.')
         price = float(price)
         for x in d:
@@ -851,11 +854,11 @@ def user_loja_dados(request):
                 'trabalhe_conosco': f'{trabalhe_conosco}',
                 'price': price,
                 'promocao': f"{promocao}",
-                'cidade': f"{cde['cidade']['nome']}",
-                'estado': f"{cde['estado']['sigla']}",
+                'cidade': f"{cidade}",
+                'estado': f"{estado}",
             })
             return redirect('user_loja_dados_sucesso.html')
-    return render(request, 'user_loja_dados.html', {'lista': d})
+    return render(request, 'user_loja_dados.html', {'lista': dec})
 
 @login_required
 def user_loja_dados_sucesso(request):
