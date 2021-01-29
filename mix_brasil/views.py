@@ -883,6 +883,16 @@ def user_adicionar_imagem(request, cat, id):
         formform.update({
             'img': firestore.ArrayUnion([f'{url}'])
         })
+        ffa = db.collection(f'users').where('email','==',f'{email}').stream()
+        yas = [{'id': x.id} for x in ffa]
+        forfor = db.collection(f"users/{yas[0]['id']}/loja").where('uemail','==',f'{email}').stream()
+        fsa = [{'id': x.id} for x in forfor]
+        ffae = db.collection(f'users').where('email', '==', f'{email}').stream()
+        yase = [{'id': x.id} for x in ffae]
+        final_final = db.collection(f"users/{yase[0]['id']}/loja").document(f"{fsa[0]['id']}")
+        final_final.update({
+            'img': firestore.ArrayUnion([f'{url}'])
+        })
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
         return redirect('user_adicionar_imagem_sucesso')
