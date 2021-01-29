@@ -836,7 +836,6 @@ def user_loja_dados(request):
     [abc[x].update(cde) for x in range(la)]
     if request.method == 'POST':
         name = request.POST['name']
-        categoria = request.POST['categoria']
         whatsapp = request.POST['whatsapp']
         trabalhe_conosco = request.POST['trabalhe_conosco']
         price = request.POST['price']
