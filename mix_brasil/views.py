@@ -883,7 +883,7 @@ def user_adicionar_imagem(request, cat, id):
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
         return redirect('user_adicionar_imagem_sucesso')
-    return render(request, 'user_adicionar_imagem_sucesso.html')
+    return render(request, 'user_adicionar_imagem.html')
 
 @login_required
 def user_adicionar_imagem_sucesso(request):
