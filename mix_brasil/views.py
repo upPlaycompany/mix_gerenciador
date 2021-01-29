@@ -829,7 +829,7 @@ def user_loja_dados(request):
     dec = [{'id': x.id} for x in dados]
     dados2 = db.collection('users').where('email','==',f'{email}').stream()
     d2 = [x.to_dict() for x in dados2]
-    xay = len(d)
+    xay = len(dec)
     [dec[x].update(d2[x]) for x in range(xay)]
     [dec[x].update(cde) for x in range(xay)]
     if request.method == 'POST':
