@@ -825,13 +825,15 @@ def user_loja_dados(request):
     link = requests.get(url, headers=headers, verify=False)
     cde = link.json()
     email = request.user.email
-    dados = db.collection('users').where('email','==',f'{email}').stream()
-    dec = [{'id': x.id} for x in dados]
-    dados2 = db.collection('users').where('email','==',f'{email}').stream()
-    d2 = [x.to_dict() for x in dados2]
-    xay = len(dec)
-    [dec[x].update(d2[x]) for x in range(xay)]
-    [dec[x].update(cde) for x in range(xay)]
+    dados = db.collection('users').where('email', '==', f'{email}').stream()
+    y = [print('{}'.format(x.id)) for x in dados]
+    con = db.collection(f"users/{y[0]}/lojas").where('uemail', '==', f'{email}').stream()
+    abc = [{'id': x.id} for x in con]
+    cen = db.collection(f"users/{y[0]}/lojas").where('uemail', '==', f'{email}').stream()
+    xyz = [x.to_dict() for x in cen]
+    la = len(abc)
+    [abc[x].update(xyz[x]) for x in range(la)]
+    [abc[x].update(cde) for x in range(la)]
     if request.method == 'POST':
         name = request.POST['name']
         categoria = request.POST['categoria']
@@ -843,16 +845,8 @@ def user_loja_dados(request):
         estado = request.POST['estado']
         price = price.replace(',', '.')
         price = float(price)
-        con = db.collection(f"users/{dec['id']}/lojas").where('uemail', '==', f'{email}').stream()
-        abc = [{'id': x.id} for x in con]
-        cen = db.collection(f"users/{dec['id']}/lojas").where('uemail', '==', f'{email}').stream()
-        xyz = [x.to_dict() for x in cen]
-        la = len(abc)
-        [abc[x].update(xyz[x]) for x in range(la)]
-        [abc[x].update(cde) for x in range(la)]
-        for x in abc:
-            can = db.collection(f"users/{x['id']}/lojas").document(f"{x['id']}")
-            can.update({
+        can = db.collection(f"users/{abc[0]['id']}/lojas").document(f"{abc[0]['id']}")
+        can.update({
                 'name': f'{name}',
                 'categoria': f'{categoria}',
                 'whatsapp': f'{whatsapp}',
@@ -861,8 +855,8 @@ def user_loja_dados(request):
                 'promocao': f"{promocao}",
                 'cidade': f"{cidade}",
                 'estado': f"{estado}",
-            })
-            return redirect('user_loja_dados_sucesso.html')
+        })
+        return redirect('user_loja_dados_sucesso.html')
     return render(request, 'user_loja_dados.html', {'lista': abc})
 
 @login_required
