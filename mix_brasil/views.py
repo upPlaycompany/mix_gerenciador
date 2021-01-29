@@ -863,12 +863,14 @@ def user_loja_dados_sucesso(request):
 
 @login_required
 def user_adicionar_imagem(request, cat, id):
+
     if request.user.is_superuser == True or request.user.is_staff == True:
         return redirect('index')
     email = request.user.email
     ac = db.collection(f"categorias/{cat}/lojas").where('uemail','==',f'{email}').stream()
     ad = [{'id': x.id} for x in ac]
     if request.method == 'POST':
+        tipo_imagem = request.POST['tipo_imagem']
         img = request.FILES['img']
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
         imagem_mix.save()
@@ -879,10 +881,24 @@ def user_adicionar_imagem(request, cat, id):
             method="GET",
         )
         url = str(url)
+
         formform = db.collection(f'categorias/{cat}/lojas').document(ad[0]['id'])
-        formform.update({
-            'img': firestore.ArrayUnion([f'{url}'])
-        })
+        if tipo_imagem == 'normal':
+            formform.update({
+                    'img': firestore.ArrayUnion([f'{url}'])
+            })
+        elif tipo_imagem == 'ofertas':
+            formform.update({
+                'img_ofertas': firestore.ArrayUnion([f'{url}'])
+            })
+        elif tipo_imagem == 'destacados':
+            formform.update({
+                'img_destacados': firestore.ArrayUnion([f'{url}'])
+            })
+        elif tipo_imagem == 'cupons':
+            formform.update({
+                'img_cupons': firestore.ArrayUnion([f'{url}'])
+            })
         ffa = db.collection(f'users').where('email','==',f'{email}').stream()
         yas = [{'id': x.id} for x in ffa]
         forfor = db.collection(f"users/{yas[0]['id']}/loja").where('uemail','==',f'{email}').stream()
@@ -890,9 +906,26 @@ def user_adicionar_imagem(request, cat, id):
         ffae = db.collection(f'users').where('email', '==', f'{email}').stream()
         yase = [{'id': x.id} for x in ffae]
         final_final = db.collection(f"users/{yase[0]['id']}/loja").document(f"{fsa[0]['id']}")
-        final_final.update({
-            'img': firestore.ArrayUnion([f'{url}'])
-        })
+        if tipo_imagem == 'normal':
+            final_final.update({
+                    'img': firestore.ArrayUnion([f'{url}'])
+            })
+        elif tipo_imagem == 'ofertas':
+            final_final.update({
+                'img_ofertas': firestore.ArrayUnion([f'{url}'])
+            })
+        elif tipo_imagem == 'destacados':
+            final_final.update({
+                'img_destacados': firestore.ArrayUnion([f'{url}'])
+            })
+        elif tipo_imagem == 'cupons':
+            final_final.update({
+                'img_cupons': firestore.ArrayUnion([f'{url}'])
+            })
+        else:
+            final_final.update({
+                'img': firestore.ArrayUnion([f'{url}'])
+            })
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
         return redirect('user_adicionar_imagem_sucesso')
@@ -901,3 +934,4 @@ def user_adicionar_imagem(request, cat, id):
 @login_required
 def user_adicionar_imagem_sucesso(request):
     return render(request, 'user_adicionar_imagem_sucesso.html')
+
