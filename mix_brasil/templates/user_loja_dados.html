@@ -6,7 +6,7 @@
 
 {% block content %}
 
-{% for dec in lista %}
+{% for abc in lista %}
 <form method="get">
     {% csrf_token %}
     <div class="row">
@@ -31,19 +31,19 @@
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Nome da loja</label>
-                <input type="text" class="form-control" name="name" value="{{ dec.name }}">
+                <input type="text" class="form-control" name="name" value="{{ abc.name }}">
             </div>
         </div>
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Whats App da loja</label>
-                <input type="text" class="form-control" name="whatsapp" value="{{ dec.whatsapp }}">
+                <input type="text" class="form-control" name="whatsapp" value="{{ abc.whatsapp }}">
             </div>
         </div>
         <div class="col-md-6 col-sm-12">
             <div class="form-group">
                 <label>Inserir vagas de emprego</label>
-                <input type="text" class="form-control" name="descricao" value="{{ dec.trabalhe_conosco }}">
+                <input type="text" class="form-control" name="descricao" value="{{ abc.trabalhe_conosco }}">
             </div>
         </div>
 
@@ -52,26 +52,26 @@
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Preço padrão da loja</label>
-                <input type="text" class="form-control" name="price" value="{{ dec.price }}">
+                <input type="text" class="form-control" name="price" value="{{ abc.price }}">
             </div>
         </div>
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Cidade</label>
-                {% if not dec.cidade.nome %}
-                <input type="text" class="form-control" name="cidade" value="{{ dec.cidade }}">
+                {% if not abc.cidade.nome %}
+                <input type="text" class="form-control" name="cidade" value="{{ abc.cidade }}">
                 {% else %}
-                <input type="text" class="form-control" name="cidade" value="{{ dec.cidade.nome }}">
+                <input type="text" class="form-control" name="cidade" value="{{ abc.cidade.nome }}">
                 {% endif %}
             </div>
         </div>
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Estado</label>
-                {% if not dec.estado.sigla %}
-                <input type="text" class="form-control" name="estado" value="{{ dec.estado }}">
+                {% if not abc.estado.sigla %}
+                <input type="text" class="form-control" name="estado" value="{{ abc.estado }}">
                 {% else %}
-                <input type="text" class="form-control" name="estado" value="{{ dec.estado.sigla }}">
+                <input type="text" class="form-control" name="estado" value="{{ abc.estado.sigla }}">
                 {% endif %}
             </div>
         </div>
@@ -80,7 +80,7 @@
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
                 <label>Adicionar promoção</label>
-                <input type="text" class="form-control" name="promocao" value="{{ dec.promocao }}">
+                <input type="text" class="form-control" name="promocao" value="{{ abc.promocao }}">
             </div>
         </div>
     </div>
@@ -89,7 +89,7 @@
             <div class="form-group">
                 <label>Imagens da loja</label><br>
                 <div class="row">
-                    {% for image in dec.img %}
+                    {% for image in abc.img %}
                     <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
                     {% endfor %}
                 </div>
@@ -101,7 +101,7 @@
             <div class="form-group">
                 <label>Imagens da loja em destaque</label><br>
                 <div class="row">
-                    {% for image in dec.img_destacados %}
+                    {% for image in abc.img_destacados %}
                     <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
                     {% endfor %}
                 </div>
@@ -113,7 +113,7 @@
             <div class="form-group">
                 <label>Imagens da loja em destaque</label><br>
                 <div class="row">
-                    {% for image in dec.img_destacados %}
+                    {% for image in abc.img_destacados %}
                     <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
                     {% endfor %}
                 </div>
@@ -125,7 +125,7 @@
             <div class="form-group">
                 <label>Imagens da loja em ofertas</label><br>
                 <div class="row">
-                    {% for image in dec.img_ofertas %}
+                    {% for image in abc.img_ofertas %}
                     <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
                     {% endfor %}
                 </div>
@@ -137,7 +137,7 @@
             <div class="form-group">
                 <label>Imagens de cupons da loja</label><br>
                 <div class="row">
-                    {% for image in dec.img_cupons %}
+                    {% for image in abc.img_cupons %}
                     <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
                     {% endfor %}
                 </div>
