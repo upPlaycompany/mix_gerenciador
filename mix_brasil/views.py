@@ -935,3 +935,23 @@ def user_adicionar_imagem(request, cat, id):
 def user_adicionar_imagem_sucesso(request):
     return render(request, 'user_adicionar_imagem_sucesso.html')
 
+@login_required
+def user_remover_loja(request, cat, id):
+    if request.user.is_superuser == True or request.user.is_staff == True:
+        return redirect('index')
+    if request.method == 'POST':
+        email = request.user.email
+        db.collection(f'categorias/{cat}/lojas').document(f'{id}').delete()
+        exa1 = db.collection(f'users').where('email','==',f'{email}').stream()
+        ex1 = [{'id': x.id} for x in exa1]
+        exc = db.collection(f"users/{ex1[0]['id']}/loja").where('uemail','==',f'{email}').stream()
+        pa = [{'id': x.id} for x in exc]
+        exa2 = db.collection(f'users').where('email', '==', f'{email}').stream()
+        ex2 = [{'id': x.id} for x in exa2]
+        db.collection(f"users/{pa[0]['id']}/loja").document(f"{ex2[0][id]}").delete()
+        return redirect('user_remover_loja_sucesso')
+    return render(request, 'user_remover_loja.html')
+
+@login_required
+def user_remover_loja_sucesso(request):
+    return render(request, 'user_remover_loja_sucesso.html')

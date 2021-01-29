@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Deseja mesmo remover a loja?</h2>
+{% endblock title %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <span><button type="submit" class="btn btn-danger">Remover loja</button></span>
+    <span><a href="{% url 'user_loja_dados' %}"><button type="button" class="btn btn-success">Não, voltar as categorias</button></a></span>
+</form>
+{% endblock %}

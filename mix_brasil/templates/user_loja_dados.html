@@ -138,6 +138,9 @@
                 <span><button type="submit" class="btn btn-success">Atualizar dados</button></span>
                 <span><a href="{% url 'user_adicionar_imagem' cat=abc.categoria id=abc.id %}"><button type="button"
                                                                                                        class="btn btn-info">Adicionar imagens à loja</button></a></span>
+            <span><a href="{% url 'user_remover_loja' cat=abc.categoria id=abc.id %}"><button type="button"
+                                                                                             class="btn btn-danger">Excluir loja</button></a></span>
+
             </div>
         </div>
     </div>
