@@ -948,7 +948,7 @@ def user_remover_loja(request, cat, id):
         pa = [{'id': x.id} for x in exc]
         exa2 = db.collection(f'users').where('email', '==', f'{email}').stream()
         ex2 = [{'id': x.id} for x in exa2]
-        db.collection(f"users/{pa[0]['id']}/loja").document(f"{ex2[0][id]}").delete()
+        db.collection(f"users/{pa[0]['id']}/loja").document(f"{ex2[0]['id']}").delete()
         return redirect('user_remover_loja_sucesso')
     return render(request, 'user_remover_loja.html')
 
