@@ -832,6 +832,13 @@ def user_loja_dados(request):
     xay = len(dec)
     [dec[x].update(d2[x]) for x in range(xay)]
     [dec[x].update(cde) for x in range(xay)]
+    con = db.collection(f"users/{x['id']}/lojas").where('uemail', '==', f'{email}').stream()
+    abc = [{'id': x.id} for x in con]
+    cen = db.collection(f"users/{x['id']}/lojas").where('uemail', '==', f'{email}').stream()
+    xyz = [x.to_dict() for x in cen]
+    la = len(abc)
+    [abc[la].update(xyz[la]) for x in range(la)]
+    [abc[la].update(cde) for x in range(la)]
     if request.method == 'POST':
         name = request.POST['name']
         categoria = request.POST['categoria']
@@ -843,10 +850,8 @@ def user_loja_dados(request):
         estado = request.POST['estado']
         price = price.replace(',', '.')
         price = float(price)
-        for x in d:
-            con = db.collection(f"users/{x['id']}/lojas").where('uemail','==',f'{email}').stream()
-            abc = print('{}'.format(con.id))
-            can = db.collection(f"users/{x['id']}/lojas").document(f'{abc}')
+        for x in abc:
+            can = db.collection(f"users/{x['id']}/lojas").document(f"{x['id']}")
             can.update({
                 'name': f'{name}',
                 'categoria': f'{categoria}',
@@ -858,7 +863,7 @@ def user_loja_dados(request):
                 'estado': f"{estado}",
             })
             return redirect('user_loja_dados_sucesso.html')
-    return render(request, 'user_loja_dados.html', {'lista': dec})
+    return render(request, 'user_loja_dados.html', {'lista': abc})
 
 @login_required
 def user_loja_dados_sucesso(request):
