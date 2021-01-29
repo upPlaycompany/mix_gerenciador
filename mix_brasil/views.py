@@ -848,7 +848,6 @@ def user_loja_dados(request):
         can = db.collection(f"users/{abc[0]['id']}/lojas").document(f"{abc[0]['id']}")
         can.update({
                 'name': f'{name}',
-                'categoria': f'{categoria}',
                 'whatsapp': f'{whatsapp}',
                 'trabalhe_conosco': f'{trabalhe_conosco}',
                 'price': price,
