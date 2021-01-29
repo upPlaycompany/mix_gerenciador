@@ -784,14 +784,14 @@ def user_criar_loja(request):
         info2 = db.collection(f'categorias/{categoria}/lojas').where('name', '==', f'{name}').stream()
         gg = [x.to_dict() for x in info2]
         a = len(ff)
-        categoria = {'categoria': f'{categoria}'}
+        category = {'categoria': f'{categoria}'}
         [ff[x].update(gg[x]) for x in range(a)]
-        [ff[x].update(categoria) for x in range(a)]
+        [ff[x].update(category) for x in range(a)]
         [ff[x].update(cde) for x in range(a)]
         des = db.collection(f'users').where('email','==',f'{email}').stream()
-        pka = [print(f'{x.id}') for x in des]
+        pka = [{'id': x.id} for x in des]
         for y in pka:
-            fad = db.collection(f'users/{y}/loja').document(f"{y}")
+            fad = db.collection(f"users/{y['id']}/loja").document(f"{y['id']}")
             fad.set({
                     'name': f'{name}',
                     'categoria': f'{categoria}',
