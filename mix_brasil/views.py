@@ -819,6 +819,8 @@ def user_criar_loja_sucesso(request):
 
 @login_required
 def user_loja_dados(request):
+    if request.user.is_superuser == True or request.user.is_staff == True:
+        return redirect('index')
     cep = request.GET.get("cep")
     url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
     headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
@@ -859,6 +861,8 @@ def user_loja_dados(request):
 
 @login_required
 def user_loja_dados_sucesso(request):
+    if request.user.is_superuser == True or request.user.is_staff == True:
+        return redirect('index')
     return render(request, 'user_loja_dados_sucesso.html')
 
 @login_required
@@ -933,6 +937,8 @@ def user_adicionar_imagem(request, cat, id):
 
 @login_required
 def user_adicionar_imagem_sucesso(request):
+    if request.user.is_superuser == True or request.user.is_staff == True:
+        return redirect('index')
     return render(request, 'user_adicionar_imagem_sucesso.html')
 
 @login_required
@@ -956,4 +962,6 @@ def user_remover_loja(request, cat, id):
 
 @login_required
 def user_remover_loja_sucesso(request):
+    if request.user.is_superuser == True or request.user.is_staff == True:
+        return redirect('index')
     return render(request, 'user_remover_loja_sucesso.html')
