@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Atualização bem-sucedida</h2>
+{% endblock title %}
+
+{% block content %}
+<a href="{% url 'user_index' %}"><button type="button" class="btn btn-success">Volte para tela inicial</button></a>
+{% endblock %}
