@@ -791,7 +791,7 @@ def user_criar_loja(request):
         des = db.collection(f'users').where('email','==',f'{email}').stream()
         pka = [print(f'{x.id}') for x in des]
         for y in pka:
-            fad = db.collection(f'users/{y}/lojas').document()
+            fad = db.collection(f'users/{y}/lojas').document(f"{y}")
             fad.set({
                     'name': f'{name}',
                     'categoria': f'{categoria}',
