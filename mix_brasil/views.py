@@ -837,7 +837,7 @@ def user_loja_dados(request):
     if request.method == 'POST':
         name = request.POST['name']
         whatsapp = request.POST['whatsapp']
-        trabalhe_conosco = request.POST['trabalhe_conosco']
+        trabalheconosco = request.POST['trabalheconosco']
         price = request.POST['price']
         promocao = request.POST['promocao']
         cidade = request.POST['cidade']
@@ -848,7 +848,7 @@ def user_loja_dados(request):
         can.update({
                 'name': f'{name}',
                 'whatsapp': f'{whatsapp}',
-                'trabalhe_conosco': f'{trabalhe_conosco}',
+                'trabalhe_conosco': f'{trabalheconosco}',
                 'price': price,
                 'promocao': f"{promocao}",
                 'cidade': f"{cidade}",
