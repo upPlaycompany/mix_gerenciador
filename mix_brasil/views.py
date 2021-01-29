@@ -941,7 +941,9 @@ def user_remover_loja(request, cat, id):
         return redirect('index')
     if request.method == 'POST':
         email = request.user.email
-        db.collection(f'categorias/{cat}/lojas').document(f'{id}').delete()
+        papap = db.collection(f"categorias/{cat}/lojas").where('uemail','==',f'{email}').stream()
+        pas = [{'id': x.id} for x in papap]
+        db.collection(f'categorias/{cat}/lojas').document(f"{pas[0]['id']}").delete()
         exa1 = db.collection(f'users').where('email','==',f'{email}').stream()
         ex1 = [{'id': x.id} for x in exa1]
         exc = db.collection(f"users/{ex1[0]['id']}/loja").where('uemail','==',f'{email}').stream()
