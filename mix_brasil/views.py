@@ -832,13 +832,6 @@ def user_loja_dados(request):
     xay = len(dec)
     [dec[x].update(d2[x]) for x in range(xay)]
     [dec[x].update(cde) for x in range(xay)]
-    con = db.collection(f"users/{x['id']}/lojas").where('uemail', '==', f'{email}').stream()
-    abc = [{'id': x.id} for x in con]
-    cen = db.collection(f"users/{x['id']}/lojas").where('uemail', '==', f'{email}').stream()
-    xyz = [x.to_dict() for x in cen]
-    la = len(abc)
-    [abc[la].update(xyz[la]) for x in range(la)]
-    [abc[la].update(cde) for x in range(la)]
     if request.method == 'POST':
         name = request.POST['name']
         categoria = request.POST['categoria']
@@ -850,6 +843,13 @@ def user_loja_dados(request):
         estado = request.POST['estado']
         price = price.replace(',', '.')
         price = float(price)
+        con = db.collection(f"users/{dec['id']}/lojas").where('uemail', '==', f'{email}').stream()
+        abc = [{'id': x.id} for x in con]
+        cen = db.collection(f"users/{dec['id']}/lojas").where('uemail', '==', f'{email}').stream()
+        xyz = [x.to_dict() for x in cen]
+        la = len(abc)
+        [abc[x].update(xyz[x]) for x in range(la)]
+        [abc[x].update(cde) for x in range(la)]
         for x in abc:
             can = db.collection(f"users/{x['id']}/lojas").document(f"{x['id']}")
             can.update({
