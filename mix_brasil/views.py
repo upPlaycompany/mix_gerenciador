@@ -791,7 +791,7 @@ def user_criar_loja(request):
         des = db.collection(f'users').where('email','==',f'{email}').stream()
         pka = [print(f'{x.id}') for x in des]
         for y in pka:
-            fad = db.collection(f'users/{y}/lojas').document(f"{y}")
+            fad = db.collection(f'users/{y}/loja').document(f"{y}")
             fad.set({
                     'name': f'{name}',
                     'categoria': f'{categoria}',
@@ -826,10 +826,10 @@ def user_loja_dados(request):
     cde = link.json()
     email = request.user.email
     dados = db.collection('users').where('email', '==', f'{email}').stream()
-    y = [print('{}'.format(x.id)) for x in dados]
-    con = db.collection(f"users/{y[0]}/lojas").where('uemail', '==', f'{email}').stream()
+    y = [{'id': x.id} for x in dados]
+    con = db.collection(f"users/{y[0]['id']}/loja").where('uemail', '==', f'{email}').stream()
     abc = [{'id': x.id} for x in con]
-    cen = db.collection(f"users/{y[0]}/lojas").where('uemail', '==', f'{email}').stream()
+    cen = db.collection(f"users/{y[0]['id']}/loja").where('uemail', '==', f'{email}').stream()
     xyz = [x.to_dict() for x in cen]
     la = len(abc)
     [abc[x].update(xyz[x]) for x in range(la)]
@@ -844,7 +844,7 @@ def user_loja_dados(request):
         estado = request.POST['estado']
         price = price.replace(',', '.')
         price = float(price)
-        can = db.collection(f"users/{abc[0]['id']}/lojas").document(f"{abc[0]['id']}")
+        can = db.collection(f"users/{abc[0]['id']}/loja").document(f"{abc[0]['id']}")
         can.update({
                 'name': f'{name}',
                 'whatsapp': f'{whatsapp}',
