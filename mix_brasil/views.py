@@ -83,10 +83,8 @@ def criar_usuario(request):
         headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
         link = requests.get(url, headers=headers, verify=False)
         cde = link.json()
-        auth.create_user(
-                email=f'{email}', password=f'{password}')
-        ussu = auth.get_user_by_email(f'{email}')
-        dados = db.collection('users').document(ussu.uid)
+        
+        dados = db.collection('users').document()
         dados.set({
             'name': f'{name}',
             'phone': f'{phone}',
@@ -867,7 +865,6 @@ def user_loja_dados_sucesso(request):
 
 @login_required
 def user_adicionar_imagem(request, cat, id):
-
     if request.user.is_superuser == True or request.user.is_staff == True:
         return redirect('index')
     email = request.user.email
