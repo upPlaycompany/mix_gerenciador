@@ -79,11 +79,11 @@ def criar_usuario(request):
         email = request.POST['email']
         password = request.POST['password']
         cep = request.POST['cep']
-        url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
-        headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
-        link = requests.get(url, headers=headers, verify=False)
-        cde = link.json()
-        
+        if cep != "":
+            url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+            headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+            link = requests.get(url, headers=headers, verify=False)
+            cde = link.json()
         dados = db.collection('users').document()
         dados.set({
             'name': f'{name}',
@@ -127,10 +127,11 @@ def usuario_dados(request, id):
     if request.user.is_superuser == False or request.user.is_staff == False:
         return redirect('user_index')
     cep = request.GET.get("cep")
-    url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
-    headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
-    link = requests.get(url, headers=headers, verify=False)
-    cde = link.json()
+    if cep != "":
+        url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+        headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+        link = requests.get(url, headers=headers, verify=False)
+        cde = link.json()
     dados = db.collection(f'users').document(f'{id}')
     dad = dados.get()
     abc = dad.to_dict()
@@ -236,10 +237,11 @@ def criar_loja(request, id):
         price = price.replace(',', '.')
         price = float(price)
         dados = db.collection(f'categorias/{id}/lojas').document()
-        url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
-        headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
-        link = requests.get(url, headers=headers, verify=False)
-        cde = link.json()
+        if cep != "":
+            url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+            headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+            link = requests.get(url, headers=headers, verify=False)
+            cde = link.json()
         dados.set({
             'name': f'{name}',
             'whatsapp': f'{whatsapp}',
@@ -317,10 +319,11 @@ def lojas_dados(request, id, nome, cod):
     if request.user.is_superuser == False or request.user.is_staff == False:
         return redirect('user_index')
     cep = request.GET.get("cep")
-    url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
-    headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
-    link = requests.get(url, headers=headers, verify=False)
-    cde = link.json()
+    if cep != "":
+        url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+        headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+        link = requests.get(url, headers=headers, verify=False)
+        cde = link.json()
     dados = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{nome}').stream()
     abc = [x.to_dict() for x in dados]
     dados2 = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{nome}').stream()
@@ -499,10 +502,11 @@ def criar_desapego(request, id):
         count = db.collection(f'desapego/{id}/desapegos').stream()
         xxx = len([x.id for x in count])
         dados = db.collection(f'desapego/{id}/desapegos').document()
-        url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
-        headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
-        link = requests.get(url, headers=headers, verify=False)
-        cde = link.json()
+        if cep != "":
+            url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+            headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+            link = requests.get(url, headers=headers, verify=False)
+            cde = link.json()
         dados.set({
             'anunciante': f'{anunciante}',
             'descricao': f'{descricao}',
@@ -577,10 +581,11 @@ def desapegos_dados(request, id, nome, cod):
     if request.user.is_superuser == False or request.user.is_staff == False:
         return redirect('user_index')
     cep = request.GET.get("cep")
-    url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
-    headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
-    link = requests.get(url, headers=headers, verify=False)
-    cde = link.json()
+    if cep != "":
+        url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+        headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+        link = requests.get(url, headers=headers, verify=False)
+        cde = link.json()
     dados = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{nome}').stream()
     abc = [x.to_dict() for x in dados]
     dados2 = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{nome}').stream()
@@ -757,10 +762,11 @@ def user_criar_loja(request):
         price = price.replace(',', '.')
         price = float(price)
         dados = db.collection(f'categorias/{categoria}/lojas').document()
-        url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
-        headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
-        link = requests.get(url, headers=headers, verify=False)
-        cde = link.json()
+        if cep != "":
+            url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+            headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+            link = requests.get(url, headers=headers, verify=False)
+            cde = link.json()
         dados.set({
             'name': f'{name}',
             'categoria': f'{categoria}',
@@ -820,10 +826,11 @@ def user_loja_dados(request):
     if request.user.is_superuser == True or request.user.is_staff == True:
         return redirect('index')
     cep = request.GET.get("cep")
-    url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
-    headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
-    link = requests.get(url, headers=headers, verify=False)
-    cde = link.json()
+    if cep != "":
+        url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+        headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+        link = requests.get(url, headers=headers, verify=False)
+        cde = link.json()
     email = request.user.email
     dados = db.collection('users').where('email', '==', f'{email}').stream()
     y = [{'id': x.id} for x in dados]
