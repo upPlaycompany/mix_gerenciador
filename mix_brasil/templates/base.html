@@ -169,15 +169,14 @@
         </div>
     </div>
 </div>
-
+{% for key in t %}
 <div class="left-side-bar">
     <div class="brand-logo">
-        {% for key in t %}
         <a href="{% url 'index' token=key %}">
             <img src="{% static 'src/images/logo-mix-2.png' %}" alt="" class="dark-logo">
             <img src="{% static 'src/images/logo-mix-2.png' %}" alt="" class="light-logo">
         </a>
-        {% endfor %}
+
         <div class="close-sidebar" data-toggle="left-sidebar-close">
             <i class="ion-close-round"></i>
         </div>
@@ -234,7 +233,7 @@
         </div>
     </div>
 </div>
-
+{% endfor %}
 <div class="mobile-menu-overlay"></div>
 
 <div class="main-container">
