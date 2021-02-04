@@ -177,38 +177,15 @@
     </div>
     <div class="menu-block customscroll">
         <div class="sidebar-menu">
+
             <ul id="accordion-menu">
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
                         <span class="micon dw dw-list3"></span><span class="mtext">Lojas</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="{% url 'categoria_listagem' %}">Listagem de categorias</a></li>
-
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-list3"></span><span class="mtext">Desapegos</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="{% url 'categoria_desapego_listagem' %}">Listagem de categorias</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-list3"></span><span class="mtext">Usuários</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="{% url 'usuario_listagem' %}">Listagem de usuários</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-list3"></span><span class="mtext">Notificações</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="#">Consulta</a></li>
+                        <li><a href="{% url 'user_criar_loja' %}">Criar loja</a></li>
+                        <li><a href="{% url 'user_loja_dados' %}">Atualizar dados da loja</a></li>
                     </ul>
                 </li>
             </ul>

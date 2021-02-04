@@ -12,6 +12,7 @@ from firebase_admin import firestore
 from firebase_admin import storage
 from firebase_admin import auth
 import psycopg2
+from django.contrib import auth as autent
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -56,6 +57,8 @@ def logar(request):
             con = [{'id': x.id} for x in consulta]
             for x in con:
                 if str(x['id']) == user['localId']:
+                    session_id = user['localId']
+                    request.session['uid'] = str(session_id)
                     return HttpResponseRedirect(next)
                 else:
                     return redirect('login_erro')
@@ -64,6 +67,8 @@ def logar(request):
             con = [{'id': x.id} for x in consulta]
             for x in con:
                 if str(x['id']) == user['localId']:
+                    session_id = user['localId']
+                    request.session['uid'] = str(session_id)
                     return HttpResponseRedirect(next_user)
                 else:
                     return redirect('login_erro')
