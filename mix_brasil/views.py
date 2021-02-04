@@ -57,8 +57,7 @@ def logar(request):
             con = [{'id': x.id} for x in consulta]
             for x in con:
                 if str(x['id']) == user['localId']:
-                    session_id = user['localId']
-                    request.session['uid'] = str(session_id)
+
                     return HttpResponseRedirect(next)
                 else:
                     return redirect('login_erro')
@@ -67,8 +66,7 @@ def logar(request):
             con = [{'id': x.id} for x in consulta]
             for x in con:
                 if str(x['id']) == user['localId']:
-                    session_id = user['localId']
-                    request.session['uid'] = str(session_id)
+
                     return HttpResponseRedirect(next_user)
                 else:
                     return redirect('login_erro')
