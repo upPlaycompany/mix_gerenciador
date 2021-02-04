@@ -85,7 +85,7 @@ def index(request, token):
     for x in usa:
         if str(x['email']) != user.email:
             return redirect('user_index')
-    return render(request, 'index.html', {'t': key})
+    return render(request, 'index.html', key)
 
 def base(request, token):
     key = str(token)
@@ -222,7 +222,7 @@ def atualizar_usuario_sucesso(request, token):
     for x in usa:
         if str(x['email']) != user.email:
             return redirect('user_index')
-    return render(request, 'atualizar_usuario_sucesso.html', {'t': key})
+    return render(request, 'atualizar_usuario_sucesso.html', key)
 
 def remover_usuario(request, token, id, e):
     key = str(token)
@@ -238,7 +238,7 @@ def remover_usuario(request, token, id, e):
         db.collection(f'users').document(f'{id}').delete()
         auth.delete_user(uid=id)
         return redirect('remover_usuario_sucesso')
-    return render(request, 'remover_usuario.html', {'t': key})
+    return render(request, 'remover_usuario.html', key)
 
 def remover_usuario_sucesso(request, token):
     key = str(token)
@@ -248,7 +248,7 @@ def remover_usuario_sucesso(request, token):
     for x in usa:
         if str(x['email']) != user.email:
             return redirect('user_index')
-    return render(request, 'remover_usuario_sucesso.html', {'t': key})
+    return render(request, 'remover_usuario_sucesso.html', key)
 
 def adicionar_imagem_perfil(request, token, id):
     key = str(token)
@@ -276,7 +276,7 @@ def adicionar_imagem_perfil(request, token, id):
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
         return redirect('adicionar_imagem_perfil_sucesso')
-    return render(request, 'adicionar_imagem_perfil.html', {'t': key})
+    return render(request, 'adicionar_imagem_perfil.html', key)
 
 def criar_loja(request, token, id):
     key = str(token)
@@ -344,7 +344,7 @@ def criar_loja(request, token, id):
                     'estado': f"{n['estado']['sigla']}"
                 })
         return redirect('criar_loja_sucesso')
-    return render(request, 'criar_loja.html', {'t': key})
+    return render(request, 'criar_loja.html', key)
 
 def criar_loja_sucesso(request, token):
     key = str(token)
@@ -354,7 +354,7 @@ def criar_loja_sucesso(request, token):
     for x in usa:
         if str(x['email']) != user.email:
             return redirect('user_index')
-    return render(request, 'criar_loja_sucesso.html', {'t': key})
+    return render(request, 'criar_loja_sucesso.html', key)
 
 def categoria_listagem(request, token):
     key = str(token)
@@ -494,7 +494,7 @@ def atualizar_loja_sucesso(request, token):
     for x in usa:
         if str(x['email']) != user.email:
             return redirect('user_index')
-    return render(request, 'atualizar_loja_sucesso.html', {'t': key})
+    return render(request, 'atualizar_loja_sucesso.html', key)
 
 def adicionar_imagens_loja(request, token, id, cod):
     key = str(token)
@@ -536,7 +536,7 @@ def adicionar_imagens_loja(request, token, id, cod):
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
         return redirect('adicionar_imagens_loja_sucesso')
-    return render(request, 'adicionar_imagens_loja.html', {'t': key})
+    return render(request, 'adicionar_imagens_loja.html', key)
 
 def adicionar_imagens_loja_sucesso(request, token):
     key = str(token)
@@ -546,7 +546,7 @@ def adicionar_imagens_loja_sucesso(request, token):
     for x in usa:
         if str(x['email']) != user.email:
             return redirect('user_index')
-    return render(request, 'adicionar_imagens_loja_sucesso.html', {'t': key})
+    return render(request, 'adicionar_imagens_loja_sucesso.html', key)
 
 def remover_imagens_loja(request, token, id, name, cod):
     key = str(token)
@@ -588,7 +588,7 @@ def remover_imagens_loja_sucesso(request, token):
     for x in usa:
         if str(x['email']) != user.email:
             return redirect('user_index')
-    return render(request, 'remover_imagens_loja_sucesso.html', {'t': key})
+    return render(request, 'remover_imagens_loja_sucesso.html', key)
 
 def remover_loja(request, token, id, cod):
     key = str(token)
@@ -602,7 +602,7 @@ def remover_loja(request, token, id, cod):
         db.collection(f'categorias/{id}/lojas').document(f'{cod}').delete()
         db.collection('destaque_home').where('lid', '==', f'{cod}').delete()
         return redirect('remover_loja_sucesso')
-    return render(request, 'remover_loja.html', {'t': key})
+    return render(request, 'remover_loja.html', key)
 
 def remover_loja_sucesso(request, token):
     key = str(token)
@@ -612,7 +612,7 @@ def remover_loja_sucesso(request, token):
     for x in usa:
         if str(x['email']) != user.email:
             return redirect('user_index')
-    return render(request, 'remover_loja_sucesso.html', {'t': key})
+    return render(request, 'remover_loja_sucesso.html', key)
 
 def criar_desapego(request, token, id):
     key = str(token)
@@ -681,7 +681,7 @@ def criar_desapego(request, token, id):
                     'estado': f"{n['estado']['sigla']}",
                 })
         return redirect('criar_loja_sucesso')
-    return render(request, 'criar_desapego.html', {'t': key})
+    return render(request, 'criar_desapego.html', key)
 
 def criar_desapego_sucesso(request, token):
     key = str(token)
@@ -691,7 +691,7 @@ def criar_desapego_sucesso(request, token):
     for x in usa:
         if str(x['email']) != user.email:
             return redirect('user_index')
-    return render(request, 'criar_desapego_sucesso.html', {'t': key})
+    return render(request, 'criar_desapego_sucesso.html', key)
 
 def categoria_desapego_listagem(request, token):
     key = str(token)
@@ -834,7 +834,7 @@ def atualizar_desapego_sucesso(request, token):
             return redirect('user_index')
     if request.user.is_superuser == False or request.user.is_staff == False:
         return redirect('user_index')
-    return render(request, 'atualizar_desapego_sucesso.html', {'t': key})
+    return render(request, 'atualizar_desapego_sucesso.html', key)
 
 def adicionar_imagens_desapego(request, token, id, cod):
     key = str(token)
@@ -862,7 +862,7 @@ def adicionar_imagens_desapego(request, token, id, cod):
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
         return redirect('adicionar_imagens_desapego_sucesso')
-    return render(request, 'adicionar_imagens_desapego.html', {'t': key})
+    return render(request, 'adicionar_imagens_desapego.html', key)
 
 
 def adicionar_imagens_desapego_sucesso(request, token):
@@ -873,7 +873,7 @@ def adicionar_imagens_desapego_sucesso(request, token):
     for x in usa:
         if str(x['email']) != user.email:
             return redirect('user_index')
-    return render(request, 'adicionar_imagens_desapego_sucesso.html', {'t': key})
+    return render(request, 'adicionar_imagens_desapego_sucesso.html', key)
 
 def remover_imagens_desapego(request, token, id, name, cod):
     key = str(token)
@@ -902,7 +902,7 @@ def remover_imagens_desapego_sucesso(request, token):
     for x in usa:
         if str(x['email']) != user.email:
             return redirect('user_index')
-    return render(request, 'remover_imagens_desapego_sucesso.html', {'t': key})
+    return render(request, 'remover_imagens_desapego_sucesso.html', key)
 
 def remover_desapego(request, token, id, cod):
     key = str(token)
@@ -916,7 +916,7 @@ def remover_desapego(request, token, id, cod):
         db.collection(f'desapego/{id}/desapegos').document(f'{cod}').delete()
         db.collection('destaque_desapego').where('did', '==', f'{cod}').delete()
         return redirect('remover_desapego_sucesso')
-    return render(request, 'remover_desapego.html', {'t': key})
+    return render(request, 'remover_desapego.html', key)
 
 def remover_desapego_sucesso(request, token):
     key = str(token)
@@ -926,7 +926,7 @@ def remover_desapego_sucesso(request, token):
     for x in usa:
         if str(x['email']) != user.email:
             return redirect('user_index')
-    return render(request, 'remover_desapego_sucesso.html', {'t': key})
+    return render(request, 'remover_desapego_sucesso.html', key)
 
 
 #PARTE DE USUARIO
