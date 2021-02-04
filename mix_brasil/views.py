@@ -52,7 +52,7 @@ def logar(request):
         options = request.POST['options']
         user = authent.sign_in_with_email_and_password(email, password)
         if options == 'admin':
-            consulta = db.collecion('admin').where('email', '==', f'{email}').stream()
+            consulta = db.collection('admin').where('email', '==', f'{email}').stream()
             con = [{'id': x.id} for x in consulta]
             for x in con:
                 if str(x.id) == user['localId']:
@@ -60,7 +60,7 @@ def logar(request):
                 else:
                     return redirect('login_erro')
         elif options == 'user':
-            consulta = db.collecion('users').where('email', '==', f'{email}').stream()
+            consulta = db.collection('users').where('email', '==', f'{email}').stream()
             con = [{'id': x.id} for x in consulta]
             for x in con:
                 if str(x.id) == user['localId']:
