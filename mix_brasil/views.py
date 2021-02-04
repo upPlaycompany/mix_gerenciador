@@ -23,27 +23,41 @@ from django.shortcuts import render, redirect, get_object_or_404
 import pandas as pd
 import pprint
 
+
+config = {
+  "type": "service_account",
+  "project_id": "mix-brasil",
+  "private_key_id": "236e696d8c82caf097bb662e2a1334cff8dadf5c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC+qVxdE8wZH9R3\nCxtUuhtd6HD7r9AuM3s8VG6gsN1+C0PYF21drIdAIwj820D73/In88o5/ZrdLdRP\nF/xUXY2WEKVEbz5TJb27rKIIGXl6KLNdUjLRERROQedeQovxcgAEenclN4m/A6vC\n0eDrEDUr5IqnbqyRklcKP4hnt+0d5/EqRt7V37FEWy82cqhxO55ZmuaF/SnaJkpL\n6g9rJkgDvIhkxuV0pVBWXjygvmoQkVmKRO+IsvItjPWdjbXzmUl8uRJDf/5w4yim\ntpmkJkNsMHwbd1/kYY3R88P1etkdvvofK0LHWsRjhsALnU1jxxzP4GnGDqBIZMsv\nowrp0LyZAgMBAAECggEABfsiXX2d3xJla/wWVga2DdC5PZ3+6/obtTFpXINb2WTB\nUrWubbw4LHIE6ci3fcdBTZFLYF0VJvfVc4s7NErQgpsAUjiipgFWtbzVQueIrOU6\ntjRaSX5tioRs/YMdKHx05W8RjoJy4OH8uQJ0Oa+DGX7EfjrdsT3b2uOSE/3cM35J\npkeASjqAUZGBXf3hUb/9Pk8EQ38RPzvgT0se51ub3ko6cy7PrkX6jEn7DQyA35GH\n2/66LIWc93izrODri55R4E2/7AZQPVkfnN6cwzmVOY11zOdXne5PSmkWS9NFXRhR\nluqI0gD+l2oLLRXSdLXurUbloJ0GzRfSYfIIORVw4QKBgQDu5RB1D09WTIQwS7FR\nCyHKoKDfRGLfn54EWKX8r/IDM1N9H3mmZBY+Hyw3oiMf7JpkEOzlQ3Nsl+FVXK1x\n6OCyqfbggsmr/fW/auRA3/G4qpD6GHGUwtzlf2ihDMYBCUTBGj6FP3RH/Cv8eVXP\nd+bEaVy/mCkFa7Myoap0RhwxuQKBgQDMUC7LD3NKEj6i9V76RZvv2796k6rqE4q2\nJ2L9/E/Gf/0d1d6UXeHacYety3/bonGHISQX/8K8yKAS7WtdjGFE82YJP82u/qg+\nkgpFfGQteRz3OAETHeqM7nWRhp8/SyqNijWSRUIDQYeseOSKAu07UHMFn4zNA392\nrsMJ9nnR4QKBgE/1DRgRAr3gqFG90+BLOIkoUA/KRMmSFAJiZVP406iskiIL2dyO\nHT+3kUYhl14FA/vACnoFpGlRQFMgzNCWYDaMWpv0Smmte4YQ0crA6ZekRxfd/I4M\n1oBdr3hP3SnVn1R+YzSX82Rwi4xaVBU3jV5p4WgjFn/A915X68Q0/xTJAoGBAI73\ncLbw2ci0GZZoQoy4VtSxnTxFxmxDPmYWC4QUoTISb2kINdb2FsuHc9yeMJrdAbn/\n68TLWFZHwRNdhSqRx6K6+uRv/Bp+4fXetUdIMsVLIYSwcLgS0ATL/ALYA+kDTQR7\n+N6gjf+/RBPhCHK2d5Bwy/vcWGdBEllXEu2OxlGhAoGBAJzjl2xrZ4bCGHTZZVs5\nn1SGmPUX7lKW83ChtReLfXsu0My0TYoZmTsr8GFBHZlLAfdOirZOBFHljZzJD/xJ\nEmXMfgAls9B9jceIuiU8Y2alDs8ZXILMxivyVlHtL99oz3yoN/eUcclNn2FCIsOy\n0kBKqd1VwuYomz+bolHtM/tg\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-ft7nj@mix-brasil.iam.gserviceaccount.com",
+  "client_id": "106449342467082663798",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ft7nj%40mix-brasil.iam.gserviceaccount.com"
+}
+
+
 cred = credentials.Certificate("/app/mix_brasil/credencial.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 sto = storage.bucket('mix-brasil.appspot.com')
-
+firebase = pyrebase.initialize_app(config)
+auth = firebase.auth()
 
 def logar(request):
     next = request.GET.get('next', '/index/')
     next_user = request.GET.get('next_user', '/user_index/')
     if request.method == "POST":
-        username = request.POST['username']
+        email = request.POST['email']
         password = request.POST['password']
         options = request.POST['options']
-        user = authenticate(username=username, password=password)
-        if options == 'admin' and user.is_superuser == True and user.is_staff == True:
-            if user is not None:
-                login(request, user)
+        user = auth.sign_in_with_email_and_password(email, password)
+        if options == 'admin':
+            if str(user['idToken']) != "":
                 return HttpResponseRedirect(next)
-        elif options == 'user' and user.is_superuser == False and user.is_staff == False:
-            if user is not None:
-                login(request, user)
+        elif options == 'user':
+            if str(user['idToken']) != "":
                 return HttpResponseRedirect(next_user)
         else:
             return redirect('login_erro')
@@ -53,20 +67,13 @@ def logar(request):
 def login_erro(request):
     return render(request, 'login_erro.html')
 
-@login_required
 def index(request):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     return render(request, 'index.html')
 
-@login_required
 def user_index(request):
-    if request.user.is_superuser == True or request.user.is_staff == True:
-        return redirect('index')
     return render(request, 'user_index.html')
 
 
-@login_required
 def deslogar(request):
     logout(request)
     return HttpResponseRedirect("/")
@@ -112,20 +119,14 @@ def criar_usuario(request):
 def criar_usuario_sucesso(request):
     return render(request, 'criar_usuario_sucesso.html')
 
-@login_required
 def usuario_listagem(request):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     usuarios = db.collection('users').stream()
     doz = [x.id for x in usuarios]
     ident = db.collection('users').stream()
     docs = [x.to_dict() for x in ident]
     return render(request, 'usuario_listagem.html', {'lista': docs, 'lista_id': doz})
 
-@login_required
 def usuario_dados(request, id):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     cep = request.GET.get("cep")
     if cep != "":
         url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
@@ -171,16 +172,10 @@ def usuario_dados(request, id):
     return render(request, 'usuario_dados.html', {'lista': abc})
 
 
-@login_required
 def atualizar_usuario_sucesso(request):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     return render(request, 'atualizar_usuario_sucesso.html')
 
-@login_required
 def remover_usuario(request, id, e):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     if request.method == 'POST':
         user = User.objects.get(email=e)
         user.delete()
@@ -189,16 +184,10 @@ def remover_usuario(request, id, e):
         return redirect('remover_usuario_sucesso')
     return render(request, 'remover_usuario.html')
 
-@login_required
 def remover_usuario_sucesso(request):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     return render(request, 'remover_usuario_sucesso.html')
 
-@login_required
 def adicionar_imagem_perfil(request, id):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     if request.method == 'POST':
         img = request.FILES['img']
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
@@ -219,10 +208,7 @@ def adicionar_imagem_perfil(request, id):
         return redirect('adicionar_imagem_perfil_sucesso')
     return render(request, 'adicionar_imagem_perfil.html')
 
-@login_required
 def criar_loja(request, id):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     if request.method == 'POST':
         name = request.POST['name']
         whatsapp = request.POST['whatsapp']
@@ -283,26 +269,17 @@ def criar_loja(request, id):
         return redirect('criar_loja_sucesso')
     return render(request, 'criar_loja.html')
 
-@login_required
 def criar_loja_sucesso(request):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     return render(request, 'criar_loja_sucesso.html')
 
-@login_required
 def categoria_listagem(request):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     categorias = db.collection('categorias').stream()
     doz = [x.id for x in categorias]
     ident = db.collection('categorias').stream()
     docs = [x.to_dict() for x in ident]
     return render(request, 'categoria_listagem.html', {'lista': docs, 'lista_id': doz})
 
-@login_required
 def lojas_listagem(request, id):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     lojas = db.collection(f'categorias/{id}/lojas').stream()
     docs = [{'id': x.id} for x in lojas]
     lojas2 = db.collection(f'categorias/{id}/lojas').stream()
@@ -314,10 +291,7 @@ def lojas_listagem(request, id):
     [docs[x].update(categoria) for x in range(a)]
     return render(request, 'lojas_listagem.html', {'lista': docs, 'order': dzz})
 
-@login_required
 def lojas_dados(request, id, nome, cod):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     cep = request.GET.get("cep")
     if cep != "":
         url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
@@ -407,17 +381,12 @@ def lojas_dados(request, id, nome, cod):
         return redirect('atualizar_loja_sucesso')
     return render(request, 'lojas_dados.html', {'lista': dec})
 
-@login_required
 def atualizar_loja_sucesso(request):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     return render(request, 'atualizar_loja_sucesso.html')
 
-@login_required
 def adicionar_imagens_loja(request, id, cod):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     if request.method == 'POST':
+        tipo_imagem = request.POST['tipo_imagem']
         img = request.FILES['img']
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
         imagem_mix.save()
@@ -429,61 +398,69 @@ def adicionar_imagens_loja(request, id, cod):
         )
         url = str(url)
         formform = db.collection(f'categorias/{id}/lojas').document(f'{cod}')
-        formform.update({
-            'img': firestore.ArrayUnion([f'{url}'])
-        })
+        if tipo_imagem == 'normal':
+            formform.update({
+                    'img': firestore.ArrayUnion([f'{url}'])
+            })
+        elif tipo_imagem == 'ofertas':
+            formform.update({
+                'img_ofertas': firestore.ArrayUnion([f'{url}'])
+            })
+        elif tipo_imagem == 'destacados':
+            formform.update({
+                'img_destacados': firestore.ArrayUnion([f'{url}'])
+            })
+        elif tipo_imagem == 'cupons':
+            formform.update({
+                'img_cupons': firestore.ArrayUnion([f'{url}'])
+            })
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
         return redirect('adicionar_imagens_loja_sucesso')
     return render(request, 'adicionar_imagens_loja.html')
 
-@login_required
 def adicionar_imagens_loja_sucesso(request):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     return render(request, 'adicionar_imagens_loja_sucesso.html')
 
-@login_required
 def remover_imagens_loja(request, id, name, cod):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     dados = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{name}').stream()
     docs = [x.to_dict() for x in dados]
     if request.method == 'POST':
         imagem = request.POST['imagem']
         formform = db.collection(f'categorias/{id}/lojas').document(f'{cod}')
-        formform.update({
-            'img': firestore.ArrayRemove([f'{imagem}'])
-        })
+        if tipo_imagem == 'normal':
+            formform.update({
+                    'img': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'ofertas':
+            formform.update({
+                'img_ofertas': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'destacados':
+            formform.update({
+                'img_destacados': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'cupons':
+            formform.update({
+                'img_cupons': firestore.ArrayRemove([f'{imagem}'])
+            })
         return redirect('remover_imagens_loja_sucesso')
     return render(request, 'remover_imagens_loja.html', {'lista': docs})
 
-@login_required
 def remover_imagens_loja_sucesso(request):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     return render(request, 'remover_imagens_loja_sucesso.html')
 
-@login_required
 def remover_loja(request, id, cod):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     if request.method == 'POST':
         db.collection(f'categorias/{id}/lojas').document(f'{cod}').delete()
         db.collection('destaque_home').where('lid', '==', f'{cod}').delete()
         return redirect('remover_loja_sucesso')
     return render(request, 'remover_loja.html')
 
-@login_required
 def remover_loja_sucesso(request):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     return render(request, 'remover_loja_sucesso.html')
 
-@login_required
 def criar_desapego(request, id):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     if request.method == 'POST':
         anunciante = request.POST['anunciante']
         descricao = request.POST['descricao']
@@ -547,24 +524,16 @@ def criar_desapego(request, id):
 
 @login_required
 def criar_desapego_sucesso(request):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     return render(request, 'criar_desapego_sucesso.html')
 
-@login_required
 def categoria_desapego_listagem(request):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     desapegos = db.collection('desapego').stream()
     doz = [x.id for x in desapegos]
     ident = db.collection('desapego').stream()
     docs = [x.to_dict() for x in ident]
     return render(request, 'categoria_desapego_listagem.html', {'lista': docs, 'lista_id': doz})
 
-@login_required
 def desapegos_listagem(request, id):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     desapegos = db.collection(f'desapego/{id}/desapegos').stream()
     docs = [{'id': x.id} for x in desapegos]
     lojas2 = db.collection(f'desapego/{id}/desapegos').stream()
@@ -576,10 +545,7 @@ def desapegos_listagem(request, id):
     [docs[x].update(categoria) for x in range(a)]
     return render(request, 'desapegos_listagem.html', {'lista': docs, 'order': dzz})
 
-@login_required
 def desapegos_dados(request, id, nome, cod):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     cep = request.GET.get("cep")
     if cep != "":
         url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
@@ -670,16 +636,12 @@ def desapegos_dados(request, id, nome, cod):
         return redirect('atualizar_desapego_sucesso')
     return render(request, 'desapegos_dados.html', {'lista': dec})
 
-@login_required
 def atualizar_desapego_sucesso(request):
     if request.user.is_superuser == False or request.user.is_staff == False:
         return redirect('user_index')
     return render(request, 'atualizar_desapego_sucesso.html')
 
-@login_required
 def adicionar_imagens_desapego(request, id, cod):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     if request.method == 'POST':
         img = request.FILES['img']
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
@@ -701,16 +663,10 @@ def adicionar_imagens_desapego(request, id, cod):
     return render(request, 'adicionar_imagens_desapego.html')
 
 
-@login_required
 def adicionar_imagens_desapego_sucesso(request):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     return render(request, 'adicionar_imagens_desapego_sucesso.html')
 
-@login_required
 def remover_imagens_desapego(request, id, name, cod):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     dados = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
     docs = [x.to_dict() for x in dados]
     if request.method == 'POST':
@@ -722,34 +678,22 @@ def remover_imagens_desapego(request, id, name, cod):
         return redirect('remover_imagens_desapego_sucesso')
     return render(request, 'remover_imagens_desapego.html', {'lista': docs})
 
-@login_required
 def remover_imagens_desapego_sucesso(request):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     return render(request, 'remover_imagens_desapego_sucesso.html')
 
-@login_required
 def remover_desapego(request, id, cod):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     if request.method == 'POST':
         db.collection(f'desapego/{id}/desapegos').document(f'{cod}').delete()
         db.collection('destaque_desapego').where('did', '==', f'{cod}').delete()
         return redirect('remover_desapego_sucesso')
     return render(request, 'remover_desapego.html')
 
-@login_required
 def remover_desapego_sucesso(request):
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     return render(request, 'remover_desapego_sucesso.html')
 
 
 #PARTE DE USUARIO
-@login_required
 def user_criar_loja(request):
-    if request.user.is_superuser == True or request.user.is_staff == True:
-        return redirect('index')
     if request.method == 'POST':
         email = request.user.email
         name = request.POST['name']
@@ -815,16 +759,10 @@ def user_criar_loja(request):
         return redirect('user_criar_loja_sucesso')
     return render(request, 'user_criar_loja.html')
 
-@login_required
 def user_criar_loja_sucesso(request):
-    if request.user.is_superuser == True or request.user.is_staff == True:
-        return redirect('index')
     return render(request,'user_criar_loja_sucesso.html')
 
-@login_required
 def user_loja_dados(request):
-    if request.user.is_superuser == True or request.user.is_staff == True:
-        return redirect('index')
     cep = request.GET.get("cep")
     if cep != "":
         url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
@@ -864,16 +802,12 @@ def user_loja_dados(request):
         return redirect('user_loja_dados_sucesso')
     return render(request, 'user_loja_dados.html', {'lista': abc})
 
-@login_required
 def user_loja_dados_sucesso(request):
     if request.user.is_superuser == True or request.user.is_staff == True:
         return redirect('index')
     return render(request, 'user_loja_dados_sucesso.html')
 
-@login_required
 def user_adicionar_imagem(request, cat, id):
-    if request.user.is_superuser == True or request.user.is_staff == True:
-        return redirect('index')
     email = request.user.email
     ac = db.collection(f"categorias/{cat}/lojas").where('uemail','==',f'{email}').stream()
     ad = [{'id': x.id} for x in ac]
@@ -939,16 +873,10 @@ def user_adicionar_imagem(request, cat, id):
         return redirect('user_adicionar_imagem_sucesso')
     return render(request, 'user_adicionar_imagem.html')
 
-@login_required
 def user_adicionar_imagem_sucesso(request):
-    if request.user.is_superuser == True or request.user.is_staff == True:
-        return redirect('index')
     return render(request, 'user_adicionar_imagem_sucesso.html')
 
-@login_required
 def user_remover_loja(request, cat, id):
-    if request.user.is_superuser == True or request.user.is_staff == True:
-        return redirect('index')
     if request.method == 'POST':
         email = request.user.email
         papap = db.collection(f"categorias/{cat}/lojas").where('uemail','==',f'{email}').stream()
@@ -964,8 +892,5 @@ def user_remover_loja(request, cat, id):
         return redirect('user_remover_loja_sucesso')
     return render(request, 'user_remover_loja.html')
 
-@login_required
 def user_remover_loja_sucesso(request):
-    if request.user.is_superuser == True or request.user.is_staff == True:
-        return redirect('index')
     return render(request, 'user_remover_loja_sucesso.html')
