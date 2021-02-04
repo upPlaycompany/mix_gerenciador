@@ -52,6 +52,7 @@ def logar(request):
         password = request.POST['password']
         options = request.POST['options']
         user = authent.sign_in_with_email_and_password(email, password)
+        bb = authent.get_account_info(user['idToken'])
         if options == 'admin':
             consulta = db.collection('admin').where('email', '==', f'{email}').stream()
             con = [{'id': x.id} for x in consulta]
@@ -60,7 +61,7 @@ def logar(request):
 
                     return HttpResponseRedirect(next)
                 else:
-                    return redirect('login_erro')
+                    return HttpResponseRedirect('login_erro')
         elif options == 'user':
             consulta = db.collection('users').where('email', '==', f'{email}').stream()
             con = [{'id': x.id} for x in consulta]
@@ -69,10 +70,10 @@ def logar(request):
 
                     return HttpResponseRedirect(next_user)
                 else:
-                    return redirect('login_erro')
+                    return HttpResponseRedirect('login_erro')
         else:
             return redirect('login_erro')
-    return render(request, 'login.html')
+    return render(request, 'login.html', {'lista': bb, 'e': email})
 
 
 def login_erro(request):
