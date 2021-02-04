@@ -85,7 +85,7 @@ def index(request, token):
     for x in usa:
         if str(x['email']) != user.email:
             return redirect('user_index')
-    return render(request, 'index.html', {'t': token})
+    return render(request, 'index.html', {'t': key})
 
 def base(request, token):
     key = str(token)
