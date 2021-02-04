@@ -42,6 +42,7 @@
 
 
 
+
     </script>
 </head>
 <body>
@@ -171,12 +172,12 @@
 
 <div class="left-side-bar">
     <div class="brand-logo">
-
-        <a href="{% url 'index' token=token %}">
+        <% for key in t %}
+        <a href="{% url 'index' token=key %}">
             <img src="{% static 'src/images/logo-mix-2.png' %}" alt="" class="dark-logo">
             <img src="{% static 'src/images/logo-mix-2.png' %}" alt="" class="light-logo">
         </a>
-
+        {% endfor %}
         <div class="close-sidebar" data-toggle="left-sidebar-close">
             <i class="ion-close-round"></i>
         </div>
@@ -190,8 +191,8 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            {% for token in t %}
-                            <a href="{% url 'categoria_listagem' token=token %}">Listagem de categorias</a>
+                            {% for key in t %}
+                            <a href="{% url 'categoria_listagem' token=key %}">Listagem de categorias</a>
                             {% endfor %}
                         </li>
 
@@ -203,8 +204,8 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            {% for token in t %}
-                            <a href="{% url 'categoria_desapego_listagem' token=token %}">Listagem de categorias</a>
+                            {% for key in t %}
+                            <a href="{% url 'categoria_desapego_listagem' token=key %}">Listagem de categorias</a>
                             {% endfor %}
                         </li>
                     </ul>
@@ -215,8 +216,8 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            {% for token in t %}
-                            <a href="{% url 'usuario_listagem' token=token %}">Listagem de usuários</a>
+                            {% for key in t %}
+                            <a href="{% url 'usuario_listagem' token=key %}">Listagem de usuários</a>
                             {% endfor %}
                         </li>
                     </ul>
