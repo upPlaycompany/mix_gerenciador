@@ -190,9 +190,7 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            {% for key in t %}
                             <a href="{% url 'categoria_listagem' token=key %}">Listagem de categorias</a>
-                            {% endfor %}
                         </li>
 
                     </ul>
@@ -203,9 +201,7 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            {% for key in t %}
                             <a href="{% url 'categoria_desapego_listagem' token=key %}">Listagem de categorias</a>
-                            {% endfor %}
                         </li>
                     </ul>
                 </li>
@@ -215,9 +211,7 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            {% for key in t %}
                             <a href="{% url 'usuario_listagem' token=key %}">Listagem de usuários</a>
-                            {% endfor %}
                         </li>
                     </ul>
                 </li>
