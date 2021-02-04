@@ -83,7 +83,16 @@ def index(request, token):
     for x in usa:
         if str(x['email']) != user.email:
             return redirect('user_index')
-    return render(request, 'index.html', {'token': token})
+    return render(request, 'index.html', {'t': token})
+
+def base(request, token):
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    for x in usa:
+        if str(x['email']) != user.email:
+            return redirect('user_index')
+    return render(request, 'base.html', {'t': token})
 
 def user_index(request, token):
     return render(request, 'user_index.html')
