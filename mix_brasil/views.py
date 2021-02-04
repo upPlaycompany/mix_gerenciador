@@ -55,7 +55,7 @@ def logar(request):
             consulta = db.collection('admin').where('email', '==', f'{email}').stream()
             con = [{'id': x[0]} for x in consulta]
             for x in con:
-                if str(x.id) == user['localId']:
+                if str(x['id']) == user['localId']:
                     return HttpResponseRedirect(next)
                 else:
                     return redirect('login_erro')
@@ -63,7 +63,7 @@ def logar(request):
             consulta = db.collection('users').where('email', '==', f'{email}').stream()
             con = [{'id': x.id} for x in consulta]
             for x in con:
-                if str(x[0]) == user['localId']:
+                if str(x['id']) == user['localId']:
                     return HttpResponseRedirect(next_user)
                 else:
                     return redirect('login_erro')
