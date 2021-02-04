@@ -25,17 +25,15 @@ import pprint
 
 
 config = {
-  "type": "service_account",
-  "project_id": "mix-brasil",
-  "private_key_id": "236e696d8c82caf097bb662e2a1334cff8dadf5c",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC+qVxdE8wZH9R3\nCxtUuhtd6HD7r9AuM3s8VG6gsN1+C0PYF21drIdAIwj820D73/In88o5/ZrdLdRP\nF/xUXY2WEKVEbz5TJb27rKIIGXl6KLNdUjLRERROQedeQovxcgAEenclN4m/A6vC\n0eDrEDUr5IqnbqyRklcKP4hnt+0d5/EqRt7V37FEWy82cqhxO55ZmuaF/SnaJkpL\n6g9rJkgDvIhkxuV0pVBWXjygvmoQkVmKRO+IsvItjPWdjbXzmUl8uRJDf/5w4yim\ntpmkJkNsMHwbd1/kYY3R88P1etkdvvofK0LHWsRjhsALnU1jxxzP4GnGDqBIZMsv\nowrp0LyZAgMBAAECggEABfsiXX2d3xJla/wWVga2DdC5PZ3+6/obtTFpXINb2WTB\nUrWubbw4LHIE6ci3fcdBTZFLYF0VJvfVc4s7NErQgpsAUjiipgFWtbzVQueIrOU6\ntjRaSX5tioRs/YMdKHx05W8RjoJy4OH8uQJ0Oa+DGX7EfjrdsT3b2uOSE/3cM35J\npkeASjqAUZGBXf3hUb/9Pk8EQ38RPzvgT0se51ub3ko6cy7PrkX6jEn7DQyA35GH\n2/66LIWc93izrODri55R4E2/7AZQPVkfnN6cwzmVOY11zOdXne5PSmkWS9NFXRhR\nluqI0gD+l2oLLRXSdLXurUbloJ0GzRfSYfIIORVw4QKBgQDu5RB1D09WTIQwS7FR\nCyHKoKDfRGLfn54EWKX8r/IDM1N9H3mmZBY+Hyw3oiMf7JpkEOzlQ3Nsl+FVXK1x\n6OCyqfbggsmr/fW/auRA3/G4qpD6GHGUwtzlf2ihDMYBCUTBGj6FP3RH/Cv8eVXP\nd+bEaVy/mCkFa7Myoap0RhwxuQKBgQDMUC7LD3NKEj6i9V76RZvv2796k6rqE4q2\nJ2L9/E/Gf/0d1d6UXeHacYety3/bonGHISQX/8K8yKAS7WtdjGFE82YJP82u/qg+\nkgpFfGQteRz3OAETHeqM7nWRhp8/SyqNijWSRUIDQYeseOSKAu07UHMFn4zNA392\nrsMJ9nnR4QKBgE/1DRgRAr3gqFG90+BLOIkoUA/KRMmSFAJiZVP406iskiIL2dyO\nHT+3kUYhl14FA/vACnoFpGlRQFMgzNCWYDaMWpv0Smmte4YQ0crA6ZekRxfd/I4M\n1oBdr3hP3SnVn1R+YzSX82Rwi4xaVBU3jV5p4WgjFn/A915X68Q0/xTJAoGBAI73\ncLbw2ci0GZZoQoy4VtSxnTxFxmxDPmYWC4QUoTISb2kINdb2FsuHc9yeMJrdAbn/\n68TLWFZHwRNdhSqRx6K6+uRv/Bp+4fXetUdIMsVLIYSwcLgS0ATL/ALYA+kDTQR7\n+N6gjf+/RBPhCHK2d5Bwy/vcWGdBEllXEu2OxlGhAoGBAJzjl2xrZ4bCGHTZZVs5\nn1SGmPUX7lKW83ChtReLfXsu0My0TYoZmTsr8GFBHZlLAfdOirZOBFHljZzJD/xJ\nEmXMfgAls9B9jceIuiU8Y2alDs8ZXILMxivyVlHtL99oz3yoN/eUcclNn2FCIsOy\n0kBKqd1VwuYomz+bolHtM/tg\n-----END PRIVATE KEY-----\n",
-  "client_email": "firebase-adminsdk-ft7nj@mix-brasil.iam.gserviceaccount.com",
-  "client_id": "106449342467082663798",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ft7nj%40mix-brasil.iam.gserviceaccount.com"
-}
+    'apiKey': "AIzaSyBh-DC_fXWzzcHV6XYhFQ1Ya6MWG5OjH_w",
+    'authDomain': "mix-brasil.firebaseapp.com",
+    'databaseURL': "https://mix-brasil.firebaseio.com",
+    'projectId': "mix-brasil",
+    'storageBucket': "mix-brasil.appspot.com",
+    'messagingSenderId': "132448934641",
+    'appId': "1:132448934641:web:f22d872cbc228c8d822750",
+    'measurementId': "G-NPE7ECX901"
+  }
 
 
 cred = credentials.Certificate("/app/mix_brasil/credencial.json")
