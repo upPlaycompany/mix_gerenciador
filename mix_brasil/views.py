@@ -53,7 +53,7 @@ def logar(request):
         user = authent.sign_in_with_email_and_password(email, password)
         if options == 'admin':
             consulta = db.collection('admin').where('email', '==', f'{email}').stream()
-            con = [{'id': x[0]} for x in consulta]
+            con = [{'id': x.id} for x in consulta]
             for x in con:
                 if str(x['id']) == user['localId']:
                     return HttpResponseRedirect(next)
