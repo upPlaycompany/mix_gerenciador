@@ -73,7 +73,7 @@ def logar(request):
                     return HttpResponseRedirect('login_erro')
         else:
             return redirect('login_erro')
-    return render(request, 'login.html', {'lista': bb, 'e': email})
+    return render(request, 'login.html')
 
 
 def login_erro(request):
