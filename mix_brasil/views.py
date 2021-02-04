@@ -41,7 +41,7 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 sto = storage.bucket('mix-brasil.appspot.com')
 firebase = pyrebase.initialize_app(config)
-auth = firebase.auth()
+authent = firebase.auth()
 
 def logar(request):
     next = request.GET.get('next', '/index/')
@@ -50,16 +50,26 @@ def logar(request):
         email = request.POST['email']
         password = request.POST['password']
         options = request.POST['options']
-        user = auth.sign_in_with_email_and_password(email, password)
+        user = authent.sign_in_with_email_and_password(email, password)
         if options == 'admin':
-            if str(user['idToken']) != "":
-                return HttpResponseRedirect(next)
+            consulta = db.collecion('admin').where('email', '==', f'{email}').stream()
+            con = [{'id': x.id} for x in consulta]
+            for x in con:
+                if str(x.id) == user['localId']:
+                    return HttpResponseRedirect(next)
+                else:
+                    return redirect('login_erro')
         elif options == 'user':
-            if str(user['idToken']) != "":
-                return HttpResponseRedirect(next_user)
+            consulta = db.collecion('users').where('email', '==', f'{email}').stream()
+            con = [{'id': x.id} for x in consulta]
+            for x in con:
+                if str(x.id) == user['localId']:
+                    return HttpResponseRedirect(next_user)
+                else:
+                    return redirect('login_erro')
         else:
             return redirect('login_erro')
-    return render(request, 'login.html', {'redirect_to': next})
+    return render(request, 'login.html')
 
 
 def login_erro(request):
@@ -79,7 +89,6 @@ def deslogar(request):
 def criar_usuario(request):
     if request.method == 'POST':
         name = request.POST['name']
-        username = request.POST['username']
         phone = request.POST['phone']
         email = request.POST['email']
         password = request.POST['password']
@@ -89,7 +98,10 @@ def criar_usuario(request):
             headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
             link = requests.get(url, headers=headers, verify=False)
             cde = link.json()
-        dados = db.collection('users').document()
+        else:
+            cde = {}
+        user = auth.create_user(email=email, password=password)
+        dados = db.collection('users').document(user.uid)
         dados.set({
             'name': f'{name}',
             'phone': f'{phone}',
@@ -104,13 +116,7 @@ def criar_usuario(request):
                 'street': f"{cde['logradouro']}",
                 'zipCode': f"{cde['cep']}"
             }
-
         })
-        user = User.objects.create_user(username, email, password)
-        user.first_name = name
-        user.is_superuser = False
-        user.is_staff = False
-        user.save()
         return redirect('criar_usuario_sucesso')
     return render(request, 'criar_usuario.html')
 
@@ -131,6 +137,8 @@ def usuario_dados(request, id):
         headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
         link = requests.get(url, headers=headers, verify=False)
         cde = link.json()
+    else:
+        cde = {}
     dados = db.collection(f'users').document(f'{id}')
     dad = dados.get()
     abc = dad.to_dict()
