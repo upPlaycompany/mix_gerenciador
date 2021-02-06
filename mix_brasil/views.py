@@ -108,7 +108,7 @@ def user_index(request, token):
 
 
 def user_base(request, token):
-    key = {'token': str(token)}
+    key = [{'token': str(token)}]
     user = auth.get_user(token)
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
