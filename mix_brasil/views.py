@@ -106,6 +106,15 @@ def user_index(request, token):
             return redirect('index', token=token)
     return render(request, 'user_index.html', {'t': key})
 
+def user_base(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('users').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+            return redirect('index', token=token)
+    return render(request, 'user_base.html', {'t': key})
+
 
 def deslogar(request):
     logout(request)
