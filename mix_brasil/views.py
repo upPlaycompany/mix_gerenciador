@@ -1090,7 +1090,7 @@ def user_loja_dados(request, token):
             'estado': f"{estado}",
         })
         return redirect('user_loja_dados_sucesso')
-    return render(request, 'user_loja_dados.html', {'lista': abc})
+    return render(request, 'user_loja_dados.html', {'lista': abc, 't': key})
 
 
 def user_loja_dados_sucesso(request, token):
