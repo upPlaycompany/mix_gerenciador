@@ -1330,7 +1330,6 @@ def notificacao(request, token):
                     aps=messaging.Aps(badge=42),
                 ),
             ),
-            topic='industry-tech',
         )
         return redirect('notificacao_sucesso', token=token)
     return render(request, 'notificacao.html', {'t': key})
