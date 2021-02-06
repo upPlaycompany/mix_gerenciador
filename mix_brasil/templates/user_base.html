@@ -39,7 +39,6 @@
 
 
 
-
     </script>
 </head>
 <body>
@@ -169,8 +168,8 @@
 
 <div class="left-side-bar">
     <div class="brand-logo">
-        {% for x in key %}
-        <a href="/user_index/{{ x.token }}/">
+        {% for key in t %}
+        <a href="{% url 'user_index' token=key %}">
             <img src="{% static 'src/images/logo-mix-2.png' %}" alt="" class="dark-logo">
             <img src="{% static 'src/images/logo-mix-2.png' %}" alt="" class="light-logo">
         </a>
@@ -189,13 +188,13 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            {% for x in key %}
-                            <a href="{% url 'user_criar_loja' token=x.token %}">Criar loja</a>
+                            {% for key in t %}
+                            <a href="{% url 'user_criar_loja' token=key %}">Criar loja</a>
                             {% endfor %}
                         </li>
                         <li>
-                            {% for x in key %}
-                            <a href="{% url 'user_loja_dados' token=x.token %}">Atualizar dados da loja</a>
+                            {% for key in t %}
+                            <a href="{% url 'user_loja_dados' token=key %}">Atualizar dados da loja</a>
                             {% endfor %}
                         </li>
                     </ul>

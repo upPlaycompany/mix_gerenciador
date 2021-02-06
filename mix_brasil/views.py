@@ -108,13 +108,13 @@ def user_index(request, token):
 
 
 def user_base(request, token):
-    key = [{'token': str(token)}]
+    key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('index', token=token)
-    return render(request, 'user_base.html', key)
+    return render(request, 'user_base.html', {'t': key})
 
 
 def deslogar(request):
