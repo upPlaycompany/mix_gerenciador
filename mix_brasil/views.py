@@ -24,7 +24,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 import pandas as pd
 import pprint
 
-
 config = {
     'apiKey': "AIzaSyBh-DC_fXWzzcHV6XYhFQ1Ya6MWG5OjH_w",
     'authDomain': "mix-brasil.firebaseapp.com",
@@ -34,8 +33,7 @@ config = {
     'messagingSenderId': "132448934641",
     'appId': "1:132448934641:web:f22d872cbc228c8d822750",
     'measurementId': "G-NPE7ECX901"
-  }
-
+}
 
 cred = credentials.Certificate("/app/mix_brasil/credencial.json")
 firebase_admin.initialize_app(cred)
@@ -43,6 +41,7 @@ db = firestore.client()
 sto = storage.bucket('mix-brasil.appspot.com')
 firebase = pyrebase.initialize_app(config)
 authent = firebase.auth()
+
 
 def logar(request):
     if request.method == "POST":
@@ -77,40 +76,41 @@ def logar(request):
 def login_erro(request):
     return render(request, 'login_erro.html')
 
+
 def index(request, token):
     key = [str(token)]
     user = auth.get_user(token)
-    us = db.collection('admin').where('email','==',f'{user.email}').stream()
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     return render(request, 'index.html', {'t': key})
+
 
 def base(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
-    return render(request, 'base.html', {'t': token})
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
+    return render(request, 'base.html', {'t': key})
+
 
 def user_index(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('index', token=token)
     return render(request, 'user_index.html', {'t': key})
 
 
 def deslogar(request):
     logout(request)
     return HttpResponseRedirect("/")
+
 
 def criar_usuario(request):
     if request.method == 'POST':
@@ -146,17 +146,18 @@ def criar_usuario(request):
         return redirect('criar_usuario_sucesso')
     return render(request, 'criar_usuario.html')
 
+
 def criar_usuario_sucesso(request):
     return render(request, 'criar_usuario_sucesso.html')
+
 
 def usuario_listagem(request, token):
     key = {'token': str(token)}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     usuarios = db.collection('users').stream()
     doz = [{'id': x.id} for x in usuarios]
     ident = db.collection('users').stream()
@@ -165,14 +166,14 @@ def usuario_listagem(request, token):
     [doz[x].update(key) for x in range(a)]
     return render(request, 'usuario_listagem.html', {'lista': docs, 'lista_id': doz})
 
+
 def usuario_dados(request, token):
     key = {'token': str(token)}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     cep = request.GET.get("cep")
     if cep != "":
         url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
@@ -226,19 +227,18 @@ def atualizar_usuario_sucesso(request, token):
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     return render(request, 'atualizar_usuario_sucesso.html', {'t': key})
+
 
 def remover_usuario(request, token, id, e):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     if request.method == 'POST':
         user = User.objects.get(email=e)
         user.delete()
@@ -247,24 +247,24 @@ def remover_usuario(request, token, id, e):
         return redirect('remover_usuario_sucesso')
     return render(request, 'remover_usuario.html', {'t': key})
 
+
 def remover_usuario_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     return render(request, 'remover_usuario_sucesso.html', {'t': key})
+
 
 def adicionar_imagem_perfil(request, token, id):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     if request.method == 'POST':
         img = request.FILES['img']
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
@@ -285,14 +285,14 @@ def adicionar_imagem_perfil(request, token, id):
         return redirect('adicionar_imagem_perfil_sucesso')
     return render(request, 'adicionar_imagem_perfil.html', {'t': key})
 
+
 def criar_loja(request, token, id):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     if request.method == 'POST':
         name = request.POST['name']
         whatsapp = request.POST['whatsapp']
@@ -353,15 +353,16 @@ def criar_loja(request, token, id):
         return redirect('criar_loja_sucesso')
     return render(request, 'criar_loja.html', {'t': key})
 
+
 def criar_loja_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     return render(request, 'criar_loja_sucesso.html', {'t': key})
+
 
 def categoria_listagem(request, token):
     key = {'token': str(token)}
@@ -379,13 +380,13 @@ def categoria_listagem(request, token):
     [doz[x].update(key) for x in range(a)]
     return render(request, 'categoria_listagem.html', {'lista': docs, 'lista_id': doz})
 
+
 def lojas_listagem(request, token, id):
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     lojas = db.collection(f'categorias/{id}/lojas').stream()
     docs = [{'id': x.id} for x in lojas]
     lojas2 = db.collection(f'categorias/{id}/lojas').stream()
@@ -399,14 +400,14 @@ def lojas_listagem(request, token, id):
     [docs[x].update(key) for x in range(a)]
     return render(request, 'lojas_listagem.html', {'lista': docs, 'order': dzz})
 
+
 def lojas_dados(request, token, id, nome, cod):
     key = {'id': str(token)}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     cep = request.GET.get("cep")
     if cep != "":
         url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
@@ -499,24 +500,24 @@ def lojas_dados(request, token, id, nome, cod):
         return redirect('atualizar_loja_sucesso')
     return render(request, 'lojas_dados.html', {'lista': dec})
 
+
 def atualizar_loja_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     return render(request, 'atualizar_loja_sucesso.html', {'t': key})
+
 
 def adicionar_imagens_loja(request, token, id, cod):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     if request.method == 'POST':
         tipo_imagem = request.POST['tipo_imagem']
         img = request.FILES['img']
@@ -532,7 +533,7 @@ def adicionar_imagens_loja(request, token, id, cod):
         formform = db.collection(f'categorias/{id}/lojas').document(f'{cod}')
         if tipo_imagem == 'normal':
             formform.update({
-                    'img': firestore.ArrayUnion([f'{url}'])
+                'img': firestore.ArrayUnion([f'{url}'])
             })
         elif tipo_imagem == 'ofertas':
             formform.update({
@@ -551,24 +552,24 @@ def adicionar_imagens_loja(request, token, id, cod):
         return redirect('adicionar_imagens_loja_sucesso')
     return render(request, 'adicionar_imagens_loja.html', {'t': key})
 
+
 def adicionar_imagens_loja_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     return render(request, 'adicionar_imagens_loja_sucesso.html', {'t': key})
+
 
 def remover_imagens_loja(request, token, id, name, cod):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     dados = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{name}').stream()
     docs = [x.to_dict() for x in dados]
     if request.method == 'POST':
@@ -576,7 +577,7 @@ def remover_imagens_loja(request, token, id, name, cod):
         formform = db.collection(f'categorias/{id}/lojas').document(f'{cod}')
         if tipo_imagem == 'normal':
             formform.update({
-                    'img': firestore.ArrayRemove([f'{imagem}'])
+                'img': firestore.ArrayRemove([f'{imagem}'])
             })
         elif tipo_imagem == 'ofertas':
             formform.update({
@@ -593,48 +594,48 @@ def remover_imagens_loja(request, token, id, name, cod):
         return redirect('remover_imagens_loja_sucesso')
     return render(request, 'remover_imagens_loja.html', {'lista': docs, 't': key})
 
+
 def remover_imagens_loja_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     return render(request, 'remover_imagens_loja_sucesso.html', {'t': key})
+
 
 def remover_loja(request, token, id, cod):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     if request.method == 'POST':
         db.collection(f'categorias/{id}/lojas').document(f'{cod}').delete()
         db.collection('destaque_home').where('lid', '==', f'{cod}').delete()
         return redirect('remover_loja_sucesso')
     return render(request, 'remover_loja.html', {'t': key})
 
+
 def remover_loja_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     return render(request, 'remover_loja_sucesso.html', {'t': key})
+
 
 def criar_desapego(request, token, id):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     if request.method == 'POST':
         anunciante = request.POST['anunciante']
         descricao = request.POST['descricao']
@@ -696,24 +697,24 @@ def criar_desapego(request, token, id):
         return redirect('criar_loja_sucesso')
     return render(request, 'criar_desapego.html', {'t': key})
 
+
 def criar_desapego_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     return render(request, 'criar_desapego_sucesso.html', {'t': key})
+
 
 def categoria_desapego_listagem(request, token):
     key = {'token': str(token)}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     desapegos = db.collection('desapego').stream()
     doz = [{'id': x.id} for x in desapegos]
     ident = db.collection('desapego').stream()
@@ -722,14 +723,14 @@ def categoria_desapego_listagem(request, token):
     [doz[x].update(key) for x in range(a)]
     return render(request, 'categoria_desapego_listagem.html', {'lista': docs, 'lista_id': doz})
 
+
 def desapegos_listagem(request, token, id):
     key = {'token': str(token)}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     desapegos = db.collection(f'desapego/{id}/desapegos').stream()
     docs = [{'id': x.id} for x in desapegos]
     lojas2 = db.collection(f'desapego/{id}/desapegos').stream()
@@ -742,14 +743,14 @@ def desapegos_listagem(request, token, id):
     [docs[x].update(key) for x in range(a)]
     return render(request, 'desapegos_listagem.html', {'lista': docs, 'order': dzz})
 
+
 def desapegos_dados(request, token, id, nome, cod):
     key = {'token': str(token)}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     cep = request.GET.get("cep")
     if cep != "":
         url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
@@ -843,26 +844,26 @@ def desapegos_dados(request, token, id, nome, cod):
         return redirect('atualizar_desapego_sucesso')
     return render(request, 'desapegos_dados.html', {'lista': dec})
 
+
 def atualizar_desapego_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     if request.user.is_superuser == False or request.user.is_staff == False:
         return redirect('user_index')
     return render(request, 'atualizar_desapego_sucesso.html', {'t': key})
+
 
 def adicionar_imagens_desapego(request, token, id, cod):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     if request.method == 'POST':
         img = request.FILES['img']
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
@@ -889,19 +890,18 @@ def adicionar_imagens_desapego_sucesso(request, token):
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     return render(request, 'adicionar_imagens_desapego_sucesso.html', {'t': key})
+
 
 def remover_imagens_desapego(request, token, id, name, cod):
     key = {'token': str(token)}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     dados = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
     docs = [x.to_dict() for x in dados]
     a = len(docs)
@@ -915,6 +915,7 @@ def remover_imagens_desapego(request, token, id, name, cod):
         return redirect('remover_imagens_desapego_sucesso')
     return render(request, 'remover_imagens_desapego.html', {'lista': docs})
 
+
 def remover_imagens_desapego_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
@@ -925,40 +926,39 @@ def remover_imagens_desapego_sucesso(request, token):
             return redirect('user_index')
     return render(request, 'remover_imagens_desapego_sucesso.html', {'t': key})
 
+
 def remover_desapego(request, token, id, cod):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     if request.method == 'POST':
         db.collection(f'desapego/{id}/desapegos').document(f'{cod}').delete()
         db.collection('destaque_desapego').where('did', '==', f'{cod}').delete()
         return redirect('remover_desapego_sucesso')
     return render(request, 'remover_desapego.html', {'t': key})
 
+
 def remover_desapego_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('user_index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('user_index', token=token)
     return render(request, 'remover_desapego_sucesso.html', {'t': key})
 
 
-#PARTE DE USUARIO
+# PARTE DE USUARIO
 def user_criar_loja(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('index', token=token)
     if request.method == 'POST':
         email = str(user.email)
         name = request.POST['name']
@@ -1001,47 +1001,47 @@ def user_criar_loja(request, token):
         [ff[x].update(gg[x]) for x in range(a)]
         [ff[x].update(category) for x in range(a)]
         [ff[x].update(cde) for x in range(a)]
-        des = db.collection(f'users').where('email','==',f'{email}').stream()
+        des = db.collection(f'users').where('email', '==', f'{email}').stream()
         pka = [{'id': x.id} for x in des]
         for y in pka:
             fad = db.collection(f"users/{y['id']}/loja").document(f"{y['id']}")
             fad.set({
-                    'name': f'{name}',
-                    'categoria': f'{categoria}',
-                    'whatsapp': f'{whatsapp}',
-                    'trabalhe_conosco': f'{trabalhe_conosco}',
-                    'price': price,
-                    'destaque': dex,
-                    'promocao': "",
-                    'img': firestore.ArrayUnion([""]),
-                    'img_destacados': firestore.ArrayUnion([""]),
-                    'img_ofertas': firestore.ArrayUnion([""]),
-                    'img_cupons': firestore.ArrayUnion([""]),
-                    'cidade': f"{cde['cidade']['nome']}",
-                    'estado': f"{cde['estado']['sigla']}",
-                    'uemail': f"{email}"
+                'name': f'{name}',
+                'categoria': f'{categoria}',
+                'whatsapp': f'{whatsapp}',
+                'trabalhe_conosco': f'{trabalhe_conosco}',
+                'price': price,
+                'destaque': dex,
+                'promocao': "",
+                'img': firestore.ArrayUnion([""]),
+                'img_destacados': firestore.ArrayUnion([""]),
+                'img_ofertas': firestore.ArrayUnion([""]),
+                'img_cupons': firestore.ArrayUnion([""]),
+                'cidade': f"{cde['cidade']['nome']}",
+                'estado': f"{cde['estado']['sigla']}",
+                'uemail': f"{email}"
             })
         return redirect('user_criar_loja_sucesso')
     return render(request, 'user_criar_loja.html', {'t': key})
+
 
 def user_criar_loja_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('index', token=token)
-    return render(request,'user_criar_loja_sucesso.html', {'t': key})
+    if usa[0]['email'] != user.email:
+        return redirect('index', token=token)
+    return render(request, 'user_criar_loja_sucesso.html', {'t': key})
+
 
 def user_loja_dados(request, token):
     key = {'token': str(token)}
     user = auth.get_user(token)
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('index', token=token)
     cep = request.GET.get("cep")
     if cep != "":
         url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
@@ -1071,36 +1071,36 @@ def user_loja_dados(request, token):
         price = float(price)
         can = db.collection(f"users/{abc[0]['id']}/loja").document(f"{abc[0]['id']}")
         can.update({
-                'name': f'{name}',
-                'whatsapp': f'{whatsapp}',
-                'trabalhe_conosco': f'{trabalheconosco}',
-                'price': price,
-                'promocao': f"{promocao}",
-                'cidade': f"{cidade}",
-                'estado': f"{estado}",
+            'name': f'{name}',
+            'whatsapp': f'{whatsapp}',
+            'trabalhe_conosco': f'{trabalheconosco}',
+            'price': price,
+            'promocao': f"{promocao}",
+            'cidade': f"{cidade}",
+            'estado': f"{estado}",
         })
         return redirect('user_loja_dados_sucesso')
     return render(request, 'user_loja_dados.html', {'lista': abc})
+
 
 def user_loja_dados_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('index', token=token)
     return render(request, 'user_loja_dados_sucesso.html', {'t': key})
+
 
 def user_adicionar_imagem(request, token, cat, id):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('index', token=token)
-    ac = db.collection(f"categorias/{cat}/lojas").where('uemail','==',f'{user.email}').stream()
+    if usa[0]['email'] != user.email:
+        return redirect('index', token=token)
+    ac = db.collection(f"categorias/{cat}/lojas").where('uemail', '==', f'{user.email}').stream()
     ad = [{'id': x.id} for x in ac]
     if request.method == 'POST':
         tipo_imagem = request.POST['tipo_imagem']
@@ -1118,7 +1118,7 @@ def user_adicionar_imagem(request, token, cat, id):
         formform = db.collection(f'categorias/{cat}/lojas').document(ad[0]['id'])
         if tipo_imagem == 'normal':
             formform.update({
-                    'img': firestore.ArrayUnion([f'{url}'])
+                'img': firestore.ArrayUnion([f'{url}'])
             })
         elif tipo_imagem == 'ofertas':
             formform.update({
@@ -1132,16 +1132,16 @@ def user_adicionar_imagem(request, token, cat, id):
             formform.update({
                 'img_cupons': firestore.ArrayUnion([f'{url}'])
             })
-        ffa = db.collection(f'users').where('email','==',f'{user.email}').stream()
+        ffa = db.collection(f'users').where('email', '==', f'{user.email}').stream()
         yas = [{'id': x.id} for x in ffa]
-        forfor = db.collection(f"users/{yas[0]['id']}/loja").where('uemail','==',f'{user.email}').stream()
+        forfor = db.collection(f"users/{yas[0]['id']}/loja").where('uemail', '==', f'{user.email}').stream()
         fsa = [{'id': x.id} for x in forfor]
         ffae = db.collection(f'users').where('email', '==', f'{user.email}').stream()
         yase = [{'id': x.id} for x in ffae]
         final_final = db.collection(f"users/{yase[0]['id']}/loja").document(f"{fsa[0]['id']}")
         if tipo_imagem == 'normal':
             final_final.update({
-                    'img': firestore.ArrayUnion([f'{url}'])
+                'img': firestore.ArrayUnion([f'{url}'])
             })
         elif tipo_imagem == 'ofertas':
             final_final.update({
@@ -1164,31 +1164,31 @@ def user_adicionar_imagem(request, token, cat, id):
         return redirect('user_adicionar_imagem_sucesso')
     return render(request, 'user_adicionar_imagem.html', {'t': key})
 
+
 def user_adicionar_imagem_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('index', token=token)
     return render(request, 'user_adicionar_imagem_sucesso.html', {'t': key})
+
 
 def user_remover_loja(request, token, cat, id):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('index', token=token)
     if request.method == 'POST':
-        papap = db.collection(f"categorias/{cat}/lojas").where('uemail','==',f'{user.email}').stream()
+        papap = db.collection(f"categorias/{cat}/lojas").where('uemail', '==', f'{user.email}').stream()
         pas = [{'id': x.id} for x in papap]
         db.collection(f'categorias/{cat}/lojas').document(f"{pas[0]['id']}").delete()
-        exa1 = db.collection(f'users').where('email','==',f'{user.email}').stream()
+        exa1 = db.collection(f'users').where('email', '==', f'{user.email}').stream()
         ex1 = [{'id': x.id} for x in exa1]
-        exc = db.collection(f"users/{ex1[0]['id']}/loja").where('uemail','==',f'{user.email}').stream()
+        exc = db.collection(f"users/{ex1[0]['id']}/loja").where('uemail', '==', f'{user.email}').stream()
         pa = [{'id': x.id} for x in exc]
         exa2 = db.collection(f'users').where('email', '==', f'{user.email}').stream()
         ex2 = [{'id': x.id} for x in exa2]
@@ -1196,12 +1196,12 @@ def user_remover_loja(request, token, cat, id):
         return redirect('user_remover_loja_sucesso')
     return render(request, 'user_remover_loja.html', {'t': key})
 
+
 def user_remover_loja_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
-    for x in usa:
-        if str(x['email']) != user.email:
-            return redirect('index', token=token)
+    if usa[0]['email'] != user.email:
+        return redirect('index', token=token)
     return render(request, 'user_remover_loja_sucesso.html', {'t': key})
