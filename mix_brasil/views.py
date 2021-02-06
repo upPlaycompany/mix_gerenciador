@@ -174,7 +174,7 @@ def usuario_listagem(request, token):
     docs = [x.to_dict() for x in ident]
     a = len(doz)
     [doz[x].update(key) for x in range(a)]
-    return render(request, 'usuario_listagem.html', {'lista': docs, 'lista_id': doz})
+    return render(request, 'usuario_listagem.html', {'lista': docs, 'lista_id': doz, 't': key})
 
 
 def usuario_dados(request, token):
@@ -388,7 +388,7 @@ def categoria_listagem(request, token):
     docs = [x.to_dict() for x in ident]
     a = len(doz)
     [doz[x].update(key) for x in range(a)]
-    return render(request, 'categoria_listagem.html', {'lista': docs, 'lista_id': doz})
+    return render(request, 'categoria_listagem.html', {'lista': docs, 'lista_id': doz, 't': key})
 
 
 def lojas_listagem(request, token, id):
@@ -408,7 +408,7 @@ def lojas_listagem(request, token, id):
     [docs[x].update(docs2[x]) for x in range(a)]
     [docs[x].update(categoria) for x in range(a)]
     [docs[x].update(key) for x in range(a)]
-    return render(request, 'lojas_listagem.html', {'lista': docs, 'order': dzz})
+    return render(request, 'lojas_listagem.html', {'lista': docs, 'order': dzz, 't': key})
 
 
 def lojas_dados(request, token, id, nome, cod):
@@ -508,7 +508,7 @@ def lojas_dados(request, token, id, nome, cod):
             [da[x].update(categoria) for x in range(a)]
             [da[x].update(cde[x]) for x in range(a)]
         return redirect('atualizar_loja_sucesso')
-    return render(request, 'lojas_dados.html', {'lista': dec})
+    return render(request, 'lojas_dados.html', {'lista': dec, 't': key})
 
 
 def atualizar_loja_sucesso(request, token):
@@ -731,7 +731,7 @@ def categoria_desapego_listagem(request, token):
     docs = [x.to_dict() for x in ident]
     a = len(doz)
     [doz[x].update(key) for x in range(a)]
-    return render(request, 'categoria_desapego_listagem.html', {'lista': docs, 'lista_id': doz})
+    return render(request, 'categoria_desapego_listagem.html', {'lista': docs, 'lista_id': doz, 't': key})
 
 
 def desapegos_listagem(request, token, id):
@@ -751,7 +751,7 @@ def desapegos_listagem(request, token, id):
     [docs[x].update(docs2[x]) for x in range(a)]
     [docs[x].update(categoria) for x in range(a)]
     [docs[x].update(key) for x in range(a)]
-    return render(request, 'desapegos_listagem.html', {'lista': docs, 'order': dzz})
+    return render(request, 'desapegos_listagem.html', {'lista': docs, 'order': dzz, 't': key})
 
 
 def desapegos_dados(request, token, id, nome, cod):
@@ -852,7 +852,7 @@ def desapegos_dados(request, token, id, nome, cod):
             [da[x].update(categoria) for x in range(a)]
             [da[x].update(cde[x]) for x in range(a)]
         return redirect('atualizar_desapego_sucesso')
-    return render(request, 'desapegos_dados.html', {'lista': dec})
+    return render(request, 'desapegos_dados.html', {'lista': dec, 't': key})
 
 
 def atualizar_desapego_sucesso(request, token):
@@ -923,7 +923,7 @@ def remover_imagens_desapego(request, token, id, name, cod):
             'img': firestore.ArrayRemove([f'{imagem}'])
         })
         return redirect('remover_imagens_desapego_sucesso')
-    return render(request, 'remover_imagens_desapego.html', {'lista': docs})
+    return render(request, 'remover_imagens_desapego.html', {'lista': docs, 't': key})
 
 
 def remover_imagens_desapego_sucesso(request, token):
