@@ -1046,7 +1046,8 @@ def user_criar_loja_sucesso(request, token):
 
 
 def user_loja_dados(request, token):
-    key = {'token': str(token)}
+    key = [str(token)]
+    keya = {'token': str(token)}
     user = auth.get_user(str(token))
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
@@ -1068,7 +1069,7 @@ def user_loja_dados(request, token):
     la = len(abc)
     [abc[x].update(xyz[x]) for x in range(la)]
     [abc[x].update(cde) for x in range(la)]
-    [abc[x].update(key) for x in range(la)]
+    [abc[x].update(keya) for x in range(la)]
     if request.method == 'POST':
         name = request.POST['name']
         whatsapp = request.POST['whatsapp']
