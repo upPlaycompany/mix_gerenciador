@@ -591,6 +591,7 @@ def remover_imagens_loja(request, token, id, name, cod):
     docs = [x.to_dict() for x in dados]
     if request.method == 'POST':
         imagem = request.POST['imagem']
+        tipo_imagem = request.POST['tipo_imagem']
         formform = db.collection(f'categorias/{id}/lojas').document(f'{cod}')
         if tipo_imagem == 'normal':
             formform.update({
@@ -886,6 +887,7 @@ def adicionar_imagens_desapego(request, token, id, cod):
         return redirect('user_index', token=token)
     if request.method == 'POST':
         img = request.FILES['img']
+        tipo_imagem = request.POST['tipo_imagem']
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
         imagem_mix.save()
         arquivo = sto.blob(f'desapego/{id}/{cod}/{img}')
@@ -896,9 +898,22 @@ def adicionar_imagens_desapego(request, token, id, cod):
         )
         url = str(url)
         formform = db.collection(f'desapego/{id}/desapegos').document(f'{cod}')
-        formform.update({
-            'img': firestore.ArrayUnion([f'{url}'])
-        })
+        if tipo_imagem == 'normal':
+            formform.update({
+                'img': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'ofertas':
+            formform.update({
+                'img_ofertas': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'destacados':
+            formform.update({
+                'img_destacados': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'cupons':
+            formform.update({
+                'img_cupons': firestore.ArrayRemove([f'{imagem}'])
+            })
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
         return redirect('adicionar_imagens_desapego_sucesso')
@@ -929,10 +944,24 @@ def remover_imagens_desapego(request, token, id, name, cod):
     [docs[x].update(keya) for x in range(a)]
     if request.method == 'POST':
         imagem = request.POST['imagem']
+        tipo_imagem = request.POST['tipo_imagem']
         formform = db.collection(f'desapego/{id}/desapegos').document(f'{cod}')
-        formform.update({
-            'img': firestore.ArrayRemove([f'{imagem}'])
-        })
+        if tipo_imagem == 'normal':
+            formform.update({
+                'img': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'ofertas':
+            formform.update({
+                'img_ofertas': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'destacados':
+            formform.update({
+                'img_destacados': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'cupons':
+            formform.update({
+                'img_cupons': firestore.ArrayRemove([f'{imagem}'])
+            })
         return redirect('remover_imagens_desapego_sucesso')
     return render(request, 'remover_imagens_desapego.html', {'lista': docs, 't': key})
 
@@ -1195,6 +1224,102 @@ def user_adicionar_imagem_sucesso(request, token):
     if usa == []:
         return redirect('index', token=token)
     return render(request, 'user_adicionar_imagem_sucesso.html', {'t': key})
+
+def user_remover_imagens(request, token, cat, id):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('users').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('index', token=token)
+    ac = db.collection(f"categorias/{cat}/lojas").where('uemail', '==', f'{user.email}').stream()
+    ad = [{'id': x.id} for x in ac]
+    ae = db.collection(f"categorias/{cat}/lojas").where('uemail', '==', f'{user.email}').stream()
+    docs = [x.to_dict() for x in ae]
+    if request.method == 'POST':
+        tipo_imagem = request.POST['tipo_imagem']
+        imagem = request.POST['imagem']
+        formform = db.collection(f'categorias/{cat}/lojas').document(ad[0]['id'])
+        if tipo_imagem == 'normal':
+            formform.update({
+                'img': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'ofertas':
+            formform.update({
+                'img_ofertas': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'destacados':
+            formform.update({
+                'img_destacados': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'cupons':
+            formform.update({
+                'img_cupons': firestore.ArrayRemove([f'{imagem}'])
+            })
+        ffa = db.collection(f'users').where('email', '==', f'{user.email}').stream()
+        yas = [{'id': x.id} for x in ffa]
+        forfor = db.collection(f"users/{yas[0]['id']}/loja").where('uemail', '==', f'{user.email}').stream()
+        fsa = [{'id': x.id} for x in forfor]
+        ffae = db.collection(f'users').where('email', '==', f'{user.email}').stream()
+        yase = [{'id': x.id} for x in ffae]
+        final_final = db.collection(f"users/{yase[0]['id']}/loja").document(f"{fsa[0]['id']}")
+        if tipo_imagem == 'normal':
+            final_final.update({
+                'img': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'ofertas':
+            final_final.update({
+                'img_ofertas': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'destacados':
+            final_final.update({
+                'img_destacados': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'cupons':
+            final_final.update({
+                'img_cupons': firestore.ArrayRemove([f'{imagem}'])
+            })
+        else:
+            final_final.update({
+                'img': firestore.ArrayRemove([f'{imagem}'])
+            })
+        return redirect('user_remover_imagens_sucesso.html')
+    return render(request, 'user_adicionar_imagem.html', {'lista': docs, 't': key})
+
+def a(request, token, id, name, cod):
+    key = [str(token)]
+    keya = {'token': str(token)}
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    dados = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
+    docs = [x.to_dict() for x in dados]
+    a = len(docs)
+    [docs[x].update(keya) for x in range(a)]
+    if request.method == 'POST':
+        imagem = request.POST['imagem']
+        tipo_imagem = request.POST['tipo_imagem']
+        formform = db.collection(f'desapego/{id}/desapegos').document(f'{cod}')
+        if tipo_imagem == 'normal':
+            formform.update({
+                'img': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'ofertas':
+            formform.update({
+                'img_ofertas': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'destacados':
+            formform.update({
+                'img_destacados': firestore.ArrayRemove([f'{imagem}'])
+            })
+        elif tipo_imagem == 'cupons':
+            formform.update({
+                'img_cupons': firestore.ArrayRemove([f'{imagem}'])
+            })
+        return redirect('remover_imagens_desapego_sucesso')
+    return render(request, 'remover_imagens_desapego.html', {'lista': docs, 't': key})
 
 
 def user_remover_loja(request, token, cat, id):
