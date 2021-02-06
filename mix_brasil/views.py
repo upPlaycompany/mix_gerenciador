@@ -1317,22 +1317,8 @@ def notificacao(request, token):
                 title=f'{titulo}',
                 body=f'{mensagem}',
             ),
-            android=messaging.AndroidConfig(
-                ttl=datetime.timedelta(seconds=3600),
-                priority='normal',
-                notification=messaging.AndroidNotification(
-                    icon='stock_ticker_update',
-                    color='#f45342'
-                ),
-            ),
-            apns=messaging.APNSConfig(
-                payload=messaging.APNSPayload(
-                    aps=messaging.Aps(badge=42),
-                ),
-            ),
-            topic='all',
         )
-        messaging.send(message)
+        response = messaging.send(message)
         return redirect('notificacao_sucesso', token=token)
     return render(request, 'notificacao.html', {'t': key})
 
