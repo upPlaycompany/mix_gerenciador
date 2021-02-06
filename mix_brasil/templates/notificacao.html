@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% include 'base.html' %}
+
+{% block title %}
+<h2>Criar loja</h2>
+{% endblock title %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label>Título da notificação</label>
+                <input type="text" class="form-control" name="titulo" placeholder="Insira o título da notificação">
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label>Descrição da notificação</label>
+                <input type="text" class="form-control" name="mensagem" placeholder="Insira a descrição da mensagem">
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <span><button type="submit" class="btn btn-success">Enviar mensagem</button></span>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

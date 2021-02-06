@@ -1300,3 +1300,45 @@ def user_remover_loja_sucesso(request, token):
     if usa == []:
         return redirect('index', token=token)
     return render(request, 'user_remover_loja_sucesso.html', {'t': key})
+
+def notificacao(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    if request.method == 'POST':
+        titulo = request.POST['titulo']
+        mensagem = request.POST['messagem']
+        message = messaging.Message(
+            notification=messaging.Notification(
+                title=f'{titulo}',
+                body=f'{mensagem}',
+            ),
+            android=messaging.AndroidConfig(
+                ttl=datetime.timedelta(seconds=3600),
+                priority='normal',
+                notification=messaging.AndroidNotification(
+                    icon='stock_ticker_update',
+                    color='#f45342'
+                ),
+            ),
+            apns=messaging.APNSConfig(
+                payload=messaging.APNSPayload(
+                    aps=messaging.Aps(badge=42),
+                ),
+            ),
+            topic='industry-tech',
+        )
+        return redirect('notificacao_sucesso', token=token)
+    return render(request, 'notificacao.html', {'t': key})
+
+def notificacao_sucesso(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    return render(request, 'notificacao_sucesso.html', {'t': key})
