@@ -1317,6 +1317,7 @@ def notificacao(request, token):
                 title=f'{titulo}',
                 body=f'{mensagem}',
             ),
+            topic='all'
         )
         response = messaging.send(message)
         return redirect('notificacao_sucesso', token=token)
