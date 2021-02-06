@@ -393,8 +393,10 @@ def lojas_listagem(request, token, id):
     a = len(docs)
     dzz = [{'categoria': f'{id}', 'token': str(token)}]
     categoria = {'categoria': f'{id}'}
+    key = {'token': str(token)}
     [docs[x].update(docs2[x]) for x in range(a)]
     [docs[x].update(categoria) for x in range(a)]
+    [docs[x].update(key) for x in range(a)]
     return render(request, 'lojas_listagem.html', {'lista': docs, 'order': dzz})
 
 def lojas_dados(request, token, id, nome, cod):
@@ -721,7 +723,7 @@ def categoria_desapego_listagem(request, token):
     return render(request, 'categoria_desapego_listagem.html', {'lista': docs, 'lista_id': doz})
 
 def desapegos_listagem(request, token, id):
-    key = [str(token)]
+    key = {'token': str(token)}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
@@ -737,6 +739,7 @@ def desapegos_listagem(request, token, id):
     categoria = {'categoria': f'{id}'}
     [docs[x].update(docs2[x]) for x in range(a)]
     [docs[x].update(categoria) for x in range(a)]
+    [docs[x].update(key) for x in range(a)]
     return render(request, 'desapegos_listagem.html', {'lista': docs, 'order': dzz})
 
 def desapegos_dados(request, token, id, nome, cod):

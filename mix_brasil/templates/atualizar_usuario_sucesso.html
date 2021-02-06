@@ -6,6 +6,6 @@
 
 {% block content %}
 {% for key in t %}
-<a href="{% url 'usuario_listagem' %}"><button type="button" class="btn btn-success">Volte para tela de usuários</button></a>
+<a href="{% url 'usuario_listagem' token=key %}"><button type="button" class="btn btn-success">Volte para tela de usuários</button></a>
 {% endfor %}
 {% endblock %}

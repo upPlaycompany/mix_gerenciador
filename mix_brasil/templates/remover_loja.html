@@ -8,6 +8,8 @@
 <form method="post">
     {% csrf_token %}
     <span><button type="submit" class="btn btn-danger">Remover loja</button></span>
-    <span><a href="{% url 'categoria_listagem' %}"><button type="button" class="btn btn-success">Não, voltar as categorias</button></a></span>
+    {% for key in t %}
+    <span><a href="{% url 'categoria_listagem' token=key %}"><button type="button" class="btn btn-success">Não, voltar as categorias</button></a></span>
+    {% endfor %}
 </form>
 {% endblock %}

@@ -5,5 +5,7 @@
 {% endblock title %}
 
 {% block content %}
-<a href="{% url 'user_index' %}"><button type="button" class="btn btn-success">Volte para tela inicial</button></a>
+{% for key in t %}
+<a href="{% url 'user_index' token=key %}"><button type="button" class="btn btn-success">Volte para tela inicial</button></a>
+{% endfor %}
 {% endblock %}>

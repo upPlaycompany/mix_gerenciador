@@ -119,11 +119,11 @@
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
                 <span><button type="submit" class="btn btn-success">Atualizar dados</button></span>
-                <span><a href="{% url 'adicionar_imagens_desapego' id=dec.categoria cod=dec.id %}"><button type="button"
+                <span><a href="{% url 'adicionar_imagens_desapego' token=dec.token id=dec.categoria cod=dec.id %}"><button type="button"
                                                                                                        class="btn btn-info">Adicionar imagens ao desapego</button></a></span>
-                <span><a href="{% url 'remover_imagens_desapego' id=dec.categoria name=dec.name cod=dec.id %}"><button
+                <span><a href="{% url 'remover_imagens_desapego' token=dec.token id=dec.categoria name=dec.name cod=dec.id %}"><button
                         type="button" class="btn btn-warning">Excluir imagens do desapego</button></a></span>
-                <span><a href="{% url 'remover_desapego' id=dec.categoria cod=dec.id %}"><button type="button"
+                <span><a href="{% url 'remover_desapego' token=dec.token id=dec.categoria cod=dec.id %}"><button type="button"
                                                                                              class="btn btn-danger">Excluir desapego</button></a></span>
             </div>
         </div>

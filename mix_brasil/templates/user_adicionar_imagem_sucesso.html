@@ -5,5 +5,7 @@
 {% endblock title %}
 
 {% block content %}
-<a href="{% url 'user_loja_dados' %}"><button type="button" class="btn btn-success">Volte para os dados da loja</button></a>
+{% for key in t %}
+<a href="{% url 'user_loja_dados' token=key %}"><button type="button" class="btn btn-success">Volte para os dados da loja</button></a>
+{% endfor %}
 {% endblock %}
