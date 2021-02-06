@@ -957,7 +957,7 @@ def user_criar_loja(request, token):
         if str(x['email']) != user.email:
             return redirect('index')
     if request.method == 'POST':
-        email = request.user.email
+        email = str(user.email)
         name = request.POST['name']
         categoria = request.POST['categoria']
         whatsapp = request.POST['whatsapp']
