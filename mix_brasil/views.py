@@ -1310,7 +1310,7 @@ def notificacao(request, token):
         return redirect('user_index', token=token)
     if request.method == 'POST':
         titulo = request.POST['titulo']
-        mensagem = request.POST['messagem']
+        mensagem = request.POST['mensagem']
         message = messaging.Message(
             notification=messaging.Notification(
                 title=f'{titulo}',
