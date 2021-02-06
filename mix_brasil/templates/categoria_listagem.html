@@ -29,10 +29,12 @@
     </tr>
     </thead>
     <tbody>
+    {% for key in t %}
     {% for doz in lista_id %}
     <tr>
-        <td><a href="{% url 'lojas_listagem' id=doz %}">Ver lojas</a></td>
+        <td><a href="{% url 'lojas_listagem' token=doz.token id=doz.id %}">Ver lojas</a></td>
     </tr>
+    {% endfor %}
     {% endfor %}
     </tbody>
 </table>
