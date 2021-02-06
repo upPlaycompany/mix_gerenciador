@@ -1225,7 +1225,7 @@ def user_adicionar_imagem_sucesso(request, token):
         return redirect('index', token=token)
     return render(request, 'user_adicionar_imagem_sucesso.html', {'t': key})
 
-def user_remover_imagens(request, token, cat, id):
+def user_remover_imagens(request, token, cat):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
@@ -1286,40 +1286,14 @@ def user_remover_imagens(request, token, cat, id):
         return redirect('user_remover_imagens_sucesso.html')
     return render(request, 'user_adicionar_imagem.html', {'lista': docs, 't': key})
 
-def a(request, token, id, name, cod):
+def user_remover_imagens_sucesso(request, token):
     key = [str(token)]
-    keya = {'token': str(token)}
     user = auth.get_user(token)
-    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
     if usa == []:
-        return redirect('user_index', token=token)
-    dados = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
-    docs = [x.to_dict() for x in dados]
-    a = len(docs)
-    [docs[x].update(keya) for x in range(a)]
-    if request.method == 'POST':
-        imagem = request.POST['imagem']
-        tipo_imagem = request.POST['tipo_imagem']
-        formform = db.collection(f'desapego/{id}/desapegos').document(f'{cod}')
-        if tipo_imagem == 'normal':
-            formform.update({
-                'img': firestore.ArrayRemove([f'{imagem}'])
-            })
-        elif tipo_imagem == 'ofertas':
-            formform.update({
-                'img_ofertas': firestore.ArrayRemove([f'{imagem}'])
-            })
-        elif tipo_imagem == 'destacados':
-            formform.update({
-                'img_destacados': firestore.ArrayRemove([f'{imagem}'])
-            })
-        elif tipo_imagem == 'cupons':
-            formform.update({
-                'img_cupons': firestore.ArrayRemove([f'{imagem}'])
-            })
-        return redirect('remover_imagens_desapego_sucesso')
-    return render(request, 'remover_imagens_desapego.html', {'lista': docs, 't': key})
+        return redirect('index', token=token)
+    return render(request, 'user_loja_dados_sucesso.html', {'t': key})
 
 
 def user_remover_loja(request, token, cat, id):
