@@ -294,7 +294,7 @@ def adicionar_imagem_perfil(request, token, id):
         })
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
-        return redirect('adicionar_imagem_perfil_sucesso')
+        return redirect('adicionar_imagem_perfil_sucesso', token=token)
     return render(request, 'adicionar_imagem_perfil.html', {'t': key})
 
 
@@ -362,7 +362,7 @@ def criar_loja(request, token, id):
                     'cidade': f"{n['cidade']['nome']}",
                     'estado': f"{n['estado']['sigla']}"
                 })
-        return redirect('criar_loja_sucesso')
+        return redirect('criar_loja_sucesso', token=token)
     return render(request, 'criar_loja.html', {'t': key})
 
 
@@ -566,7 +566,7 @@ def adicionar_imagens_loja(request, token, id, cod):
             })
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
-        return redirect('adicionar_imagens_loja_sucesso')
+        return redirect('adicionar_imagens_loja_sucesso', token=token)
     return render(request, 'adicionar_imagens_loja.html', {'t': key})
 
 
@@ -609,7 +609,7 @@ def remover_imagens_loja(request, token, id, name, cod):
             formform.update({
                 'img_cupons': firestore.ArrayRemove([f'{imagem}'])
             })
-        return redirect('remover_imagens_loja_sucesso')
+        return redirect('remover_imagens_loja_sucesso', token=token)
     return render(request, 'remover_imagens_loja.html', {'lista': docs, 't': key})
 
 
@@ -633,7 +633,7 @@ def remover_loja(request, token, id, cod):
     if request.method == 'POST':
         db.collection(f'categorias/{id}/lojas').document(f'{cod}').delete()
         db.collection('destaque_home').where('lid', '==', f'{cod}').delete()
-        return redirect('remover_loja_sucesso')
+        return redirect('remover_loja_sucesso', token=token)
     return render(request, 'remover_loja.html', {'t': key})
 
 
@@ -712,7 +712,7 @@ def criar_desapego(request, token, id):
                     'cidade': f"{n['cidade']['nome']}",
                     'estado': f"{n['estado']['sigla']}",
                 })
-        return redirect('criar_loja_sucesso')
+        return redirect('criar_loja_sucesso', token=token)
     return render(request, 'criar_desapego.html', {'t': key})
 
 
@@ -862,7 +862,7 @@ def desapegos_dados(request, token, id, nome, cod):
             [da[x].update(dw[x]) for x in range(a)]
             [da[x].update(categoria) for x in range(a)]
             [da[x].update(cde[x]) for x in range(a)]
-        return redirect('atualizar_desapego_sucesso')
+        return redirect('atualizar_desapego_sucesso', token=token)
     return render(request, 'desapegos_dados.html', {'lista': dec, 't': key})
 
 
@@ -916,7 +916,7 @@ def adicionar_imagens_desapego(request, token, id, cod):
             })
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
-        return redirect('adicionar_imagens_desapego_sucesso')
+        return redirect('adicionar_imagens_desapego_sucesso', token=token)
     return render(request, 'adicionar_imagens_desapego.html', {'t': key})
 
 
@@ -962,7 +962,7 @@ def remover_imagens_desapego(request, token, id, name, cod):
             formform.update({
                 'img_cupons': firestore.ArrayRemove([f'{imagem}'])
             })
-        return redirect('remover_imagens_desapego_sucesso')
+        return redirect('remover_imagens_desapego_sucesso', token=token)
     return render(request, 'remover_imagens_desapego.html', {'lista': docs, 't': key})
 
 
@@ -987,7 +987,7 @@ def remover_desapego(request, token, id, cod):
     if request.method == 'POST':
         db.collection(f'desapego/{id}/desapegos').document(f'{cod}').delete()
         db.collection('destaque_desapego').where('did', '==', f'{cod}').delete()
-        return redirect('remover_desapego_sucesso')
+        return redirect('remover_desapego_sucesso', token=token)
     return render(request, 'remover_desapego.html', {'t': key})
 
 
@@ -1071,7 +1071,7 @@ def user_criar_loja(request, token):
                 'estado': f"{cde['estado']['sigla']}",
                 'uemail': f"{email}"
             })
-        return redirect('user_criar_loja_sucesso')
+        return redirect('user_criar_loja_sucesso', token=token)
     return render(request, 'user_criar_loja.html', {'t': key})
 
 
@@ -1130,7 +1130,7 @@ def user_loja_dados(request, token):
             'cidade': f"{cidade}",
             'estado': f"{estado}",
         })
-        return redirect('user_loja_dados_sucesso')
+        return redirect('user_loja_dados_sucesso', token=token)
     return render(request, 'user_loja_dados.html', {'lista': abc, 't': key})
 
 
@@ -1212,7 +1212,7 @@ def user_adicionar_imagem(request, token, cat, id):
             })
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
-        return redirect('user_adicionar_imagem_sucesso')
+        return redirect('user_adicionar_imagem_sucesso', token=token)
     return render(request, 'user_adicionar_imagem.html', {'t': key})
 
 
@@ -1283,7 +1283,7 @@ def user_remover_imagens(request, token, cat):
             final_final.update({
                 'img': firestore.ArrayRemove([f'{imagem}'])
             })
-        return redirect('user_remover_imagens_sucesso.html')
+        return redirect('user_remover_imagens_sucesso.html', token=token)
     return render(request, 'user_adicionar_imagem.html', {'lista': docs, 't': key})
 
 def user_remover_imagens_sucesso(request, token):
@@ -1314,7 +1314,7 @@ def user_remover_loja(request, token, cat, id):
         exa2 = db.collection(f'users').where('email', '==', f'{user.email}').stream()
         ex2 = [{'id': x.id} for x in exa2]
         db.collection(f"users/{pa[0]['id']}/loja").document(f"{ex2[0]['id']}").delete()
-        return redirect('user_remover_loja_sucesso')
+        return redirect('user_remover_loja_sucesso', token=token)
     return render(request, 'user_remover_loja.html', {'t': key})
 
 
