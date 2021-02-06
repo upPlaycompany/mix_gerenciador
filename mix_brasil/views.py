@@ -231,7 +231,7 @@ def usuario_dados(request, token):
             }
         )
         return redirect('atualizar_usuario_sucesso', token=token)
-    return render(request, 'usuario_dados.html', {'lista': abc})
+    return render(request, 'usuario_dados.html', {'lista': abc, 't': key})
 
 
 def atualizar_usuario_sucesso(request, token):
@@ -412,7 +412,7 @@ def lojas_listagem(request, token, id):
 
     [docs[x].update(docs2[x]) for x in range(a)]
     [docs[x].update(categoria) for x in range(a)]
-    [docs[x].update(key) for x in range(a)]
+    [docs[x].update(keya) for x in range(a)]
     return render(request, 'lojas_listagem.html', {'lista': docs, 'order': dzz, 't': key})
 
 
