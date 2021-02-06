@@ -887,7 +887,6 @@ def adicionar_imagens_desapego(request, token, id, cod):
         return redirect('user_index', token=token)
     if request.method == 'POST':
         img = request.FILES['img']
-        tipo_imagem = request.POST['tipo_imagem']
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
         imagem_mix.save()
         arquivo = sto.blob(f'desapego/{id}/{cod}/{img}')
@@ -898,22 +897,10 @@ def adicionar_imagens_desapego(request, token, id, cod):
         )
         url = str(url)
         formform = db.collection(f'desapego/{id}/desapegos').document(f'{cod}')
-        if tipo_imagem == 'normal':
-            formform.update({
+        formform.update({
                 'img': firestore.ArrayRemove([f'{imagem}'])
             })
-        elif tipo_imagem == 'ofertas':
-            formform.update({
-                'img_ofertas': firestore.ArrayRemove([f'{imagem}'])
-            })
-        elif tipo_imagem == 'destacados':
-            formform.update({
-                'img_destacados': firestore.ArrayRemove([f'{imagem}'])
-            })
-        elif tipo_imagem == 'cupons':
-            formform.update({
-                'img_cupons': firestore.ArrayRemove([f'{imagem}'])
-            })
+
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
         return redirect('adicionar_imagens_desapego_sucesso', token=token)
@@ -944,24 +931,11 @@ def remover_imagens_desapego(request, token, id, name, cod):
     [docs[x].update(keya) for x in range(a)]
     if request.method == 'POST':
         imagem = request.POST['imagem']
-        tipo_imagem = request.POST['tipo_imagem']
         formform = db.collection(f'desapego/{id}/desapegos').document(f'{cod}')
-        if tipo_imagem == 'normal':
-            formform.update({
+        formform.update({
                 'img': firestore.ArrayRemove([f'{imagem}'])
             })
-        elif tipo_imagem == 'ofertas':
-            formform.update({
-                'img_ofertas': firestore.ArrayRemove([f'{imagem}'])
-            })
-        elif tipo_imagem == 'destacados':
-            formform.update({
-                'img_destacados': firestore.ArrayRemove([f'{imagem}'])
-            })
-        elif tipo_imagem == 'cupons':
-            formform.update({
-                'img_cupons': firestore.ArrayRemove([f'{imagem}'])
-            })
+
         return redirect('remover_imagens_desapego_sucesso', token=token)
     return render(request, 'remover_imagens_desapego.html', {'lista': docs, 't': key})
 

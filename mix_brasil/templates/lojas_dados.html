@@ -101,7 +101,43 @@
                 <label>Imagens da loja</label><br>
                 <div class="row">
                     {% for image in dec.img %}
-                    <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
+                    <img style="width: 300px;" class="card-img-top" src="{{ image }}">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <label>Imagens da loja em destaque</label><br>
+                <div class="row">
+                    {% for image in dec.img_destacados %}
+                    <img style="width: 300px;" class="card-img-top" src="{{ image }}">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <label>Imagens da loja em ofertas</label><br>
+                <div class="row">
+                    {% for image in dec.img_ofertas %}
+                    <img style="width: 300px;" class="card-img-top" src="{{ image }}">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <label>Imagens de cupons da loja</label><br>
+                <div class="row">
+                    {% for image in dec.img_cupons %}
+                    <img style="width: 300px;" class="card-img-top" src="{{ image }}">
                     {% endfor %}
                 </div>
             </div>
