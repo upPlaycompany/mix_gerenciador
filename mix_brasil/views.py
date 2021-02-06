@@ -11,6 +11,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 from firebase_admin import storage
 from firebase_admin import auth
+from firebase_admin import messaging
 import psycopg2
 from django.contrib import auth as autent
 from django.contrib.auth import authenticate, login, logout
