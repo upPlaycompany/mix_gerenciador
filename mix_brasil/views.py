@@ -1045,7 +1045,7 @@ def user_loja_dados(request, token):
         headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
         link = requests.get(url, headers=headers, verify=False)
         cde = link.json()
-    email = request.user.email
+    email = user.email
     dados = db.collection('users').where('email', '==', f'{email}').stream()
     y = [{'id': x.id} for x in dados]
     con = db.collection(f"users/{y[0]['id']}/loja").where('uemail', '==', f'{email}').stream()
