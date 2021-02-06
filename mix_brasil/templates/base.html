@@ -43,6 +43,7 @@
 
 
 
+
     </script>
 </head>
 <body>
@@ -227,7 +228,11 @@
                         <span class="micon dw dw-list3"></span><span class="mtext">Notificações</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="#">Consulta</a></li>
+                        <li>
+                            [% for key in t %}
+                            <a href="{% url 'notificacao' token=key %}">Consulta</a>
+                            {% endfor %}
+                        </li>
                     </ul>
                 </li>
             </ul>
