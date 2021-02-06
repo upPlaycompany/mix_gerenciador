@@ -229,7 +229,7 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            [% for key in t %}
+                            {% for key in t %}
                             <a href="{% url 'notificacao' token=key %}">Consulta</a>
                             {% endfor %}
                         </li>
