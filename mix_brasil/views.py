@@ -178,7 +178,7 @@ def usuario_listagem(request, token):
     return render(request, 'usuario_listagem.html', {'lista': docs, 'lista_id': doz, 't': key})
 
 
-def usuario_dados(request, token):
+def usuario_dados(request, token, id):
     key = [str(token)]
     keya = {'token': str(token)}
     user = auth.get_user(token)
