@@ -418,7 +418,7 @@ def lojas_listagem(request, token, id):
 
 def lojas_dados(request, token, id, nome, cod):
     key = [str(token)]
-    keya = {'id': str(token)}
+
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
@@ -438,6 +438,7 @@ def lojas_dados(request, token, id, nome, cod):
     dec = [{'id': x.id} for x in dados2]
     a = len(dec)
     categoria = {'categoria': f'{id}'}
+    keya = {'token': str(token)}
     [dec[x].update(abc[x]) for x in range(a)]
     [dec[x].update(categoria) for x in range(a)]
     [dec[x].update(cde) for x in range(a)]
