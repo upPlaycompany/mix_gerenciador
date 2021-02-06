@@ -162,7 +162,8 @@ def criar_usuario_sucesso(request):
 
 
 def usuario_listagem(request, token):
-    key = {'token': str(token)}
+    key = [str(token)]
+    keya = {'token': str(token)}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
@@ -173,12 +174,13 @@ def usuario_listagem(request, token):
     ident = db.collection('users').stream()
     docs = [x.to_dict() for x in ident]
     a = len(doz)
-    [doz[x].update(key) for x in range(a)]
+    [doz[x].update(keya) for x in range(a)]
     return render(request, 'usuario_listagem.html', {'lista': docs, 'lista_id': doz, 't': key})
 
 
 def usuario_dados(request, token):
-    key = {'token': str(token)}
+    key = [str(token)]
+    keya = {'token': str(token)}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
@@ -198,7 +200,7 @@ def usuario_dados(request, token):
     ident = {'id': f'{id}'}
     abc.update(ident)
     abc.update(cde)
-    abc.update(key)
+    abc.update(keya)
     abc = [abc]
     if request.method == 'POST':
         name = request.POST['name']
@@ -375,7 +377,8 @@ def criar_loja_sucesso(request, token):
 
 
 def categoria_listagem(request, token):
-    key = {'token': str(token)}
+    key = [str(token)]
+    keya = {'token': str(token)}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
@@ -387,11 +390,13 @@ def categoria_listagem(request, token):
     ident = db.collection('categorias').stream()
     docs = [x.to_dict() for x in ident]
     a = len(doz)
-    [doz[x].update(key) for x in range(a)]
+    [doz[x].update(keya) for x in range(a)]
     return render(request, 'categoria_listagem.html', {'lista': docs, 'lista_id': doz, 't': key})
 
 
 def lojas_listagem(request, token, id):
+    key = [str(token)]
+    keya = {'token': str(token)}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
@@ -404,7 +409,7 @@ def lojas_listagem(request, token, id):
     a = len(docs)
     dzz = [{'categoria': f'{id}', 'token': str(token)}]
     categoria = {'categoria': f'{id}'}
-    key = {'token': str(token)}
+
     [docs[x].update(docs2[x]) for x in range(a)]
     [docs[x].update(categoria) for x in range(a)]
     [docs[x].update(key) for x in range(a)]
@@ -412,7 +417,8 @@ def lojas_listagem(request, token, id):
 
 
 def lojas_dados(request, token, id, nome, cod):
-    key = {'id': str(token)}
+    key = [str(token)]
+    keya = {'id': str(token)}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
@@ -435,7 +441,7 @@ def lojas_dados(request, token, id, nome, cod):
     [dec[x].update(abc[x]) for x in range(a)]
     [dec[x].update(categoria) for x in range(a)]
     [dec[x].update(cde) for x in range(a)]
-    [dec[x].update(key) for x in range(a)]
+    [dec[x].update(keya) for x in range(a)]
     if request.method == 'POST':
         name = request.POST['name']
         whatsapp = request.POST['whatsapp']
@@ -719,7 +725,8 @@ def criar_desapego_sucesso(request, token):
 
 
 def categoria_desapego_listagem(request, token):
-    key = {'token': str(token)}
+    key = [str(token)]
+    keya = {'token': str(token)}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
@@ -730,12 +737,13 @@ def categoria_desapego_listagem(request, token):
     ident = db.collection('desapego').stream()
     docs = [x.to_dict() for x in ident]
     a = len(doz)
-    [doz[x].update(key) for x in range(a)]
+    [doz[x].update(keya) for x in range(a)]
     return render(request, 'categoria_desapego_listagem.html', {'lista': docs, 'lista_id': doz, 't': key})
 
 
 def desapegos_listagem(request, token, id):
-    key = {'token': str(token)}
+    key = [str(token)]
+    keya = {'token': str(token)}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
@@ -750,12 +758,13 @@ def desapegos_listagem(request, token, id):
     categoria = {'categoria': f'{id}'}
     [docs[x].update(docs2[x]) for x in range(a)]
     [docs[x].update(categoria) for x in range(a)]
-    [docs[x].update(key) for x in range(a)]
+    [docs[x].update(keya) for x in range(a)]
     return render(request, 'desapegos_listagem.html', {'lista': docs, 'order': dzz, 't': key})
 
 
 def desapegos_dados(request, token, id, nome, cod):
-    key = {'token': str(token)}
+    key = [str(token)]
+    keya = {'token': str(token)}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
@@ -778,7 +787,7 @@ def desapegos_dados(request, token, id, nome, cod):
     [dec[x].update(abc[x]) for x in range(a)]
     [dec[x].update(categoria) for x in range(a)]
     [dec[x].update(cde) for x in range(a)]
-    [dec[x].update(key) for x in range(a)]
+    [dec[x].update(keya) for x in range(a)]
     if request.method == 'POST':
         name = request.POST['name']
         descricao = request.POST['descricao']
@@ -906,7 +915,8 @@ def adicionar_imagens_desapego_sucesso(request, token):
 
 
 def remover_imagens_desapego(request, token, id, name, cod):
-    key = {'token': str(token)}
+    key = [str(token)]
+    keya = {'token': str(token)}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
@@ -915,7 +925,7 @@ def remover_imagens_desapego(request, token, id, name, cod):
     dados = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
     docs = [x.to_dict() for x in dados]
     a = len(docs)
-    [docs[x].update(key) for x in range(a)]
+    [docs[x].update(keya) for x in range(a)]
     if request.method == 'POST':
         imagem = request.POST['imagem']
         formform = db.collection(f'desapego/{id}/desapegos').document(f'{cod}')
