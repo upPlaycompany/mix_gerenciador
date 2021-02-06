@@ -964,7 +964,7 @@ def remover_desapego_sucesso(request, token):
 # PARTE DE USUARIO
 def user_criar_loja(request, token):
     key = [str(token)]
-    user = auth.get_user(token)
+    user = auth.get_user(str(token))
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
     if usa == []:
@@ -1037,7 +1037,7 @@ def user_criar_loja(request, token):
 
 def user_criar_loja_sucesso(request, token):
     key = [str(token)]
-    user = auth.get_user(token)
+    user = auth.get_user(str(token))
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
     if usa == []:
@@ -1047,7 +1047,7 @@ def user_criar_loja_sucesso(request, token):
 
 def user_loja_dados(request, token):
     key = {'token': str(token)}
-    user = auth.get_user(token)
+    user = auth.get_user(str(token))
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
     if usa == []:
