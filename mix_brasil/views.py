@@ -1312,7 +1312,7 @@ def notificacao(request, token):
     if request.method == 'POST':
         titulo = request.POST['titulo']
         mensagem = request.POST['mensagem']
-        message = messaging.Message(
+        messaging.Message(
             notification=messaging.Notification(
                 title=f'{titulo}',
                 body=f'{mensagem}',
