@@ -419,7 +419,6 @@ def lojas_listagem(request, token, id):
 
 def lojas_dados(request, token, id, nome, cod):
     key = [str(token)]
-
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
@@ -1029,7 +1028,7 @@ def user_criar_loja(request, token):
         des = db.collection(f'users').where('email', '==', f'{email}').stream()
         pka = [{'id': x.id} for x in des]
         for y in pka:
-            fad = db.collection(f"users/{y['id']}/loja").document(f"{y['id']}")
+            fad = db.collection(f"users/{y['id']}/loja").document()
             fad.set({
                 'name': f'{name}',
                 'categoria': f'{categoria}',
