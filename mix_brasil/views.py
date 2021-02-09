@@ -981,6 +981,7 @@ def user_criar_loja(request, token):
     user = auth.get_user(str(token))
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
+
     if usa == []:
         return redirect('index', token=token)
     if request.method == 'POST':
@@ -1077,6 +1078,7 @@ def user_loja_dados(request, token):
     if usa == []:
         return redirect('index', token=token)
     cep = request.GET.get("cep")
+    cde = {}
     if cep != "":
         url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
         headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
