@@ -992,6 +992,10 @@ def user_criar_loja(request, token):
         trabalhe_conosco = request.POST['trabalhe_conosco']
         price = request.POST['price']
         cep = request.POST['cep']
+        img = request.FILES['img']
+        img_destacados = request.FILES['img_destacados']
+        img_ofertas = request.FILES['img_ofertas']
+        img_cupons = request.FILES['img_cupons']
         dex = False
         price = price.replace(',', '.')
         price = float(price)
@@ -1001,6 +1005,38 @@ def user_criar_loja(request, token):
             headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
             link = requests.get(url, headers=headers, verify=False)
             cde = link.json()
+        imagem_mix1 = IMAGEM_MIX.objects.create(imagem=img)
+        imagem_mix2 = IMAGEM_MIX.objects.create(imagem=img_cupons)
+        imagem_mix3 = IMAGEM_MIX.objects.create(imagem=img_ofertas)
+        imagem_mix4 = IMAGEM_MIX.objects.create(imagem=img_destacados)
+        imagem_mix1.save()
+        imagem_mix2.save()
+        imagem_mix3.save()
+        imagem_mix4.save()
+        arquivo1 = sto.blob(f'categorias/{categoria}/{token}/{img}')
+        arquivo2 = sto.blob(f'categorias/{categoria}/{token}/{img_cupons}')
+        arquivo3 = sto.blob(f'categorias/{categoria}/{token}/{img_ofertas}')
+        arquivo4 = sto.blob(f'categorias/{categoria}/{token}/{img_destacados}')
+        arquivo1.upload_from_filename(f"/app/mix_brasil/settings/imagem/{img}")
+        arquivo2.upload_from_filename(f"/app/mix_brasil/settings/imagem/{img_cupons}")
+        arquivo3.upload_from_filename(f"/app/mix_brasil/settings/imagem/{img_ofertas}")
+        arquivo4.upload_from_filename(f"/app/mix_brasil/settings/imagem/{img_destacados}")
+        url1 = arquivo1.generate_signed_url(
+            expiration=datetime.timedelta(weeks=200),
+            method="GET",
+        )
+        url2 = arquivo2.generate_signed_url(
+            expiration=datetime.timedelta(weeks=200),
+            method="GET",
+        )
+        url3 = arquivo3.generate_signed_url(
+            expiration=datetime.timedelta(weeks=200),
+            method="GET",
+        )
+        url4 = arquivo4.generate_signed_url(
+            expiration=datetime.timedelta(weeks=200),
+            method="GET",
+        )
         dados.set({
             'name': f'{name}',
             'idCat': f'{categoria}',
@@ -1009,10 +1045,10 @@ def user_criar_loja(request, token):
             'price': price,
             'destaque': dex,
             'promocao': "",
-            'img': firestore.ArrayUnion([""]),
-            'img_destacados': firestore.ArrayUnion([""]),
-            'img_ofertas': firestore.ArrayUnion([""]),
-            'img_cupons': firestore.ArrayUnion([""]),
+            'img': firestore.ArrayUnion([f"{url1}"]),
+            'img_destacados': firestore.ArrayUnion([f"{url4}"]),
+            'img_ofertas': firestore.ArrayUnion([f"{url3}"]),
+            'img_cupons': firestore.ArrayUnion([f"{url2}"]),
             'cidade': f"{cde['cidade']['nome']}",
             'estado': f"{cde['estado']['sigla']}",
             'uemail': f"{email}",
@@ -1043,19 +1079,27 @@ def user_criar_loja(request, token):
                 'price': price,
                 'destaque': dex,
                 'promocao': "",
-                'img': firestore.ArrayUnion([""]),
-                'img_destacados': firestore.ArrayUnion([""]),
-                'img_ofertas': firestore.ArrayUnion([""]),
-                'img_cupons': firestore.ArrayUnion([""]),
+                'img': firestore.ArrayUnion([f"{url1}"]),
+                'img_destacados': firestore.ArrayUnion([f"{url4}"]),
+                'img_ofertas': firestore.ArrayUnion([f"{url3}"]),
+                'img_cupons': firestore.ArrayUnion([f"{url2}"]),
                 'cidade': f"{cde['cidade']['nome']}",
                 'estado': f"{cde['estado']['sigla']}",
                 'uemail': f"{email}",
-                'idAdsUser': f"{ff[0]['id']}",
+                'idAds': f"{ff[0]['id']}",
                 'views': 0,
                 'viewsWhats': 0,
                 'user': f'{str(token)}',
             })
-            return redirect('user_criar_loja_sucesso', token=token)
+        abx = db.collection(f"users/{token}/loja").where('uemail','==',f'{email}').stream()
+        abv = [{'id': x.id} for x in abx]
+        pvc = db.collection(f"categorias/{categoria}/lojas").where('uemail','==',f'{email}').stream()
+        pvcz = [{'id': x.id} for x in pvc]
+        apv = db.collection(f"categorias/{categoria}/lojas").document(f"{pvcz[0]['id']}")
+        apv.update({
+            'idAdsUser': f"{abv[0]['id']}"
+        })
+        return redirect('user_criar_loja_sucesso', token=token)
     return render(request, 'user_criar_loja.html', {'t': key})
 
 
@@ -1087,14 +1131,18 @@ def user_loja_dados(request, token):
     email = user.email
     dados = db.collection('users').where('email', '==', f'{email}').stream()
     y = [{'id': x.id} for x in dados]
+    dadoss = db.collection('users').where('email', '==', f'{email}').stream()
+    yx = [{'id': x.id} for x in dadoss]
     con = db.collection(f"users/{y[0]['id']}/loja").where('uemail', '==', f'{email}').stream()
     abc = [{'id': x.id} for x in con]
-    cen = db.collection(f"users/{y[0]['id']}/loja").where('uemail', '==', f'{email}').stream()
+    cen = db.collection(f"users/{yx[0]['id']}/loja").where('uemail', '==', f'{email}').stream()
     xyz = [x.to_dict() for x in cen]
     la = len(abc)
     [abc[x].update(xyz[x]) for x in range(la)]
     [abc[x].update(cde) for x in range(la)]
     [abc[x].update(keya) for x in range(la)]
+    dados2 = db.collection('users').where('email', '==', f'{email}').stream()
+    y2 = [{'id': x.id} for x in dados2]
     if request.method == 'POST':
         name = request.POST['name']
         whatsapp = request.POST['whatsapp']
@@ -1105,8 +1153,34 @@ def user_loja_dados(request, token):
         estado = request.POST['estado']
         price = price.replace(',', '.')
         price = float(price)
-        can = db.collection(f"users/{abc[0]['id']}/loja").document(f"{abc[0]['id']}")
+        can = db.collection(f"users/{y2[0]['id']}/loja").document(f"{abc[0]['id']}")
         can.update({
+            'name': f'{name}',
+            'whatsapp': f'{whatsapp}',
+            'trabalhe_conosco': f'{trabalheconosco}',
+            'price': price,
+            'promocao': f"{promocao}",
+            'cidade': f"{cidade}",
+            'estado': f"{estado}",
+        })
+        dados3 = db.collection('users').where('email', '==', f'{email}').stream()
+        y3 = [{'id': x.id} for x in dados3]
+        con3 = db.collection(f"users/{y3[0]['id']}/loja").where('uemail', '==', f'{email}').stream()
+        abc3 = [{'id': x.id} for x in con3]
+        cen3 = db.collection(f"users/{abc3[0]['id']}/loja").where('uemail', '==', f'{email}').stream()
+        xyz3 = [x.to_dict() for x in cen3]
+        op = len(abc3)
+        [abc3[x].update(xyz3[x]) for x in range(op)]
+        a = db.collection('users').where('email', '==', f'{email}').stream()
+        b = [{'id': x.id} for x in a]
+        c = db.collection(f"users/{b[0]['id']}/loja").where('uemail', '==', f'{email}').stream()
+        d = [{'id': x.id} for x in c]
+        e = db.collection(f"users/{d[0]['id']}/loja").where('uemail', '==', f'{email}').stream()
+        f = [x.to_dict() for x in e]
+        laxa = len(d)
+        [d[x].update(f[x]) for x in range(laxa)]
+        final = db.collection(f"categorias/{abc3[0]['idCat']}/lojas").document(f"{d[0]['idAds']}")
+        final.update({
             'name': f'{name}',
             'whatsapp': f'{whatsapp}',
             'trabalhe_conosco': f'{trabalheconosco}',
@@ -1150,7 +1224,6 @@ def user_adicionar_imagem(request, token, cat, id):
             method="GET",
         )
         url = str(url)
-
         formform = db.collection(f'categorias/{cat}/lojas').document(ad[0]['id'])
         if tipo_imagem == 'normal':
             formform.update({
