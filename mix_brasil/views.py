@@ -514,7 +514,7 @@ def lojas_dados(request, token, id, nome, cod):
             [da[x].update(dw[x]) for x in range(a)]
             [da[x].update(categoria) for x in range(a)]
             [da[x].update(cde[x]) for x in range(a)]
-        return redirect('atualizar_loja_sucesso')
+        return redirect('atualizar_loja_sucesso', token=token)
     return render(request, 'lojas_dados.html', {'lista': dec, 't': key})
 
 
@@ -1300,7 +1300,7 @@ def user_remover_loja(request, token, cat, id):
         pa = [{'id': x.id} for x in exc]
         exa2 = db.collection(f'users').where('email', '==', f'{user.email}').stream()
         ex2 = [{'id': x.id} for x in exa2]
-        db.collection(f"users/{pa[0]['id']}/loja").document(f"{ex2[0]['id']}").delete()
+        db.collection(f"users/{ex2[0]['id']}/loja").document(f"{pa[0]['id']}").delete()
         return redirect('user_remover_loja_sucesso', token=token)
     return render(request, 'user_remover_loja.html', {'t': key})
 
