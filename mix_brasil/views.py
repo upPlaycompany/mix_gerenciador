@@ -898,8 +898,8 @@ def adicionar_imagens_desapego(request, token, id, cod):
         url = str(url)
         formform = db.collection(f'desapego/{id}/desapegos').document(f'{cod}')
         formform.update({
-                'img': firestore.ArrayRemove([f'{imagem}'])
-            })
+            'img': firestore.ArrayRemove([f'{imagem}'])
+        })
 
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
@@ -933,8 +933,8 @@ def remover_imagens_desapego(request, token, id, name, cod):
         imagem = request.POST['imagem']
         formform = db.collection(f'desapego/{id}/desapegos').document(f'{cod}')
         formform.update({
-                'img': firestore.ArrayRemove([f'{imagem}'])
-            })
+            'img': firestore.ArrayRemove([f'{imagem}'])
+        })
 
         return redirect('remover_imagens_desapego_sucesso', token=token)
     return render(request, 'remover_imagens_desapego.html', {'lista': docs, 't': key})
@@ -1002,7 +1002,7 @@ def user_criar_loja(request, token):
             cde = link.json()
         dados.set({
             'name': f'{name}',
-            'categoria': f'{categoria}',
+            'idCat': f'{categoria}',
             'whatsapp': f'{whatsapp}',
             'trabalhe_conosco': f'{trabalhe_conosco}',
             'price': price,
@@ -1014,7 +1014,11 @@ def user_criar_loja(request, token):
             'img_cupons': firestore.ArrayUnion([""]),
             'cidade': f"{cde['cidade']['nome']}",
             'estado': f"{cde['estado']['sigla']}",
-            'uemail': f"{email}"
+            'uemail': f"{email}",
+            'views': 0,
+            'viewsWhats': 0,
+            'user': f'{str(token)}',
+
         })
         info = db.collection(f'categorias/{categoria}/lojas').where('name', '==', f'{name}').stream()
         ff = [{'id': x.id} for x in info]
@@ -1025,13 +1029,14 @@ def user_criar_loja(request, token):
         [ff[x].update(gg[x]) for x in range(a)]
         [ff[x].update(category) for x in range(a)]
         [ff[x].update(cde) for x in range(a)]
+
         des = db.collection(f'users').where('email', '==', f'{email}').stream()
         pka = [{'id': x.id} for x in des]
         for y in pka:
             fad = db.collection(f"users/{y['id']}/loja").document()
             fad.set({
                 'name': f'{name}',
-                'categoria': f'{categoria}',
+                'idCat': f'{categoria}',
                 'whatsapp': f'{whatsapp}',
                 'trabalhe_conosco': f'{trabalhe_conosco}',
                 'price': price,
@@ -1043,9 +1048,13 @@ def user_criar_loja(request, token):
                 'img_cupons': firestore.ArrayUnion([""]),
                 'cidade': f"{cde['cidade']['nome']}",
                 'estado': f"{cde['estado']['sigla']}",
-                'uemail': f"{email}"
+                'uemail': f"{email}",
+                'idAdsUser': f"{ff[0]['id']}",
+                'views': 0,
+                'viewsWhats': 0,
+                'user': f'{str(token)}',
             })
-        return redirect('user_criar_loja_sucesso', token=token)
+            return redirect('user_criar_loja_sucesso', token=token)
     return render(request, 'user_criar_loja.html', {'t': key})
 
 
@@ -1199,6 +1208,7 @@ def user_adicionar_imagem_sucesso(request, token):
         return redirect('index', token=token)
     return render(request, 'user_adicionar_imagem_sucesso.html', {'t': key})
 
+
 def user_remover_imagens(request, token, cat):
     key = [str(token)]
     user = auth.get_user(token)
@@ -1260,6 +1270,7 @@ def user_remover_imagens(request, token, cat):
         return redirect('user_remover_imagens_sucesso.html', token=token)
     return render(request, 'user_adicionar_imagem.html', {'lista': docs, 't': key})
 
+
 def user_remover_imagens_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
@@ -1301,6 +1312,7 @@ def user_remover_loja_sucesso(request, token):
         return redirect('index', token=token)
     return render(request, 'user_remover_loja_sucesso.html', {'t': key})
 
+
 def notificacao(request, token):
     key = [str(token)]
     user = auth.get_user(token)
@@ -1321,6 +1333,7 @@ def notificacao(request, token):
         response = messaging.send(message)
         return redirect('notificacao_sucesso', token=token)
     return render(request, 'notificacao.html', {'t': key})
+
 
 def notificacao_sucesso(request, token):
     key = [str(token)]
