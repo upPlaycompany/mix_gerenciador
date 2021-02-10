@@ -1492,4 +1492,4 @@ def user_enviar_solicitacao_loja_sucesso(request, token):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('index', token=token)
-    return render(request, 'enviar_solicitacao_loja_sucesso.html', {'t': key})
+    return render(request, 'user_enviar_solicitacao_loja_sucesso.html', {'t': key})
