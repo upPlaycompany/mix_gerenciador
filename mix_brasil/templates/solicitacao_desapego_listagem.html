@@ -6,7 +6,7 @@
 
 {% block content %}
 {% for dsae in lista %}
-<span><div class="col-sm-12 col-md-4 mb-30">
+<span>
     <div class="card card-box text-center">
         <div class="card-body">
             <h5 class="card-title">{{ dsae.name }}</h5>
@@ -14,7 +14,6 @@
             <a href="{% url 'solicitacao_desapego_ver' token=dsae.token name=dsae.name %}" class="btn btn-primary">Ver
                 solicitação</a>
         </div>
-    </div>
 </div></span>
 {% endfor %}
 
