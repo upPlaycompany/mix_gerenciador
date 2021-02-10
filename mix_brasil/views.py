@@ -1022,8 +1022,8 @@ def solicitacao_loja_listagem(request, token):
     dse = db.collection(f"msg_destaca_loja").stream()
     dsee = [x.to_dict() for x in dse]
     a = len(dsae)
-    [dsae[x].update(dsee[x]) for x in a]
-    [dsae[x].update(keya) for x in a]
+    [dsae[x].update(dsee[x]) for x in range(a)]
+    [dsae[x].update(keya) for x in range(a)]
     return render(request, 'solicitcao_loja_destaque.html', {'lista': dsae, 't': key})
 
 def solicitacao_loja_ver(request, token, id):
@@ -1474,7 +1474,7 @@ def user_enviar_solicitacao_loja(request, token):
         dados2 = db.collection(f"users/{token}/loja").where('uemail','==',f'{user.email}').stream()
         da = [x.to_dict() for x in dados2]
         a = len(d)
-        [d[x].update(da[x]) for x in a]
+        [d[x].update(da[x]) for x in range(a)]
         soli = db.collection('msg_destaca_loja').document()
         soli.set({
             'name': f"{d[0]['name']}",
