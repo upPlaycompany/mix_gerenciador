@@ -1024,7 +1024,7 @@ def solicitacao_loja_listagem(request, token):
     a = len(dsae)
     [dsae[x].update(dsee[x]) for x in range(a)]
     [dsae[x].update(keya) for x in range(a)]
-    return render(request, 'solicitcao_loja_listagem.html', {'lista': dsae, 't': key})
+    return render(request, 'solicitacao_loja_listagem.html', {'lista': dsae, 't': key})
 
 def solicitacao_loja_ver(request, token, id):
     key = [str(token)]
