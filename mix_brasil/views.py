@@ -1026,7 +1026,7 @@ def solicitacao_loja_listagem(request, token):
     [dsae[x].update(keya) for x in range(a)]
     return render(request, 'solicitacao_loja_listagem.html', {'lista': dsae, 't': key})
 
-def solicitacao_loja_ver(request, token, id):
+def solicitacao_loja_ver(request, token, name):
     key = [str(token)]
     keya = {'token': token}
     user = auth.get_user(token)
@@ -1034,10 +1034,10 @@ def solicitacao_loja_ver(request, token, id):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-    day = db.collection("msg_destaca_loja").where('name','==',f'{id}').stream()
+    day = db.collection("msg_destaca_loja").where('name','==',f'{name}').stream()
     dey = [{'id': x.id} for x in day]
-    diy = db.collection("msg_destaca_loja").where('name', '==', f'{id}').stream()
-    doy = [{'id': x.id} for x in diy]
+    diy = db.collection("msg_destaca_loja").where('name', '==', f'{name}').stream()
+    doy = [x.to_dict() for x in diy]
     a = len(dey)
     [dey[x].update(doy[x]) for x in range(a)]
     [dey[x].update(keya) for x in range(a)]
