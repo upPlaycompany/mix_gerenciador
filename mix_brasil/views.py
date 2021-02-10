@@ -1460,5 +1460,36 @@ def user_remover_loja_sucesso(request, token):
         return redirect('index', token=token)
     return render(request, 'user_remover_loja_sucesso.html', {'t': key})
 
+def user_enviar_solicitacao_loja(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('users').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('index', token=token)
+    if request.method == 'POST':
+        mensagem = request.POST['mensagem']
+        dados = db.collection(f"users/{token}/loja").where('uemail','==',f'{user.email}').stream()
+        d = [{'id': x.id} for x in dados]
+        dados2 = db.collection(f"users/{token}/loja").where('uemail','==',f'{user.email}').stream()
+        da = [x.to_dict() for x in dados2]
+        a = len(d)
+        [d[x].update(da[x]) for x in a]
+        soli = db.collection('msg_destaca_loja').document()
+        soli.set({
+            'name': f"{d[0]['name']}",
+            'whatsapp': f"{d[0]['whatsapp']}",
+            'email': f"{d[0]['uemail']}",
+            'mensagem': f"{mensagem}"
+        })
+        return redirect('user_enviar_solicitacao_loja_sucesso.html', token=token)
+    return render(request, 'user_enviar_solicitacao_loja.html', {'t': key})
 
-
+def user_enviar_solicitacao_loja_sucesso(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('users').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('index', token=token)
+    return render(request, 'enviar_solicitacao_loja_sucesso.html', {'t': key})

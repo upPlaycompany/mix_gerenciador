@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Enviar solicitação</h2>
+{% endblock title %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <label>Digitar mensagem de solicitação</label>
+                <input type="text" accept="image/jpeg" class="form-control" name="mensagem">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <span><button type="submit" class="btn btn-success">Enviar solicitação</button></span>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
