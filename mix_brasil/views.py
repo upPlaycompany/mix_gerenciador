@@ -877,8 +877,6 @@ def atualizar_desapego_sucesso(request, token):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-    if request.user.is_superuser == False or request.user.is_staff == False:
-        return redirect('user_index')
     return render(request, 'atualizar_desapego_sucesso.html', {'t': key})
 
 
