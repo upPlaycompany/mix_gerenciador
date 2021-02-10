@@ -1482,7 +1482,7 @@ def user_enviar_solicitacao_loja(request, token):
             'email': f"{d[0]['uemail']}",
             'mensagem': f"{mensagem}"
         })
-        return redirect('user_enviar_solicitacao_loja_sucesso.html', token=token)
+        return redirect('user_enviar_solicitacao_loja_sucesso', token=token)
     return render(request, 'user_enviar_solicitacao_loja.html', {'t': key})
 
 def user_enviar_solicitacao_loja_sucesso(request, token):
