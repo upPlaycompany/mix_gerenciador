@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Detalhes da solicitação</h2>
+{% endblock title %}
+
+{% block content %}
+{% for dey in lista %}
+<div class="col-md-8 col-sm-12">
+    <div class="blog-detail card-box overflow-hidden mb-30">
+        <div class="blog-caption">
+            <p>Código do desapego: {{ dey.id }}</p>
+            <p>Nome do desapego: {{ dey.name }}</p>
+            <p>Número do whats do anunciante: {{ dey.whatsapp }}</p>
+            <p>Mensagem da loja solicitante: {{ dey.mensagem }}</p>
+            <br>
+            <p>Clique no botão para destacar a página</p>
+            <a href="{% url 'desapego_dados' token=dey.token id=dey.categoria nome=dey.name cod=dey.id %}"><button type="button" class="btn btn-success">Ir para página da loja</button></a>
+            <br>
+            <p>Clique no botão para deletar a solicitação</p>
+            <a href="{% url 'solicitacao_desapego_remover' token=dey.token id=dey.id %}"><button type="button" class="btn btn-danger">Deletar solicitação</button></a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1009,6 +1009,61 @@ def notificacao_sucesso(request, token):
         return redirect('user_index', token=token)
     return render(request, 'notificacao_sucesso.html', {'t': key})
 
+def solicitacao_desapego_listagem(request, token):
+    key = [str(token)]
+    keya = {'token': token}
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    dsa = db.collection(f"msg_destaca_desapego").stream()
+    dsae = [{'id': x.id} for x in dsa]
+    dse = db.collection(f"msg_destaca_desapego").stream()
+    dsee = [x.to_dict() for x in dse]
+    a = len(dsae)
+    [dsae[x].update(dsee[x]) for x in range(a)]
+    [dsae[x].update(keya) for x in range(a)]
+    return render(request, 'solicitacao_desapego_listagem.html', {'lista': dsae, 't': key})
+
+def solicitacao_desapego_ver(request, token, name):
+    key = [str(token)]
+    keya = {'token': token}
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    day = db.collection("msg_destaca_desapego").where('name','==',f'{name}').stream()
+    dey = [{'id': x.id} for x in day]
+    diy = db.collection("msg_destaca_desapego").where('name', '==', f'{name}').stream()
+    doy = [x.to_dict() for x in diy]
+    a = len(dey)
+    [dey[x].update(doy[x]) for x in range(a)]
+    [dey[x].update(keya) for x in range(a)]
+    return render(request, 'solicitacao_desapego_ver.html', {'lista': dey, 't': key})
+
+def solicitacao_desapego_remover(request, token, id):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    if request.method == 'POST':
+        db.collection("msg_destaca_desapego").document(f"{id}").delete()
+        return redirect('solicitacao_desapego_remover_sucesso', token=token)
+    return render(request, 'solicitacao_desapego_remover.html', {'t': key})
+
+def solicitacao_desapego_remover_sucesso(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    return render(request, 'solicitacao_desapego_remover_sucesso.html', {'t': key})
+
 def solicitacao_loja_listagem(request, token):
     key = [str(token)]
     keya = {'token': token}
