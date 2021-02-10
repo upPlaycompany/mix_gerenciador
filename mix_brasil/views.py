@@ -1043,7 +1043,26 @@ def solicitacao_loja_ver(request, token, name):
     [dey[x].update(keya) for x in range(a)]
     return render(request, 'solicitacao_loja_ver.html', {'lista': dey, 't': key})
 
+def solicitacao_loja_remover(request, token, id):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    if request.method == 'POST':
+        db.collection("msg_destaca_loja").document(f"{id}").delete()
+        return redirect('solicitacao_loja_remover_sucesso', token=token)
+    return render(request, 'solicitacao_loja_remover.html', {'t': key})
 
+def solicitacao_loja_remover_sucesso(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    return render(request, 'solicitacao_loja_remover_sucesso.html', {'t': key})
 
 # PARTE DE USUARIO
 def user_criar_loja(request, token):
