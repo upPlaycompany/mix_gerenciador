@@ -15,7 +15,7 @@
             <p>Mensagem da loja solicitante: {{ dey.mensagem }}</p>
             <br>
             <p>Clique no botão para destacar a página</p>
-            <a href="{% url 'desapegos_dados' token=dey.token id=dey.categoria nome=dey.name cod=dey.idAds %}"><button type="button" class="btn btn-success">Ir para página do desapego</button></a>
+            <a href="{% url 'desapegos_dados' token=dey.token id=dey.idCat nome=dey.name cod=dey.idAds %}"><button type="button" class="btn btn-success">Ir para página do desapego</button></a>
             <br>
             <p>Clique no botão para deletar a solicitação</p>
             <a href="{% url 'solicitacao_desapego_remover' token=dey.token id=dey.id %}"><button type="button" class="btn btn-danger">Deletar solicitação</button></a>
