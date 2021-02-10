@@ -10,10 +10,11 @@
     <div class="blog-detail card-box overflow-hidden mb-30">
         <div class="blog-caption">
             <h4 class="mb-10">Solicitação</h4>
-            <p>{{ dey.id }}</p>
-            <p>{{ dey.name }}</p>
-            <p>{{ dey.whatsapp }}</p>
-            <p>{{ dey.mensagem }}</p>
+            <p>Código da loja: {{ dey.id }}</p>
+            <p>Nome da loja: {{ dey.name }}</p>
+            <p>Número do whats da loja: {{ dey.whatsapp }}</p>
+            <p>Mensagem da loja solicitante: {{ dey.mensagem }}</p>
+            <br>
             <p>Clique no botão para destacar a página</p>
             <a href="{% url 'lojas_dados' token=dey.token id=dey.categoria nome=dey.name cod=dey.id %}"><button type="button" class="btn btn-success">Ir para página da loja</button></a>
         </div>
