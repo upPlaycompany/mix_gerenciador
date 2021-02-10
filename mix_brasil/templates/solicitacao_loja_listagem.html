@@ -6,7 +6,7 @@
 
 {% block content %}
 {% for dsae in lista %}
-<div class="col-sm-12 col-md-4 mb-30">
+<span><div class="col-sm-12 col-md-4 mb-30">
     <div class="card card-box text-center">
         <div class="card-body">
             <h5 class="card-title">{{ dsae.name }}</h5>
@@ -15,7 +15,7 @@
                 solicitação</a>
         </div>
     </div>
-</div>
+</div></span>
 {% endfor %}
 
 {% endblock %}
