@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Listagem de solicitações</h2>
+{% endblock title %}
+
+{% block content %}
+{% for dsae in lista %}
+<div class="card card-box text-center">
+    <div class="card-body">
+        <h5 class="card-title">{{ dsae.name }}</h5>
+        <p class="card-text">{{ dsae.email}}, {{ dsae.phone }}</p>
+        <a href="{% url 'solicitacao_loja_ver' token=dsae.token id=dsae.id %}" class="btn btn-primary">Go somewhere</a>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}

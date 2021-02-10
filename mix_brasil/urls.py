@@ -39,6 +39,8 @@ urlpatterns = [
     path('remover_loja_sucesso/<str:token>/', views.remover_loja_sucesso, name='remover_loja_sucesso'),
     path('notificacao/<str:token>/', views.notificacao, name='notificacao'),
     path('notificacao_sucesso/<str:token>/', views.notificacao_sucesso, name='notificacao_sucesso'),
+    path('solicitacao_loja_listagem/<str:token>/', views.solicitacao_loja_listagem, name='solicitacao_loja_listagem'),
+    path('solicitacao_loja_ver/<str:token>/<str:id>/', views.solicitacao_loja_ver, name='solicitacao_loja_ver'),
 
     path('criar_desapego/<str:token>/<str:id>/', views.criar_desapego, name='criar_desapego'),
     path('criar_desapego_sucesso/<str:token>/', views.criar_desapego_sucesso, name='criar_desapego_sucesso'),

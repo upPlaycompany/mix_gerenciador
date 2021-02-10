@@ -325,6 +325,8 @@ def criar_loja(request, token, id):
             headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
             link = requests.get(url, headers=headers, verify=False)
             cde = link.json()
+        else:
+            cde = {}
         dados.set({
             'name': f'{name}',
             'whatsapp': f'{whatsapp}',
@@ -677,6 +679,8 @@ def criar_desapego(request, token, id):
             headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
             link = requests.get(url, headers=headers, verify=False)
             cde = link.json()
+        else:
+            cde = {}
         dados.set({
             'anunciante': f'{anunciante}',
             'descricao': f'{descricao}',
@@ -974,6 +978,72 @@ def remover_desapego_sucesso(request, token):
         return redirect('user_index', token=token)
     return render(request, 'remover_desapego_sucesso.html', {'t': key})
 
+def notificacao(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    if request.method == 'POST':
+        titulo = request.POST['titulo']
+        mensagem = request.POST['mensagem']
+        message = messaging.Message(
+            notification=messaging.Notification(
+                title=f'{titulo}',
+                body=f'{mensagem}',
+            ),
+            topic='all'
+        )
+        response = messaging.send(message)
+        return redirect('notificacao_sucesso', token=token)
+    return render(request, 'notificacao.html', {'t': key})
+
+
+def notificacao_sucesso(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    return render(request, 'notificacao_sucesso.html', {'t': key})
+
+def solicitacao_loja_listagem(request, token):
+    key = [str(token)]
+    keya = {'token': token}
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    dsa = db.collection(f"msg_destaca_loja").stream()
+    dsae = [{'id': x.id} for x in dsa]
+    dse = db.collection(f"msg_destaca_loja").stream()
+    dsee = [x.to_dict() for x in dse]
+    a = len(dsae)
+    [dsae[x].update(dsee[x]) for x in a]
+    [dsae[x].update(keya) for x in a]
+    return render(request, 'solicitcao_loja_destaque.html', {'lista': dsae, 't': key})
+
+def solicitacao_loja_ver(request, token, id):
+    key = [str(token)]
+    keya = {'token': token}
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    day = db.collection("msg_destaca_loja").where('uemail','==',f'{user.email}').stream()
+    dey = [{'id': x.id} for x in day]
+    diy = db.collection("msg_destaca_loja").where('uemail', '==', f'{user.email}').stream()
+    doy = [{'id': x.id} for x in diy]
+    a = len(dey)
+    [dey[x].update(doy[x]) for x in a]
+    [dey[x].update(keya) for x in a]
+    return render(request, 'solicitacao_loja_ver.html', {'lista': dey, 't': key})
+
+
 
 # PARTE DE USUARIO
 def user_criar_loja(request, token):
@@ -1005,6 +1075,8 @@ def user_criar_loja(request, token):
             headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
             link = requests.get(url, headers=headers, verify=False)
             cde = link.json()
+        else:
+            cde = {}
         imagem_mix1 = IMAGEM_MIX.objects.create(imagem=img)
         imagem_mix2 = IMAGEM_MIX.objects.create(imagem=img_cupons)
         imagem_mix3 = IMAGEM_MIX.objects.create(imagem=img_ofertas)
@@ -1122,12 +1194,13 @@ def user_loja_dados(request, token):
     if usa == []:
         return redirect('index', token=token)
     cep = request.GET.get("cep")
-    cde = {}
     if cep != "":
         url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
         headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
         link = requests.get(url, headers=headers, verify=False)
         cde = link.json()
+    else:
+        cde = {}
     email = user.email
     dados = db.collection('users').where('email', '==', f'{email}').stream()
     y = [{'id': x.id} for x in dados]
@@ -1388,33 +1461,4 @@ def user_remover_loja_sucesso(request, token):
     return render(request, 'user_remover_loja_sucesso.html', {'t': key})
 
 
-def notificacao(request, token):
-    key = [str(token)]
-    user = auth.get_user(token)
-    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
-    usa = [x.to_dict() for x in us]
-    if usa == []:
-        return redirect('user_index', token=token)
-    if request.method == 'POST':
-        titulo = request.POST['titulo']
-        mensagem = request.POST['mensagem']
-        message = messaging.Message(
-            notification=messaging.Notification(
-                title=f'{titulo}',
-                body=f'{mensagem}',
-            ),
-            topic='all'
-        )
-        response = messaging.send(message)
-        return redirect('notificacao_sucesso', token=token)
-    return render(request, 'notificacao.html', {'t': key})
 
-
-def notificacao_sucesso(request, token):
-    key = [str(token)]
-    user = auth.get_user(token)
-    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
-    usa = [x.to_dict() for x in us]
-    if usa == []:
-        return redirect('user_index', token=token)
-    return render(request, 'notificacao_sucesso.html', {'t': key})
