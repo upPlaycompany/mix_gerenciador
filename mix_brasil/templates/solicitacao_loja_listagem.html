@@ -6,11 +6,14 @@
 
 {% block content %}
 {% for dsae in lista %}
-<div class="card card-box text-center">
-    <div class="card-body">
-        <h5 class="card-title">{{ dsae.name }}</h5>
-        <p class="card-text">{{ dsae.email}}, {{ dsae.phone }}</p>
-        <a href="{% url 'solicitacao_loja_ver' token=dsae.token id=dsae.id %}" class="btn btn-primary">Go somewhere</a>
+<div class="col-sm-12 col-md-4 mb-30">
+    <div class="card card-box text-center">
+        <div class="card-body">
+            <h5 class="card-title">{{ dsae.name }}</h5>
+            <p class="card-text">{{ dsae.email}}, {{ dsae.phone }}</p>
+            <a href="{% url 'solicitacao_loja_ver' token=dsae.token id=dsae.id %}" class="btn btn-primary">Ver
+                solicitação</a>
+        </div>
     </div>
 </div>
 {% endfor %}
