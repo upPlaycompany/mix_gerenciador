@@ -1039,8 +1039,8 @@ def solicitacao_loja_ver(request, token, id):
     diy = db.collection("msg_destaca_loja").where('uemail', '==', f'{user.email}').stream()
     doy = [{'id': x.id} for x in diy]
     a = len(dey)
-    [dey[x].update(doy[x]) for x in a]
-    [dey[x].update(keya) for x in a]
+    [dey[x].update(doy[x]) for x in range(a)]
+    [dey[x].update(keya) for x in range(a)]
     return render(request, 'solicitacao_loja_ver.html', {'lista': dey, 't': key})
 
 
