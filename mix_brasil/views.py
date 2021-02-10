@@ -1480,7 +1480,9 @@ def user_enviar_solicitacao_loja(request, token):
             'name': f"{d[0]['name']}",
             'whatsapp': f"{d[0]['whatsapp']}",
             'email': f"{d[0]['uemail']}",
-            'mensagem': f"{mensagem}"
+            'mensagem': f"{mensagem}",
+            'categoria': f"{d[0]['idCat']}",
+            'user': f"{d[0]['user']}"
         })
         return redirect('user_enviar_solicitacao_loja_sucesso', token=token)
     return render(request, 'user_enviar_solicitacao_loja.html', {'t': key})
