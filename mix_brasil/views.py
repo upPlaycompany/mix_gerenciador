@@ -1034,9 +1034,9 @@ def solicitacao_loja_ver(request, token, id):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-    day = db.collection("msg_destaca_loja").where('uemail','==',f'{user.email}').stream()
+    day = db.collection("msg_destaca_loja").where('name','==',f'{id}').stream()
     dey = [{'id': x.id} for x in day]
-    diy = db.collection("msg_destaca_loja").where('uemail', '==', f'{user.email}').stream()
+    diy = db.collection("msg_destaca_loja").where('name', '==', f'{id}').stream()
     doy = [{'id': x.id} for x in diy]
     a = len(dey)
     [dey[x].update(doy[x]) for x in range(a)]

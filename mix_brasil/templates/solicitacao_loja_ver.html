@@ -5,16 +5,19 @@
 {% endblock title %}
 
 {% block content %}
+{% for dey in lista %}
 <div class="col-md-8 col-sm-12">
     <div class="blog-detail card-box overflow-hidden mb-30">
         <div class="blog-caption">
             <h4 class="mb-10">Solicitação</h4>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
+            <p>{{ dey.id }}</p>
+            <p>{{ dey.name }}</p>
+            <p>{{ dey.whatsapp }}</p>
+            <p>{{ dey.mensagem }}</p>
+            <p>Clique no botão para destacar a página</p>
+            <a href="{% url 'loja_dados' token=dey.token id=dey.categoria nome=dey.name id=dey.id %}"></a>
         </div>
     </div>
 </div>
-
+{% endfor %}
 {% endblock %}
