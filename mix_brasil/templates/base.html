@@ -245,6 +245,11 @@
                             <a href="{% url 'solicitacao_loja_listagem' token=key %}">Ver solicitações de destaque</a>
                             {% endfor %}
                         </li>
+                        <li>
+                            {% for key in t %}
+                            <a href="{% url 'solicitacao_desapego_listagem' token=key %}">Ver solicitações de desapego</a>
+                            {% endfor %}
+                        </li>
                     </ul>
                 </li>
             </ul>
