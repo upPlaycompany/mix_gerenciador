@@ -163,6 +163,8 @@ def criar_usuario_sucesso(request):
 
 
 def usuario_listagem(request, token):
+    query = request.GET.get("query")
+
     key = [str(token)]
     keya = {'token': str(token)}
     user = auth.get_user(token)
@@ -170,12 +172,20 @@ def usuario_listagem(request, token):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-    usuarios = db.collection('users').stream()
-    doz = [{'id': x.id} for x in usuarios]
-    ident = db.collection('users').stream()
-    docs = [x.to_dict() for x in ident]
-    a = len(doz)
-    [doz[x].update(keya) for x in range(a)]
+    if query:
+        usuarios = db.collection('users').where('name','==',f"{query}").stream()
+        doz = [{'id': x.id} for x in usuarios]
+        ident = db.collection('users').where('name','==',f"{query}").stream()
+        docs = [x.to_dict() for x in ident]
+        a = len(doz)
+        [doz[x].update(keya) for x in range(a)]
+    else:
+        usuarios = db.collection('users').stream()
+        doz = [{'id': x.id} for x in usuarios]
+        ident = db.collection('users').stream()
+        docs = [x.to_dict() for x in ident]
+        a = len(doz)
+        [doz[x].update(keya) for x in range(a)]
     return render(request, 'usuario_listagem.html', {'lista': docs, 'lista_id': doz, 't': key})
 
 
@@ -398,6 +408,7 @@ def categoria_listagem(request, token):
 
 
 def lojas_listagem(request, token, id):
+    query = request.GET.get('query')
     key = [str(token)]
     keya = {'token': str(token)}
     user = auth.get_user(token)
@@ -405,17 +416,28 @@ def lojas_listagem(request, token, id):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-    lojas = db.collection(f'categorias/{id}/lojas').stream()
-    docs = [{'id': x.id} for x in lojas]
-    lojas2 = db.collection(f'categorias/{id}/lojas').stream()
-    docs2 = [y.to_dict() for y in lojas2]
-    a = len(docs)
-    dzz = [{'categoria': f'{id}', 'token': str(token)}]
-    categoria = {'categoria': f'{id}'}
-
-    [docs[x].update(docs2[x]) for x in range(a)]
-    [docs[x].update(categoria) for x in range(a)]
-    [docs[x].update(keya) for x in range(a)]
+    if query:
+        lojas = db.collection(f'categorias/{id}/lojas').where('name','==',f'{query}').stream()
+        docs = [{'id': x.id} for x in lojas]
+        lojas2 = db.collection(f'categorias/{id}/lojas').where('name','==',f'{query}').stream()
+        docs2 = [y.to_dict() for y in lojas2]
+        a = len(docs)
+        dzz = [{'categoria': f'{id}', 'token': str(token)}]
+        categoria = {'categoria': f'{id}'}
+        [docs[x].update(docs2[x]) for x in range(a)]
+        [docs[x].update(categoria) for x in range(a)]
+        [docs[x].update(keya) for x in range(a)]
+    else:
+        lojas = db.collection(f'categorias/{id}/lojas').stream()
+        docs = [{'id': x.id} for x in lojas]
+        lojas2 = db.collection(f'categorias/{id}/lojas').stream()
+        docs2 = [y.to_dict() for y in lojas2]
+        a = len(docs)
+        dzz = [{'categoria': f'{id}', 'token': str(token)}]
+        categoria = {'categoria': f'{id}'}
+        [docs[x].update(docs2[x]) for x in range(a)]
+        [docs[x].update(categoria) for x in range(a)]
+        [docs[x].update(keya) for x in range(a)]
     return render(request, 'lojas_listagem.html', {'lista': docs, 'order': dzz, 't': key})
 
 
@@ -738,12 +760,21 @@ def categoria_desapego_listagem(request, token):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-    desapegos = db.collection('desapego').stream()
-    doz = [{'id': x.id} for x in desapegos]
-    ident = db.collection('desapego').stream()
-    docs = [x.to_dict() for x in ident]
-    a = len(doz)
-    [doz[x].update(keya) for x in range(a)]
+
+    if query:
+        desapegos = db.collection('desapego').where('name','==',f'{query}').stream()
+        doz = [{'id': x.id} for x in desapegos]
+        ident = db.collection('desapego').where('name','==',f'{query}').stream()
+        docs = [x.to_dict() for x in ident]
+        a = len(doz)
+        [doz[x].update(keya) for x in range(a)]
+    else:
+        desapegos = db.collection('desapego').stream()
+        doz = [{'id': x.id} for x in desapegos]
+        ident = db.collection('desapego').stream()
+        docs = [x.to_dict() for x in ident]
+        a = len(doz)
+        [doz[x].update(keya) for x in range(a)]
     return render(request, 'categoria_desapego_listagem.html', {'lista': docs, 'lista_id': doz, 't': key})
 
 
@@ -755,16 +786,28 @@ def desapegos_listagem(request, token, id):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-    desapegos = db.collection(f'desapego/{id}/desapegos').stream()
-    docs = [{'id': x.id} for x in desapegos]
-    lojas2 = db.collection(f'desapego/{id}/desapegos').stream()
-    docs2 = [y.to_dict() for y in lojas2]
-    a = len(docs)
-    dzz = [{'categoria': f'{id}', 'token': str(token)}]
-    categoria = {'categoria': f'{id}'}
-    [docs[x].update(docs2[x]) for x in range(a)]
-    [docs[x].update(categoria) for x in range(a)]
-    [docs[x].update(keya) for x in range(a)]
+    if query:
+        desapegos = db.collection(f'desapego/{id}/desapegos').where('name','==',f"{query}").stream()
+        docs = [{'id': x.id} for x in desapegos]
+        lojas2 = db.collection(f'desapego/{id}/desapegos').where('name','==',f"{query}").stream()
+        docs2 = [y.to_dict() for y in lojas2]
+        a = len(docs)
+        dzz = [{'categoria': f'{id}', 'token': str(token)}]
+        categoria = {'categoria': f'{id}'}
+        [docs[x].update(docs2[x]) for x in range(a)]
+        [docs[x].update(categoria) for x in range(a)]
+        [docs[x].update(keya) for x in range(a)]
+    else:
+        desapegos = db.collection(f'desapego/{id}/desapegos').stream()
+        docs = [{'id': x.id} for x in desapegos]
+        lojas2 = db.collection(f'desapego/{id}/desapegos').stream()
+        docs2 = [y.to_dict() for y in lojas2]
+        a = len(docs)
+        dzz = [{'categoria': f'{id}', 'token': str(token)}]
+        categoria = {'categoria': f'{id}'}
+        [docs[x].update(docs2[x]) for x in range(a)]
+        [docs[x].update(categoria) for x in range(a)]
+        [docs[x].update(keya) for x in range(a)]
     return render(request, 'desapegos_listagem.html', {'lista': docs, 'order': dzz, 't': key})
 
 
