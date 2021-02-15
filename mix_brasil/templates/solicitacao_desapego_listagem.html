@@ -12,7 +12,7 @@
         <div class="card card-box text-center">
             <div class="card-body">
                 <h5 class="card-title">{{ dsae.name }}</h5>
-                <p class="card-text">{{ dsae.email}}, {{ dsae.whatsapp }}</p>
+                <p class="card-text">{{ dsae.email}}, {{ dsae.number }}</p>
                 <a href="{% url 'solicitacao_desapego_ver' token=dsae.token name=dsae.name %}" class="btn btn-primary">Ver
                     solicitação</a>
             </div>
