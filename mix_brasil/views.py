@@ -962,9 +962,6 @@ def remover_desapego(request, token, id, cod):
         return redirect('user_index', token=token)
     if request.method == 'POST':
         db.collection(f'desapego/{id}/desapegos').document(f'{cod}').delete()
-        dados = db.collection('destaque_desapego').where('did', '==', f'{cod}').stream()
-        abc = [{'id': x.id} for x in dados]
-        db.collection('destaque_desapego').document(f"{abc[0]['id']}").delete()
         return redirect('remover_desapego_sucesso', token=token)
     return render(request, 'remover_desapego.html', {'t': key})
 
