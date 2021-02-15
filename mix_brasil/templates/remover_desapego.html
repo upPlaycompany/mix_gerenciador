@@ -10,7 +10,7 @@
     {% csrf_token %}
     <span><button type="submit" class="btn btn-danger">Remover desapego</button></span>
     {% for key in t %}
-    <span><a href="{% url 'categoria_desapego_listagem' %}"><button type="button" class="btn btn-success">Não, voltar as categorias</button></a></span>
+    <span><a href="{% url 'categoria_desapego_listagem' token=key %}"><button type="button" class="btn btn-success">Não, voltar as categorias</button></a></span>
     {% endfor %}
 </form>
 {% endblock %}
