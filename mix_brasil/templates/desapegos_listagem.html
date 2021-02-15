@@ -6,7 +6,18 @@
 {% endblock title %}
 
 {% block content %}
-
+<form method="get">
+    <div class="col-lg-12">
+        <div class="input-group">
+            <input type="text" class="form-control" name="query" placeholder="Buscar por nome">
+            <span class="input-group-btn">
+        <button class="btn btn-primary" type="submit">Pesquisar</button>
+      </span>
+        </div>
+    </div>
+</form>
+<br>
+<br>
 <div class="card-deck mb-20">
     {% for docs in lista %}
     <div class="card" style="width: 250px">
