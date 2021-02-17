@@ -516,8 +516,8 @@ def lojas_dados(request, token, id, nome, cod):
                         'ofertas': firestore.ArrayUnion([""]),
                         'ofertas_destaque': firestore.ArrayUnion([""]),
                         'price': da[0]['price'],
-                        'cidade': da[0]['cidade']['nome'],
-                        'estado': da[0]['estado']['sigla']
+                        'cidade': da[0]['cidade'][0],
+                        'estado': da[0]['estado'][0]
 
                 })
             else:
