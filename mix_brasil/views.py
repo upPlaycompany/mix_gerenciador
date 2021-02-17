@@ -876,7 +876,6 @@ def desapegos_dados(request, token, id, nome, cod):
                 'descricao': f'{descricao}',
                 'price': price,
                 'destaque': des,
-                'promocao': f'{promocao}',
                 'cidade': f'{cidade}',
                 'estado': f'{estado}',
                 'anunciante': f'{anunciante}',
@@ -895,7 +894,7 @@ def desapegos_dados(request, token, id, nome, cod):
             [da[x].update(cde) for x in range(a)]
             didi = db.collection('destaque_desapego').document()
             didi.set({
-                    'cid': f"{da[0]['categoria']}",
+                    'idCat': f"{da[0]['categoria']}",
                     'img': firestore.ArrayUnion([x for x in da[0]['img']]),
                     'did': f"{da[0]['id']}",
                     'name': f"{da[0]['name']}",
@@ -903,7 +902,10 @@ def desapegos_dados(request, token, id, nome, cod):
                     'cidade': da[0]['cidade'],
                     'estado': da[0]['estado'],
                     'anunciante': f"{da[0]['anunciante']}",
-                    'number': f"{da[0]['number']}"
+                    'number': f"{da[0]['number']}",
+                    'idAds': f"{da[0]['idAds']}",
+                    'user': f"{da[0]['user']}",
+                    'viewsDestaque': 0
             })
         elif des == False:
             desdes = db.collection(f'destaque_desapego').where('lid', '==', f'{cod}').stream()
