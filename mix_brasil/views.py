@@ -794,6 +794,7 @@ def categoria_desapego_listagem(request, token):
 
 
 def desapegos_listagem(request, token, id):
+    query = request.GET.get('query')
     key = [str(token)]
     keya = {'token': str(token)}
     user = auth.get_user(token)
