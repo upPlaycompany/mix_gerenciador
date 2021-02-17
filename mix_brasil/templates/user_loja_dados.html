@@ -144,6 +144,8 @@
                 <span><button type="submit" class="btn btn-success">Atualizar dados</button></span>
                 <span><a href="{% url 'user_adicionar_imagem' token=abc.token cat=abc.idCat id=abc.id %}"><button type="button"
                                                                                                        class="btn btn-info">Adicionar imagens à loja</button></a></span>
+                <span><a href="{% url 'user_remover_imagens' token=abc.token cat=abc.idCat id=abc.id %}"><button type="button"
+                                                                                             class="btn btn-danger">Excluir imagens</button></a></span>
             <span><a href="{% url 'user_remover_loja' token=abc.token cat=abc.idCat id=abc.id %}"><button type="button"
                                                                                              class="btn btn-danger">Excluir loja</button></a></span>
                 <span><a href="{% url 'user_enviar_solicitacao_loja' token=abc.token %}"><button type="button"
