@@ -1,4 +1,5 @@
 import pyrebase
+locale.setlocale(locale.LC_TIME, 'pt_BR.utf8')
 import os
 import datetime
 import requests
@@ -517,7 +518,8 @@ def lojas_dados(request, token, id, nome, cod):
                         'ofertas_destaque': firestore.ArrayUnion([x for x in da[0]['img_destacados']]),
                         'price': da[0]['price'],
                         'cidade': da[0]['cidade'],
-                        'estado': da[0]['estado']
+                        'estado': da[0]['estado'],
+                        'created': datetime.now().strftime("%d de %B de %Y %H:%M:%S UTC-4"),
 
                 })
             else:
@@ -905,7 +907,8 @@ def desapegos_dados(request, token, id, nome, cod):
                     'descricao': f"{da[0]['descricao']}",
                     'idAds': f"{da[0]['idAds']}",
                     'user': f"{da[0]['user']}",
-                    'viewsDestaque': 0
+                    'viewsDestaque': 0,
+                    'created': datetime.now().strftime("%d de %B de %Y %H:%M:%S UTC-4"),
             })
         elif des == False:
             desdes = db.collection(f'destaque_desapego').where('lid', '==', f'{cod}').stream()
@@ -960,7 +963,7 @@ def adicionar_imagens_desapego(request, token, id, cod):
         url = str(url)
         formform = db.collection(f'desapego/{id}/desapegos').document(f'{cod}')
         formform.update({
-            'img': firestore.ArrayRemove([f'{imagem}'])
+            'img': firestore.ArrayRemove([f'{url}'])
         })
 
         IMAGEM_MIX.objects.all().delete()
