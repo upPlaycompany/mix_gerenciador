@@ -455,7 +455,7 @@ def lojas_dados(request, token, id, nome, cod):
         link = requests.get(url, headers=headers, verify=False)
         cde = link.json()
     else:
-        cde = {}
+        cde = {'0':0}
     dados = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{nome}').stream()
     abc = [x.to_dict() for x in dados]
     dados2 = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{nome}').stream()
@@ -768,6 +768,7 @@ def criar_desapego_sucesso(request, token):
 
 
 def categoria_desapego_listagem(request, token):
+    query = request.GET.get('query')
     key = [str(token)]
     keya = {'token': str(token)}
     user = auth.get_user(token)
@@ -775,7 +776,6 @@ def categoria_desapego_listagem(request, token):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-
     if query:
         desapegos = db.collection('desapego').where('name','==',f'{query}').stream()
         doz = [{'id': x.id} for x in desapegos]
