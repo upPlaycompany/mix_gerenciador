@@ -1581,18 +1581,19 @@ def user_adicionar_imagem(request, token, cat, id):
             })
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
-        return redirect('user_adicionar_imagem_sucesso', token=token)
+        return redirect('user_adicionar_imagem_sucesso', token=token, cat=cat, id=id)
     return render(request, 'user_adicionar_imagem.html', {'t': key})
 
 
-def user_adicionar_imagem_sucesso(request, token):
+def user_adicionar_imagem_sucesso(request, token, cat, id):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('index', token=token)
-    return render(request, 'user_adicionar_imagem_sucesso.html', {'t': key})
+    dados = [{'cat': cat, 'id': id, 'token': token}]
+    return render(request, 'user_adicionar_imagem_sucesso.html', {'t': key, 'lista': dados})
 
 
 def user_remover_imagens(request, token, cat, id):

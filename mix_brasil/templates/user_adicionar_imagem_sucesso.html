@@ -6,6 +6,9 @@
 
 {% block content %}
 {% for key in t %}
-<a href="{% url 'user_loja_dados' token=key %}"><button type="button" class="btn btn-success">Volte para os dados da loja</button></a>
+<span><a href="{% url 'user_loja_dados' token=key %}"><button type="button" class="btn btn-success">Volte para os dados da loja</button></a></span>
+{% endfor %}
+{% for dados in lista %}
+<span><a href="{% url 'user_adicionar_imagem' token=dados.token cat=dados.cat id=dados.id %}"><button type="button" class="btn btn-warning">Importar mais imagens</button></a></span>
 {% endfor %}
 {% endblock %}
