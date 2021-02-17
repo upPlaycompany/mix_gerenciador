@@ -903,6 +903,7 @@ def desapegos_dados(request, token, id, nome, cod):
                     'estado': da[0]['estado'],
                     'anunciante': f"{da[0]['anunciante']}",
                     'number': f"{da[0]['number']}",
+                    'descricao': f"{da[0]['descricao']}",
                     'idAds': f"{da[0]['idAds']}",
                     'user': f"{da[0]['user']}",
                     'viewsDestaque': 0
