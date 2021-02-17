@@ -506,7 +506,22 @@ def lojas_dados(request, token, id, nome, cod):
             [da[x].update(categoria) for x in range(a)]
             [da[x].update(cde) for x in range(a)]
             didi = db.collection('destaque_home').document()
-            didi.set({
+            if cep != "":
+                didi.set({
+                        'cid': f"{da[0]['categoria']}",
+                        'cupons': firestore.ArrayUnion([""]),
+                        'img': firestore.ArrayUnion([""]),
+                        'lid': f"{da[0]['id']}",
+                        'name': f"{da[0]['name']}",
+                        'ofertas': firestore.ArrayUnion([""]),
+                        'ofertas_destaque': firestore.ArrayUnion([""]),
+                        'price': da[0]['price'],
+                        'cidade': da[0]['cidade']['nome'],
+                        'estado': da[0]['estado']['sigla']
+
+                })
+            else:
+                didi.set({
                     'cid': f"{da[0]['categoria']}",
                     'cupons': firestore.ArrayUnion([""]),
                     'img': firestore.ArrayUnion([""]),
@@ -515,9 +530,10 @@ def lojas_dados(request, token, id, nome, cod):
                     'ofertas': firestore.ArrayUnion([""]),
                     'ofertas_destaque': firestore.ArrayUnion([""]),
                     'price': da[0]['price'],
-                    'cidade': da[0]['cidade']['nome'],
-                    'estado': da[0]['estado']['sigla']
-            })
+                    'cidade': da[0]['cidade'],
+                    'estado': da[0]['estado']
+
+                })
         elif des == False:
             desdes = db.collection(f'destaque_home').where('lid', '==', f'{cod}').stream()
             da = [{'id': x.id} for x in desdes]
