@@ -1470,11 +1470,13 @@ def user_loja_dados(request, token):
             'cidade': f"{cidade}",
             'estado': f"{estado}",
         })
+        dadosx = db.collection('users').where('email', '==', f'{email}').stream()
+        y7 = [{'id': x.id} for x in dadosx]
         dados3 = db.collection('users').where('email', '==', f'{email}').stream()
         y3 = [{'id': x.id} for x in dados3]
         con3 = db.collection(f"users/{y3[0]['id']}/loja").where('uemail', '==', f'{email}').stream()
         abc3 = [{'id': x.id} for x in con3]
-        cen3 = db.collection(f"users/{abc3[0]['id']}/loja").where('uemail', '==', f'{email}').stream()
+        cen3 = db.collection(f"users/{y7[0]['id']}/loja").where('uemail', '==', f'{email}').stream()
         xyz3 = [x.to_dict() for x in cen3]
         op = len(abc3)
         [abc3[x].update(xyz3[x]) for x in range(op)]
