@@ -509,15 +509,15 @@ def lojas_dados(request, token, id, nome, cod):
             if cep != "":
                 didi.set({
                         'cid': f"{da[0]['categoria']}",
-                        'cupons': firestore.ArrayUnion([""]),
-                        'img': firestore.ArrayUnion([""]),
+                        'cupons': firestore.ArrayUnion([x for x in da[0]['img_cupons']]),
+                        'img': firestore.ArrayUnion([x for x in da[0]['img']]),
                         'lid': f"{da[0]['id']}",
                         'name': f"{da[0]['name']}",
-                        'ofertas': firestore.ArrayUnion([""]),
-                        'ofertas_destaque': firestore.ArrayUnion([""]),
+                        'ofertas': firestore.ArrayUnion([x for x in da[0]['img_ofertas']]),
+                        'ofertas_destaque': firestore.ArrayUnion([x for x in da[0]['img_destacados']]),
                         'price': da[0]['price'],
-                        'cidade': da[0]['cidade'][0],
-                        'estado': da[0]['estado'][0]
+                        'cidade': da[0]['cidade'],
+                        'estado': da[0]['estado']
 
                 })
             else:
