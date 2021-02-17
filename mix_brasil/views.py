@@ -1,5 +1,5 @@
 import pyrebase
-locale.setlocale(locale.LC_TIME, 'pt_BR.utf8')
+import locale
 import os
 import datetime
 import requests
@@ -25,6 +25,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 import pandas as pd
 import pprint
+
+locale.setlocale(locale.LC_TIME, 'pt_BR.utf8')
 
 config = {
     'apiKey': "AIzaSyBh-DC_fXWzzcHV6XYhFQ1Ya6MWG5OjH_w",
