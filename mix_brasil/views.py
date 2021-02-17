@@ -1654,7 +1654,7 @@ def user_remover_imagens(request, token, cat, id):
                 'img': firestore.ArrayRemove([f'{imagem}'])
             })
         return redirect('user_remover_imagens_sucesso.html', token=token)
-    return render(request, 'user_adicionar_imagem.html', {'lista': docs, 't': key})
+    return render(request, 'user_remover_imagens.html', {'lista': docs, 't': key})
 
 
 def user_remover_imagens_sucesso(request, token):
