@@ -60,6 +60,10 @@ urlpatterns = [
     path('remover_imagens_desapego_sucesso/<str:token>/', views.remover_imagens_desapego_sucesso, name='remover_imagens_desapego_sucesso'),
     path('remover_desapego/<str:token>/<str:id>/<str:cod>/', views.remover_desapego, name='remover_desapego'),
     path('remover_desapego_sucesso/<str:token>/', views.remover_desapego_sucesso, name='remover_desapego_sucesso'),
+    path('banners_imagem/<str:token>/', views.banners_imagem, name='banners_imagem'),
+    path('banners_imagem_sucesso/<str:token>/', views.banners_imagem_sucesso, name='banners_imagem_sucesso'),
+    path('banners_imagem_remover/<str:token>/', views.banners_imagem_remover, name='banners_imagem_remover'),
+    path('banners_imagem_remover_sucesso/<str:token>/', views.banners_imagem_remover_sucesso, name='banners_imagem_remover_sucesso'),
 
     path('criar_usuario/', views.criar_usuario, name='criar_usuario'),
     path('criar_usuario_sucesso/', views.criar_usuario_sucesso, name='criar_usuario_sucesso'),

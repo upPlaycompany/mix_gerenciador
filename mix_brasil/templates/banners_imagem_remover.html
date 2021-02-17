@@ -6,14 +6,14 @@
 {% endblock title %}
 
 {% block content %}
-{% for docs in lista %}
+{% for dados2 in lista %}
 <form method="post">
     {% csrf_token %}
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
                 <div class="row">
-                    {% for image in docs.img %}
+                    {% for image in dados2.img %}
                     <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
                     {% endfor %}
                 </div>
@@ -23,9 +23,9 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
-                <label>Escreva o link da imagem que deseja deletar</label>
+                <label>Cole aqui o link da imagem que deseja deletar</label>
                 <input type="text" class="form-control" name="imagem"
-                       placeholder="Escreva o link da imagem que deseja deletar">
+                       placeholder="Cole aqui o link da imagem que deseja deletar">
             </div>
         </div>
     </div>

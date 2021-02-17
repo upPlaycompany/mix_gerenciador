@@ -963,7 +963,7 @@ def adicionar_imagens_desapego(request, token, id, cod):
         url = str(url)
         formform = db.collection(f'desapego/{id}/desapegos').document(f'{cod}')
         formform.update({
-            'img': firestore.ArrayRemove([f'{url}'])
+            'img': firestore.ArrayUnion([f'{url}'])
         })
 
         IMAGEM_MIX.objects.all().delete()
@@ -1192,6 +1192,91 @@ def solicitacao_loja_remover_sucesso(request, token):
     if usa == []:
         return redirect('user_index', token=token)
     return render(request, 'solicitacao_loja_remover_sucesso.html', {'t': key})
+
+def banners_imagem(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    dados7 = db.collection('banners_principal').stream()
+    dados8 = [{'id': x.id} for x in dados7]
+    dados9 = db.collection('banners_principal').stream()
+    dados10 = [x.to_dict() for x in dados9]
+    b = len(dados8)
+    [dados8[x].update(dados10[x]) for x in range(b)]
+    if usa == []:
+        return redirect('user_index', token=token)
+
+    if request.method == 'POST':
+        img = request.FILES['img']
+        imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
+        imagem_mix.save()
+        dados = db.collection('banners_principal').stream()
+        dados2 = [{'id': x.id} for x in dados]
+        dados3 = db.collection('banners_principal').stream()
+        dados4 = [x.to_dict() for x in dados3]
+        a = len(dados2)
+        [dados2[x].update(dados4[x]) for x in range(a)]
+        arquivo = sto.blob(f"banners_principal/{dados2[0]['id']}/{img}")
+        arquivo.upload_from_filename(f"/app/mix_brasil/settings/imagem/{img}")
+        url = arquivo.generate_signed_url(
+            expiration=datetime.timedelta(weeks=200),
+            method="GET",
+        )
+        url = str(url)
+        dados5 = db.collection('banners_principal').stream()
+        dados6 = [{'id': x.id} for x in dados5]
+        formform = db.collection(f'banners_principal').document(f"{dados6[0]['id']}")
+        formform.update({
+            'img': firestore.ArrayUnion([f'{url}'])
+        })
+
+        IMAGEM_MIX.objects.all().delete()
+        os.remove(f"/app/mix_brasil/settings/imagem/{img}")
+
+        return redirect('banners_imagem_sucesso', token=token)
+    return render(request,'banners_imagem.html', {'t': key,'lista': dados8})
+
+def banners_imagem_sucesso(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    return render(request, 'banners_imagem_sucesso.html', {'t': key})
+
+def banners_imagem_remover(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    dados = db.collection('banners_principal').stream()
+    dados2 = [{'id': x.id} for x in dados]
+    dados3 = db.collection('banners_principal').stream()
+    dados4 = [x.to_dict() for x in dados3]
+    a = len(dados2)
+    [dados2[x].update(dados4[x]) for x in range(a)]
+    if request.method == 'POST':
+        imagem = request.POST['imagem']
+        formform = db.collection(f'banners_principal').document(f"{dados2[0]['id']}")
+        formform.update({
+            'img': firestore.ArrayRemove([f'{imagem}'])
+        })
+        return redirect('remover_imagens_desapego_sucesso', token=token)
+    return render(request,'banners_imagem_remover.html', {'t': key, 'lista':dados2})
+
+def banners_imagem_remover_sucesso(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    return render(request,'banners_imagem_remover_sucesso.html', {'t': key})
+
 
 # PARTE DE USUARIO
 def user_criar_loja(request, token):
