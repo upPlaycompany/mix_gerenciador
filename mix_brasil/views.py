@@ -1595,7 +1595,7 @@ def user_adicionar_imagem_sucesso(request, token):
     return render(request, 'user_adicionar_imagem_sucesso.html', {'t': key})
 
 
-def user_remover_imagens(request, token, cat):
+def user_remover_imagens(request, token, cat, id):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('users').where('email', '==', f'{user.email}').stream()
