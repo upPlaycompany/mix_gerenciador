@@ -1482,9 +1482,11 @@ def user_loja_dados(request, token):
         [abc3[x].update(xyz3[x]) for x in range(op)]
         a = db.collection('users').where('email', '==', f'{email}').stream()
         b = [{'id': x.id} for x in a]
+        g = db.collection('users').where('email', '==', f'{email}').stream()
+        h = [{'id': x.id} for x in g]
         c = db.collection(f"users/{b[0]['id']}/loja").where('uemail', '==', f'{email}').stream()
         d = [{'id': x.id} for x in c]
-        e = db.collection(f"users/{d[0]['id']}/loja").where('uemail', '==', f'{email}').stream()
+        e = db.collection(f"users/{h[0]['id']}/loja").where('uemail', '==', f'{email}').stream()
         f = [x.to_dict() for x in e]
         laxa = len(d)
         [d[x].update(f[x]) for x in range(laxa)]
