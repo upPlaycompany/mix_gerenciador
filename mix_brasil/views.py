@@ -506,19 +506,18 @@ def lojas_dados(request, token, id, nome, cod):
             [da[x].update(categoria) for x in range(a)]
             [da[x].update(cde) for x in range(a)]
             didi = db.collection('destaque_home').document()
-            for n in da:
-                didi.set({
-                    'cid': f"{n['categoria']}",
+            didi.set({
+                    'cid': f"{da[0]['categoria']}",
                     'cupons': firestore.ArrayUnion([""]),
                     'img': firestore.ArrayUnion([""]),
-                    'lid': f"{n['id']}",
-                    'name': f"{n['name']}",
+                    'lid': f"{da[0]['id']}",
+                    'name': f"{da[0]['name']}",
                     'ofertas': firestore.ArrayUnion([""]),
                     'ofertas_destaque': firestore.ArrayUnion([""]),
-                    'price': n['price'],
-                    'cidade': n['cidade']['nome'],
-                    'estado': n['estado']['sigla']
-                })
+                    'price': da[0]['price'],
+                    'cidade': da[0]['cidade']['nome'],
+                    'estado': da[0]['estado']['sigla']
+            })
         elif des == False:
             desdes = db.collection(f'destaque_home').where('lid', '==', f'{cod}').stream()
             da = [{'id': x.id} for x in desdes]
@@ -526,8 +525,8 @@ def lojas_dados(request, token, id, nome, cod):
             dw = [x.to_dict() for x in dasdas]
             a = len(da)
             [da[x].update(dw[x]) for x in range(a)]
-            for n in da:
-                db.collection('destaque_home').document(f"{n['id']}").delete()
+
+            db.collection('destaque_home').document(f"{da[0]['id']}").delete()
         else:
             desdes = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{name}').stream()
             da = [{'id': x.id} for x in desdes]
