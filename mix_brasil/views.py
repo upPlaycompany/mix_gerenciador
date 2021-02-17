@@ -893,18 +893,17 @@ def desapegos_dados(request, token, id, nome, cod):
             [da[x].update(categoria) for x in range(a)]
             [da[x].update(cde) for x in range(a)]
             didi = db.collection('destaque_desapego').document()
-            for n in da:
-                didi.set({
-                    'cid': f"{n['categoria']}",
-                    'img': firestore.ArrayUnion([""]),
-                    'did': f"{n['id']}",
-                    'name': f"{n['name']}",
-                    'price': n['price'],
-                    'cidade': n['cidade']['nome'],
-                    'estado': n['estado']['sigla'],
-                    'anunciante': f"{n['anunciante']}",
-                    'number': f"{n['number']}"
-                })
+            didi.set({
+                    'cid': f"{da[0]['categoria']}",
+                    'img': firestore.ArrayUnion([x for x in da[0]['img']]),
+                    'did': f"{da[0]['id']}",
+                    'name': f"{da[0]['name']}",
+                    'price': da[0]['price'],
+                    'cidade': da[0]['cidade'],
+                    'estado': da[0]['estado'],
+                    'anunciante': f"{da[0]['anunciante']}",
+                    'number': f"{da[0]['number']}"
+            })
         elif des == False:
             desdes = db.collection(f'destaque_desapego').where('lid', '==', f'{cod}').stream()
             da = [{'id': x.id} for x in desdes]
