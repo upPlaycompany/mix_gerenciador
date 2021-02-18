@@ -511,16 +511,19 @@ def lojas_dados(request, token, id, nome, cod):
             if cep != "":
                 didi.set({
                         'cid': f"{da[0]['categoria']}",
-                        'cupons': firestore.ArrayUnion([x for x in da[0]['img_cupons']]),
+                        'img_cupons': firestore.ArrayUnion([x for x in da[0]['img_cupons']]),
                         'img': firestore.ArrayUnion([x for x in da[0]['img']]),
                         'lid': f"{da[0]['id']}",
                         'name': f"{da[0]['name']}",
-                        'ofertas': firestore.ArrayUnion([x for x in da[0]['img_ofertas']]),
-                        'ofertas_destaque': firestore.ArrayUnion([x for x in da[0]['img_destacados']]),
+                        'img_ofertas': firestore.ArrayUnion([x for x in da[0]['img_ofertas']]),
+                        'img_destacadas': firestore.ArrayUnion([x for x in da[0]['img_destacados']]),
                         'price': da[0]['price'],
                         'cidade': da[0]['cidade'],
                         'estado': da[0]['estado'],
                         'created': datetime.now().strftime("%d de %B de %Y %H:%M:%S UTC-4"),
+                        'promocao': f"{promocao}",
+                        'trabalheConosco': f"{trabalhe_conosco}",
+                        'whatsapp': f"{whatsapp}"
 
                 })
             else:
@@ -534,7 +537,11 @@ def lojas_dados(request, token, id, nome, cod):
                     'ofertas_destaque': firestore.ArrayUnion([""]),
                     'price': da[0]['price'],
                     'cidade': da[0]['cidade'],
-                    'estado': da[0]['estado']
+                    'estado': da[0]['estado'],
+                    'created': datetime.now().strftime("%d de %B de %Y %H:%M:%S UTC-4"),
+                    'promocao': f"{promocao}",
+                    'trabalheConosco': f"{trabalhe_conosco}",
+                    'whatsapp': f"{whatsapp}"
 
                 })
         elif des == False:
@@ -906,10 +913,34 @@ def desapegos_dados(request, token, id, nome, cod):
                     'anunciante': f"{da[0]['anunciante']}",
                     'number': f"{da[0]['number']}",
                     'descricao': f"{da[0]['descricao']}",
-                    'idAds': f"{da[0]['idAds']}",
+                    'idAdsUser': f"{da[0]['idAdsUser']}",
                     'user': f"{da[0]['user']}",
                     'viewsDestaque': 0,
                     'created': datetime.now().strftime("%d de %B de %Y %H:%M:%S UTC-4"),
+            })
+            dados10 = db.collection(f"desapego{id}/desapegos").where('name','==',f"{name}").stream()
+            dados11 = [{'id': x.id} for x in dados10]
+            dados12 = db.collection(f"desapego{id}/desapegos").where('name', '==', f"{name}").stream()
+            dados13 = [x.to_dict() for x in dados12]
+            a = len(dados11)
+            categoria = {'categoria': f'{id}'}
+            [dados11[x].update(dados13[x]) for x in range(a)]
+            [dados11[x].update(categoria) for x in range(a)]
+            [dados11[x].update(cde) for x in range(a)]
+
+            dados14 = db.collection(f"desapego{id}/desapegos").where('name', '==', f"{name}").stream()
+            dados15 = [{'id': x.id} for x in dados14]
+            dados16 = db.collection(f"desapego{id}/desapegos").where('name', '==', f"{name}").stream()
+            dados17 = [x.to_dict() for x in dados16]
+            a = len(dados15)
+            [dados15[x].update(dados17[x]) for x in range(a)]
+            [dados15[x].update(categoria) for x in range(a)]
+            [dados15[x].update(cde) for x in range(a)]
+            final = db.collection(f"users/{dados11[0]['user']}/desapegos").stream()
+            final2 = [{'id': x.id} for x in final]
+            final3 = db.collection(f"users/{dados15[0]['user']}/desapegos").document(f"final{final2[0]['id']}")
+            final3.update({
+                'status': 3
             })
         elif des == False:
             desdes = db.collection(f'destaque_desapego').where('lid', '==', f'{cod}').stream()
