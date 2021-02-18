@@ -1069,7 +1069,7 @@ def notificacao(request, token):
             ),
             topic='all',
         )
-        messaging.send(message, app=cred)
+        messaging.send(message, app=firebase_admin.App.name)
         return HttpResponseRedirect('notificacao_sucesso', token=token)
     return render(request, 'notificacao.html', {'t': key})
 
