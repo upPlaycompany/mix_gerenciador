@@ -1053,7 +1053,7 @@ def notificacao(request, token):
         dados = db.collection('users').stream()
         dados2 = [{'id': x.id} for x in dados]
         for x in dados2:
-            dados3 = db.collection(f"users/{x}/tokens").stream()
+            dados3 = db.collection(f"users/{x['id']}/tokens").stream()
             dados4 = [y.to_dict() for y in dados3]
             messages = [
                 messaging.Message(
