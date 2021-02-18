@@ -1046,22 +1046,28 @@ def notificacao(request, token):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
+
     if request.method == 'POST':
         titulo = request.POST['titulo']
         mensagem = request.POST['mensagem']
-        messages = [
-            messaging.Message(
+        dados = db.collection('users').stream()
+        dados2 = [{'id': x.id} for x in dados]
+        for x in dados2:
+            dados3 = db.collection(f"users/{x.id}/tokens").stream()
+            dados4 = [x.to_dict() for x in dados3]
+            messages = [
+                messaging.Message(
                 notification=messaging.Notification(titulo, mensagem),
-                topic='all'
-            ),
-            messaging.Message(
+                token=f"{dados4[len(x)]['token']}"
+                ),
+                messaging.Message(
                 notification=messaging.Notification(titulo, mensagem),
-                topic='all'
-            ),
-        ]
+                token=f"{dados4[len(x)]['token']}"
+                ),
+            ]
 
-        messaging.send_all(messages)
-        return redirect('notificacao_sucesso', token=token)
+            messaging.send_all(messages)
+            return redirect('notificacao_sucesso', token=token)
     return render(request, 'notificacao.html', {'t': key})
 
 
