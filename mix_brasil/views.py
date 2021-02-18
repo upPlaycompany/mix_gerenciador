@@ -1058,11 +1058,11 @@ def notificacao(request, token):
             messages = [
                 messaging.Message(
                 notification=messaging.Notification(titulo, mensagem),
-                token=f"{dados4[len(x)]['token']}"
+                token=f"{dados4[x]['token']}"
                 ),
                 messaging.Message(
                 notification=messaging.Notification(titulo, mensagem),
-                token=f"{dados4[len(x)]['token']}"
+                token=f"{dados4[x]['token']}"
                 ),
             ]
 
