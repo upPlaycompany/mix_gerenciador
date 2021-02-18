@@ -1069,9 +1069,7 @@ def notificacao(request, token):
             ),
             topic='all',
         )
-        # [END multi_platforms_message]
-
-        return message, redirect('notificacao_sucesso', token=token)
+        return redirect('notificacao_sucesso', token=token)
     return render(request, 'notificacao.html', {'t': key})
 
 
