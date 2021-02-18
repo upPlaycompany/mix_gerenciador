@@ -1234,9 +1234,8 @@ def banners_imagem(request, token):
 
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
-
         return redirect('banners_imagem_sucesso', token=token)
-    return render(request,'banners_imagem.html', {'t': key,'lista': dados8})
+    return render(request,'banners_imagem.html', {'t': key, 'lista': dados8})
 
 def banners_imagem_sucesso(request, token):
     key = [str(token)]
