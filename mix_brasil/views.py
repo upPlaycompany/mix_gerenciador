@@ -1069,7 +1069,7 @@ def notificacao(request, token):
             ),
             topic='all',
         )
-        messaging.send(message, app='MIX BRASIL')
+        messaging.send(message, app=cred)
         return HttpResponseRedirect('notificacao_sucesso', token=token)
     return render(request, 'notificacao.html', {'t': key})
 
