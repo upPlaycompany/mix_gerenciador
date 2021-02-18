@@ -1070,7 +1070,7 @@ def notificacao(request, token):
             topic='all',
         )
         messaging.send(message)
-        return HttpResponseRedirect('notificacao_sucesso', token=token)
+        return messaging.send(message), redirect('notificacao_sucesso', token=token)
     return render(request, 'notificacao.html', {'t': key})
 
 
