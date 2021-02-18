@@ -40,7 +40,7 @@
 <br>
 {% for key in t %}
 <div class="form-group">
-    <a href="{% url 'banners_imagem_remover' token=key"><button type="submit" class="btn btn-success">Remover banner</button></a>
+    <a href="{% url 'banners_imagem_remover' token=key"><button type="submit" class="btn btn-danger">Remover banner</button></a>
 </div>
 {% endfor %}
 {% endblock %}

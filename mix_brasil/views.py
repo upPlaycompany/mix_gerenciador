@@ -1266,8 +1266,8 @@ def banners_imagem_remover(request, token):
         formform.update({
             'img': firestore.ArrayRemove([f'{imagem}'])
         })
-        return redirect('remover_imagens_desapego_sucesso', token=token)
-    return render(request,'banners_imagem_remover.html', {'t': key, 'lista':dados2})
+        return redirect('banners_imagem_remover_sucesso', token=token)
+    return render(request,'banners_imagem_remover.html', {'t': key, 'lista': dados2})
 
 def banners_imagem_remover_sucesso(request, token):
     key = [str(token)]
