@@ -1049,7 +1049,7 @@ def notificacao(request, token):
     if request.method == 'POST':
         titulo = request.POST['titulo']
         mensagem = request.POST['mensagem']
-        message = messaging.Message(
+        messaging.send(messaging.Message(
             notification=messaging.Notification(
                 title=f'{titulo}',
                 body=f'{mensagem}',
@@ -1068,9 +1068,8 @@ def notificacao(request, token):
                 ),
             ),
             topic='all',
-        )
-        abc = messaging.send(message)
-        return abc and redirect('notificacao_sucesso', token=token)
+        ))
+        return redirect('notificacao_sucesso', token=token)
     return render(request, 'notificacao.html', {'t': key})
 
 
