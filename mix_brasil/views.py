@@ -1055,8 +1055,8 @@ def notificacao(request, token):
                 body=f'{mensagem}',
             ),
             android=messaging.AndroidConfig(
-                ttl=datetime.timedelta(seconds=3600),
-                priority='normal',
+                ttl=datetime.timedelta(seconds=120),
+                priority='high',
                 notification=messaging.AndroidNotification(
                     icon='stock_ticker_update',
                     color='#f45342'
