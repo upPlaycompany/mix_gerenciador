@@ -1052,9 +1052,11 @@ def notificacao(request, token):
         messages = [
             messaging.Message(
                 notification=messaging.Notification(titulo, mensagem),
+                topic='all'
             ),
             messaging.Message(
                 notification=messaging.Notification(titulo, mensagem),
+                topic='all'
             ),
         ]
 
