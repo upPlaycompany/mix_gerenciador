@@ -943,9 +943,9 @@ def desapegos_dados(request, token, id, nome, cod):
                 'status': 3
             })
         elif des == False:
-            desdes = db.collection(f'destaque_desapego').where('lid', '==', f'{cod}').stream()
+            desdes = db.collection(f'destaque_desapego').where('did', '==', f'{cod}').stream()
             da = [{'id': x.id} for x in desdes]
-            dasdas = db.collection(f'destaque_desapego').where('lid', '==', f'{cod}').stream()
+            dasdas = db.collection(f'destaque_desapego').where('did', '==', f'{cod}').stream()
             dw = [x.to_dict() for x in dasdas]
             a = len(da)
             [da[x].update(dw[x]) for x in range(a)]
