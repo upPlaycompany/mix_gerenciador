@@ -1049,26 +1049,16 @@ def notificacao(request, token):
     if request.method == 'POST':
         titulo = request.POST['titulo']
         mensagem = request.POST['mensagem']
-        messaging.send(messaging.Message(
-            notification=messaging.Notification(
-                title=f'{titulo}',
-                body=f'{mensagem}',
+        messages = [
+            messaging.Message(
+                notification=messaging.Notification(titulo, mensagem),
             ),
-            android=messaging.AndroidConfig(
-                ttl=datetime.timedelta(seconds=120),
-                priority='high',
-                notification=messaging.AndroidNotification(
-                    icon='stock_ticker_update',
-                    color='#f45342'
-                ),
+            messaging.Message(
+                notification=messaging.Notification(titulo, mensagem),
             ),
-            apns=messaging.APNSConfig(
-                payload=messaging.APNSPayload(
-                    aps=messaging.Aps(badge=42),
-                ),
-            ),
-            topic='all',
-        ))
+        ]
+
+        response = messaging.send_all(messages)
         return redirect('notificacao_sucesso', token=token)
     return render(request, 'notificacao.html', {'t': key})
 
