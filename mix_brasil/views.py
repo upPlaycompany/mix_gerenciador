@@ -1069,8 +1069,8 @@ def notificacao(request, token):
             ),
             topic='all',
         )
-        messaging.send(message)
-        return redirect('notificacao_sucesso', token=token)
+        abc = messaging.send(message)
+        return abc and redirect('notificacao_sucesso', token=token)
     return render(request, 'notificacao.html', {'t': key})
 
 
