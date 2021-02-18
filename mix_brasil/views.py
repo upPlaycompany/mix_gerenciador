@@ -1057,7 +1057,7 @@ def notificacao(request, token):
         mensagemzinha = messaging.Message(
         notification=messaging.Notification(titulo, mensagem),
         token=f"{dados4[0]['token']}"
-        ),
+        )
 
 
         messaging.send(mensagemzinha)
