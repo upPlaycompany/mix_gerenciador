@@ -12,7 +12,44 @@
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
                 <div class="row">
+                    <label>Imagens da capa</label>
                     {% for image in docs.img %}
+                    <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <div class="row">
+                    <label>Imagens do stories</label>
+                    {% for image in docs.img_destacados %}
+                    <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <div class="row">
+                    <label>Imagens dos cupons</label>
+                    {% for image in docs.img_cupons %}
+                    <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <div class="row">
+                    <label>Imagens das ofertas</label>
+                    {% for image in docs.img_ofertas %}
                     <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
                     {% endfor %}
                 </div>
