@@ -520,7 +520,7 @@ def lojas_dados(request, token, id, nome, cod):
                         'price': da[0]['price'],
                         'cidade': da[0]['cidade'],
                         'estado': da[0]['estado'],
-                        'created': datetime.now().strftime("%d de %B de %Y %H:%M:%S UTC-4"),
+                        'created': datetime.datetime.now().strftime("%d de %B de %Y %H:%M:%S UTC-4"),
                         'promocao': f"{promocao}",
                         'trabalheConosco': f"{trabalhe_conosco}",
                         'whatsapp': f"{whatsapp}"
@@ -538,7 +538,7 @@ def lojas_dados(request, token, id, nome, cod):
                     'price': da[0]['price'],
                     'cidade': da[0]['cidade'],
                     'estado': da[0]['estado'],
-                    'created': datetime.now().strftime("%d de %B de %Y %H:%M:%S UTC-4"),
+                    'created': datetime.datetime.now().strftime("%d de %B de %Y %H:%M:%S UTC-4"),
                     'promocao': f"{promocao}",
                     'trabalheConosco': f"{trabalhe_conosco}",
                     'whatsapp': f"{whatsapp}"
@@ -916,7 +916,7 @@ def desapegos_dados(request, token, id, nome, cod):
                     'idAdsUser': f"{da[0]['idAdsUser']}",
                     'user': f"{da[0]['user']}",
                     'viewsDestaque': 0,
-                    'created': datetime.now().strftime("%d de %B de %Y %H:%M:%S UTC-4"),
+                    'created': datetime.datetime.now().strftime("%d de %B de %Y %H:%M:%S UTC-4"),
             })
             dados10 = db.collection(f"desapego{id}/desapegos").where('name','==',f"{name}").stream()
             dados11 = [{'id': x.id} for x in dados10]
