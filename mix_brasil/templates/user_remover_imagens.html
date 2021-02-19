@@ -12,7 +12,7 @@
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
                 <div class="row">
-                    <label>Imagens da capa</label>
+                    <h6>Imagens da capa</h6>
                     <br>
                     {% for image in docs.img %}
                     <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
@@ -24,8 +24,9 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
+                <h6>Imagens do stories</h6>
                 <div class="row">
-                    <label>Imagens do stories</label>
+
                     <br>
                     {% for image in docs.img_destacados %}
                     <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
@@ -37,8 +38,8 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
+                <h6>Imagens dos cupons</h6>
                 <div class="row">
-                    <label>Imagens dos cupons</label>
                     <br>
                     {% for image in docs.img_cupons %}
                     <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
@@ -50,9 +51,8 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
+                <h6>Imagens das ofertas</h6>
                 <div class="row">
-                    <label>Imagens das ofertas</label>
-                    <br>
                     {% for image in docs.img_ofertas %}
                     <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
                     {% endfor %}
