@@ -11,9 +11,8 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
+                <h6>Imagens da capa</h6>
                 <div class="row">
-                    <h6>Imagens da capa</h6>
-                    <br>
                     {% for image in docs.img %}
                     <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
                     {% endfor %}
