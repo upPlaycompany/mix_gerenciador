@@ -23,11 +23,11 @@
 <div class="card-deck">
     {% for docs in lista %}
     <a href="{% url 'lojas_dados' token=docs.token id=docs.categoria nome=docs.name cod=docs.id %}"><div class="profile-photo">
-        <span><img class="card-img-top" alt="" class="avatar-photo" src="{{ docs.img.0|cut:"'" }}"></span>
+        <img class="card-img-top" alt="" class="avatar-photo" src="{{ docs.img.0|cut:"'" }}">
         <br>
         <h6>{{ docs.name }}</h6>
     </div>
-    </a><div></div>
+    </a>
     {% endfor %}
 </div>
 
