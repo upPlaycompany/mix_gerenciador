@@ -20,13 +20,12 @@
 <br>
 <div class="card-deck mb-20">
     {% for docs in lista %}
-    <a href="{% url 'lojas_dados' token=docs.token id=docs.categoria nome=docs.name cod=docs.id %}">
+    <a href="{% url 'desapegos_dados' token=docs.token id=docs.categoria nome=docs.name cod=docs.id %}">
         <div class="profile-photo">
             <img class="avatar-photo" alt="" src="{{ docs.img.0|cut:"'" }}">
         </div>
         <h6>{{ docs.name }}</h6>
     </a>
-
     {% endfor %}
 </div>
 
