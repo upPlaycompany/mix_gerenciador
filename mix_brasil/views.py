@@ -938,7 +938,7 @@ def desapegos_dados(request, token, id, nome, cod):
             [dados15[x].update(cde) for x in range(a)]
             final = db.collection(f"users/{dados11[0]['user']}/desapegos").stream()
             final2 = [{'id': x.id} for x in final]
-            final3 = db.collection(f"users/{dados15[0]['user']}/desapegos").document(f"final{final2[0]['id']}")
+            final3 = db.collection(f"users/{dados15[0]['user']}/desapegos").document(f"{final2[0]['id']}")
             final3.update({
                 'status': 3
             })
