@@ -916,7 +916,7 @@ def desapegos_dados(request, token, id, nome, cod):
                     'idAdsUser': f"{da[0]['idAdsUser']}",
                     'user': f"{da[0]['user']}",
                     'viewsDestaque': 0,
-                    'created': firestore.firestore.SERVER_TIMESTAMP.description,
+                    'created': firestore.firestore.SERVER_TIMESTAMP,
             })
             dados10 = db.collection(f"desapego/{id}/desapegos").where('name','==',f"{name}").stream()
             dados11 = [{'id': x.id} for x in dados10]
