@@ -290,6 +290,7 @@ def adicionar_imagem_perfil(request, token, id):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
+    dados = db.collection(f"users")
     if request.method == 'POST':
         img = request.FILES['img']
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
