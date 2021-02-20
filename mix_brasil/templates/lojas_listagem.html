@@ -24,12 +24,8 @@
 
 <div class="card-deck">
     {% for docs in lista %}
-    <div class="card">
-        <img class="card-img-top" src="{{ docs.img.0|cut:"'" }}">
-        <div class="card-body">
-            <a href="{% url 'lojas_dados' token=docs.token id=docs.categoria nome=docs.name cod=docs.id %}"><h5
-                    class="card-title">{{ docs.name }}</h5></a>
-        </div>
+    <div class="profile-photo">
+        <img src="{% static 'vendors/images/photo1.jpg' %}" alt="" class="avatar-photo">
     </div>
     {% endfor %}
 </div>

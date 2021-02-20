@@ -1077,7 +1077,6 @@ def notificacao(request, token):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-
     if request.method == 'POST':
         titulo = request.POST['titulo']
         mensagem = request.POST['mensagem']
@@ -1090,7 +1089,6 @@ def notificacao(request, token):
             notification=messaging.Notification(titulo, mensagem),
             token=f"{dados4[0]['token']}"
             )
-
             messaging.send(noti)
             return redirect('notificacao_sucesso', token=token)
     return render(request, 'notificacao.html', {'t': key})
@@ -1120,7 +1118,6 @@ def solicitacao_desapego_listagem(request, token):
     a = len(dsae)
     [dsae[x].update(dsee[x]) for x in range(a)]
     [dsae[x].update(keya) for x in range(a)]
-    ddaijdoiaj=
     return render(request, 'solicitacao_desapego_listagem.html', {'lista': dsae, 't': key})
 
 def solicitacao_desapego_ver(request, token, name):
