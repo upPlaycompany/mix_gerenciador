@@ -1120,6 +1120,7 @@ def solicitacao_desapego_listagem(request, token):
     a = len(dsae)
     [dsae[x].update(dsee[x]) for x in range(a)]
     [dsae[x].update(keya) for x in range(a)]
+    ddaijdoiaj=
     return render(request, 'solicitacao_desapego_listagem.html', {'lista': dsae, 't': key})
 
 def solicitacao_desapego_ver(request, token, name):
