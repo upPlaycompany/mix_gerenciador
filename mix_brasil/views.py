@@ -928,9 +928,9 @@ def desapegos_dados(request, token, id, nome, cod):
             [dados11[x].update(categoria) for x in range(a)]
             [dados11[x].update(cde) for x in range(a)]
 
-            dados14 = db.collection(f"desapego{id}/desapegos").where('name', '==', f"{name}").stream()
+            dados14 = db.collection(f"desapego/{id}/desapegos").where('name', '==', f"{name}").stream()
             dados15 = [{'id': x.id} for x in dados14]
-            dados16 = db.collection(f"desapego{id}/desapegos").where('name', '==', f"{name}").stream()
+            dados16 = db.collection(f"desapego/{id}/desapegos").where('name', '==', f"{name}").stream()
             dados17 = [x.to_dict() for x in dados16]
             a = len(dados15)
             [dados15[x].update(dados17[x]) for x in range(a)]
