@@ -23,7 +23,7 @@
 <div class="card-deck">
     {% for docs in lista %}
     <div class="profile-photo">
-        <img src="{% static 'vendors/images/photo1.jpg' %}" alt="" class="avatar-photo">
+        <img class="card-img-top" src="{{ docs.img.0|cut:"'" }}" alt="" class="avatar-photo">
     </div>
     {% endfor %}
 </div>
