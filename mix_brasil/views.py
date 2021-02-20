@@ -367,15 +367,19 @@ def criar_loja(request, token, id):
                 des = db.collection('destaque_home').document()
                 des.set({
                     'cid': f"{n['categoria']}",
-                    'cupons': firestore.ArrayUnion([""]),
-                    'img': firestore.ArrayUnion([""]),
-                    'lid': f"{n['id']}",
-                    'name': f"{n['name']}",
-                    'ofertas': firestore.ArrayUnion([""]),
-                    'ofertas_destaque': firestore.ArrayUnion([""]),
+                    'img_cupons': firestore.ArrayUnion([x for x in n['img_cupons']]),
+                    'img': firestore.ArrayUnion([x for x in n['img']]),
+                    'lid': f"{da[0]['id']}",
+                    'name': f"{da[0]['name']}",
+                    'img_ofertas': firestore.ArrayUnion([x for x in n['img_ofertas']]),
+                    'img_destacadas': firestore.ArrayUnion([x for x in n['img_destacados']]),
                     'price': n['price'],
-                    'cidade': f"{n['cidade']['nome']}",
-                    'estado': f"{n['estado']['sigla']}"
+                    'cidade': n['cidade'],
+                    'estado': n['estado'],
+                    'created': firestore.firestore.SERVER_TIMESTAMP,
+                    'promocao': f"{promocao}",
+                    'trabalheConosco': f"{trabalhe_conosco}",
+                    'whatsapp': f"{whatsapp}"
                 })
         return redirect('criar_loja_sucesso', token=token)
     return render(request, 'criar_loja.html', {'t': key})
@@ -520,7 +524,7 @@ def lojas_dados(request, token, id, nome, cod):
                         'price': da[0]['price'],
                         'cidade': da[0]['cidade'],
                         'estado': da[0]['estado'],
-                        'created': datetime.datetime.now().strftime("%d de %B de %Y %H:%M:%S UTC-4"),
+                        'created': firestore.firestore.SERVER_TIMESTAMP,
                         'promocao': f"{promocao}",
                         'trabalheConosco': f"{trabalhe_conosco}",
                         'whatsapp': f"{whatsapp}"
@@ -529,16 +533,16 @@ def lojas_dados(request, token, id, nome, cod):
             else:
                 didi.set({
                     'cid': f"{da[0]['categoria']}",
-                    'cupons': firestore.ArrayUnion([""]),
+                    'img_cupons': firestore.ArrayUnion([""]),
                     'img': firestore.ArrayUnion([""]),
                     'lid': f"{da[0]['id']}",
                     'name': f"{da[0]['name']}",
-                    'ofertas': firestore.ArrayUnion([""]),
-                    'ofertas_destaque': firestore.ArrayUnion([""]),
+                    'img_ofertas': firestore.ArrayUnion([""]),
+                    'img_destacados': firestore.ArrayUnion([""]),
                     'price': da[0]['price'],
                     'cidade': da[0]['cidade'],
                     'estado': da[0]['estado'],
-                    'created': datetime.datetime.now().strftime("%d de %B de %Y %H:%M:%S UTC-4"),
+                    'created': firestore.firestore.SERVER_TIMESTAMP,
                     'promocao': f"{promocao}",
                     'trabalheConosco': f"{trabalhe_conosco}",
                     'whatsapp': f"{whatsapp}"
@@ -754,14 +758,20 @@ def criar_desapego(request, token, id):
             if destaque == 'true':
                 des = db.collection('destaque_desapego').document()
                 des.set({
-                    'cid': f"{n['categoria']}",
+                    'idCat': f"{n['categoria']}",
                     'img': firestore.ArrayUnion([""]),
                     'did': f"{n['id']}",
                     'name': f"{n['name']}",
                     'price': n['price'],
+                    'cidade': n['cidade']['nome'],
+                    'estado': n['estado']['sigla'],
+                    'anunciante': f"{n['anunciante']}",
                     'number': f"{n['number']}",
-                    'cidade': f"{n['cidade']['nome']}",
-                    'estado': f"{n['estado']['sigla']}",
+                    'descricao': f"{n['descricao']}",
+                    'idAdsUser': f"{n['idAdsUser']}",
+                    'user': f"{n['user']}",
+                    'viewsDestaque': 0,
+                    'created': firestore.firestore.SERVER_TIMESTAMP,
                 })
         return redirect('criar_loja_sucesso', token=token)
     return render(request, 'criar_desapego.html', {'t': key})
