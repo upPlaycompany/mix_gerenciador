@@ -962,6 +962,29 @@ def desapegos_dados(request, token, id, nome, cod):
             [da[x].update(dw[x]) for x in range(a)]
             for n in da:
                 db.collection('destaque_desapego').document(f"{n['id']}").delete()
+            dados18 = db.collection(f"desapego/{id}/desapegos").where('name', '==', f"{name}").stream()
+            dados19 = [{'id': x.id} for x in dados18]
+            dados20 = db.collection(f"desapego/{id}/desapegos").where('name', '==', f"{name}").stream()
+            dados21 = [x.to_dict() for x in dados20]
+            a = len(dados19)
+            categoria = {'categoria': f'{id}'}
+            [dados19[x].update(dados21[x]) for x in range(a)]
+            [dados19[x].update(categoria) for x in range(a)]
+            [dados19[x].update(cde) for x in range(a)]
+            dados22 = db.collection(f"desapego/{id}/desapegos").where('name', '==', f"{name}").stream()
+            dados23 = [{'id': x.id} for x in dados22]
+            dados24 = db.collection(f"desapego/{id}/desapegos").where('name', '==', f"{name}").stream()
+            dados25 = [x.to_dict() for x in dados24]
+            a = len(dados23)
+            [dados23[x].update(dados25[x]) for x in range(a)]
+            [dados23[x].update(categoria) for x in range(a)]
+            [dados23[x].update(cde) for x in range(a)]
+            final4 = db.collection(f"users/{dados19[0]['user']}/desapegos").stream()
+            final5 = [{'id': x.id} for x in final4]
+            final6 = db.collection(f"users/{dados23[0]['user']}/desapegos").document(f"{final5[0]['id']}")
+            final6.update({
+                'destaque': False
+            })
         else:
             desdes = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{name}').stream()
             da = [{'id': x.id} for x in desdes]
