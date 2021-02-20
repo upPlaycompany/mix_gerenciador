@@ -920,7 +920,7 @@ def desapegos_dados(request, token, id, nome, cod):
             })
             dados10 = db.collection(f"desapego/{id}/desapegos").where('name','==',f"{name}").stream()
             dados11 = [{'id': x.id} for x in dados10]
-            dados12 = db.collection(f"desapego{id}/desapegos").where('name', '==', f"{name}").stream()
+            dados12 = db.collection(f"desapego/{id}/desapegos").where('name', '==', f"{name}").stream()
             dados13 = [x.to_dict() for x in dados12]
             a = len(dados11)
             categoria = {'categoria': f'{id}'}
