@@ -26,7 +26,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 import pandas as pd
 import pprint
 
-
 config = {
     'apiKey': "AIzaSyBh-DC_fXWzzcHV6XYhFQ1Ya6MWG5OjH_w",
     'authDomain': "mix-brasil.firebaseapp.com",
@@ -175,9 +174,9 @@ def usuario_listagem(request, token):
     if usa == []:
         return redirect('user_index', token=token)
     if query:
-        usuarios = db.collection('users').where('name','==',f"{query}").stream()
+        usuarios = db.collection('users').where('name', '==', f"{query}").stream()
         doz = [{'id': x.id} for x in usuarios]
-        ident = db.collection('users').where('name','==',f"{query}").stream()
+        ident = db.collection('users').where('name', '==', f"{query}").stream()
         docs = [x.to_dict() for x in ident]
         a = len(doz)
         [doz[x].update(keya) for x in range(a)]
@@ -424,9 +423,9 @@ def lojas_listagem(request, token, id):
     if usa == []:
         return redirect('user_index', token=token)
     if query:
-        lojas = db.collection(f'categorias/{id}/lojas').where('name','==',f'{query}').stream()
+        lojas = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{query}').stream()
         docs = [{'id': x.id} for x in lojas]
-        lojas2 = db.collection(f'categorias/{id}/lojas').where('name','==',f'{query}').stream()
+        lojas2 = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{query}').stream()
         docs2 = [y.to_dict() for y in lojas2]
         a = len(docs)
         dzz = [{'categoria': f'{id}', 'token': str(token)}]
@@ -462,7 +461,7 @@ def lojas_dados(request, token, id, nome, cod):
         link = requests.get(url, headers=headers, verify=False)
         cde = link.json()
     else:
-        cde = {'0':0}
+        cde = {'0': 0}
     dados = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{nome}').stream()
     abc = [x.to_dict() for x in dados]
     dados2 = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{nome}').stream()
@@ -515,20 +514,20 @@ def lojas_dados(request, token, id, nome, cod):
             didi = db.collection('destaque_home').document()
             if cep != "":
                 didi.set({
-                        'cid': f"{da[0]['categoria']}",
-                        'img_cupons': firestore.ArrayUnion([x for x in da[0]['img_cupons']]),
-                        'img': firestore.ArrayUnion([x for x in da[0]['img']]),
-                        'lid': f"{da[0]['id']}",
-                        'name': f"{da[0]['name']}",
-                        'img_ofertas': firestore.ArrayUnion([x for x in da[0]['img_ofertas']]),
-                        'img_destacadas': firestore.ArrayUnion([x for x in da[0]['img_destacados']]),
-                        'price': da[0]['price'],
-                        'cidade': da[0]['cidade'],
-                        'estado': da[0]['estado'],
-                        'created': firestore.firestore.SERVER_TIMESTAMP,
-                        'promocao': f"{promocao}",
-                        'trabalheConosco': f"{trabalhe_conosco}",
-                        'whatsapp': f"{whatsapp}"
+                    'cid': f"{da[0]['categoria']}",
+                    'img_cupons': firestore.ArrayUnion([x for x in da[0]['img_cupons']]),
+                    'img': firestore.ArrayUnion([x for x in da[0]['img']]),
+                    'lid': f"{da[0]['id']}",
+                    'name': f"{da[0]['name']}",
+                    'img_ofertas': firestore.ArrayUnion([x for x in da[0]['img_ofertas']]),
+                    'img_destacadas': firestore.ArrayUnion([x for x in da[0]['img_destacados']]),
+                    'price': da[0]['price'],
+                    'cidade': da[0]['cidade'],
+                    'estado': da[0]['estado'],
+                    'created': firestore.firestore.SERVER_TIMESTAMP,
+                    'promocao': f"{promocao}",
+                    'trabalheConosco': f"{trabalhe_conosco}",
+                    'whatsapp': f"{whatsapp}"
 
                 })
             else:
@@ -798,9 +797,9 @@ def categoria_desapego_listagem(request, token):
     if usa == []:
         return redirect('user_index', token=token)
     if query:
-        desapegos = db.collection('desapego').where('name','==',f'{query}').stream()
+        desapegos = db.collection('desapego').where('name', '==', f'{query}').stream()
         doz = [{'id': x.id} for x in desapegos]
-        ident = db.collection('desapego').where('name','==',f'{query}').stream()
+        ident = db.collection('desapego').where('name', '==', f'{query}').stream()
         docs = [x.to_dict() for x in ident]
         a = len(doz)
         [doz[x].update(keya) for x in range(a)]
@@ -824,9 +823,9 @@ def desapegos_listagem(request, token, id):
     if usa == []:
         return redirect('user_index', token=token)
     if query:
-        desapegos = db.collection(f'desapego/{id}/desapegos').where('name','==',f"{query}").stream()
+        desapegos = db.collection(f'desapego/{id}/desapegos').where('name', '==', f"{query}").stream()
         docs = [{'id': x.id} for x in desapegos]
-        lojas2 = db.collection(f'desapego/{id}/desapegos').where('name','==',f"{query}").stream()
+        lojas2 = db.collection(f'desapego/{id}/desapegos').where('name', '==', f"{query}").stream()
         docs2 = [y.to_dict() for y in lojas2]
         a = len(docs)
         dzz = [{'categoria': f'{id}', 'token': str(token)}]
@@ -914,22 +913,22 @@ def desapegos_dados(request, token, id, nome, cod):
             [da[x].update(cde) for x in range(a)]
             didi = db.collection('destaque_desapego').document()
             didi.set({
-                    'idCat': f"{da[0]['categoria']}",
-                    'img': firestore.ArrayUnion([x for x in da[0]['img']]),
-                    'did': f"{da[0]['id']}",
-                    'name': f"{da[0]['name']}",
-                    'price': da[0]['price'],
-                    'cidade': da[0]['cidade'],
-                    'estado': da[0]['estado'],
-                    'anunciante': f"{da[0]['anunciante']}",
-                    'number': f"{da[0]['number']}",
-                    'descricao': f"{da[0]['descricao']}",
-                    'idAdsUser': f"{da[0]['idAdsUser']}",
-                    'user': f"{da[0]['user']}",
-                    'viewsDestaque': 0,
-                    'created': firestore.firestore.SERVER_TIMESTAMP,
+                'idCat': f"{da[0]['categoria']}",
+                'img': firestore.ArrayUnion([x for x in da[0]['img']]),
+                'did': f"{da[0]['id']}",
+                'name': f"{da[0]['name']}",
+                'price': da[0]['price'],
+                'cidade': da[0]['cidade'],
+                'estado': da[0]['estado'],
+                'anunciante': f"{da[0]['anunciante']}",
+                'number': f"{da[0]['number']}",
+                'descricao': f"{da[0]['descricao']}",
+                'idAdsUser': f"{da[0]['idAdsUser']}",
+                'user': f"{da[0]['user']}",
+                'viewsDestaque': 0,
+                'created': firestore.firestore.SERVER_TIMESTAMP,
             })
-            dados10 = db.collection(f"desapego/{id}/desapegos").where('name','==',f"{name}").stream()
+            dados10 = db.collection(f"desapego/{id}/desapegos").where('name', '==', f"{name}").stream()
             dados11 = [{'id': x.id} for x in dados10]
             dados12 = db.collection(f"desapego/{id}/desapegos").where('name', '==', f"{name}").stream()
             dados13 = [x.to_dict() for x in dados12]
@@ -1104,6 +1103,7 @@ def remover_desapego_sucesso(request, token):
         return redirect('user_index', token=token)
     return render(request, 'remover_desapego_sucesso.html', {'t': key})
 
+
 def notificacao(request, token):
     key = [str(token)]
     user = auth.get_user(token)
@@ -1120,8 +1120,8 @@ def notificacao(request, token):
             dados3 = db.collection(f"users/{x['id']}/tokens").stream()
             dados4 = [y.to_dict() for y in dados3]
             noti = messaging.Message(
-            notification=messaging.Notification(titulo, mensagem),
-            token=f"{dados4[0]['token']}"
+                notification=messaging.Notification(titulo, mensagem),
+                token=f"{dados4[0]['token']}"
             )
             messaging.send(noti)
             return redirect('notificacao_sucesso', token=token)
@@ -1136,6 +1136,7 @@ def notificacao_sucesso(request, token):
     if usa == []:
         return redirect('user_index', token=token)
     return render(request, 'notificacao_sucesso.html', {'t': key})
+
 
 def solicitacao_desapego_listagem(request, token):
     key = [str(token)]
@@ -1154,6 +1155,7 @@ def solicitacao_desapego_listagem(request, token):
     [dsae[x].update(keya) for x in range(a)]
     return render(request, 'solicitacao_desapego_listagem.html', {'lista': dsae, 't': key})
 
+
 def solicitacao_desapego_ver(request, token, name):
     key = [str(token)]
     keya = {'token': token}
@@ -1162,7 +1164,7 @@ def solicitacao_desapego_ver(request, token, name):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-    day = db.collection("msg_destaca_desapego").where('name','==',f'{name}').stream()
+    day = db.collection("msg_destaca_desapego").where('name', '==', f'{name}').stream()
     dey = [{'id': x.id} for x in day]
     diy = db.collection("msg_destaca_desapego").where('name', '==', f'{name}').stream()
     doy = [x.to_dict() for x in diy]
@@ -1170,6 +1172,7 @@ def solicitacao_desapego_ver(request, token, name):
     [dey[x].update(doy[x]) for x in range(a)]
     [dey[x].update(keya) for x in range(a)]
     return render(request, 'solicitacao_desapego_ver.html', {'lista': dey, 't': key})
+
 
 def solicitacao_desapego_remover(request, token, id):
     key = [str(token)]
@@ -1183,6 +1186,7 @@ def solicitacao_desapego_remover(request, token, id):
         return redirect('solicitacao_desapego_remover_sucesso', token=token)
     return render(request, 'solicitacao_desapego_remover.html', {'t': key})
 
+
 def solicitacao_desapego_remover_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
@@ -1191,6 +1195,7 @@ def solicitacao_desapego_remover_sucesso(request, token):
     if usa == []:
         return redirect('user_index', token=token)
     return render(request, 'solicitacao_desapego_remover_sucesso.html', {'t': key})
+
 
 def solicitacao_loja_listagem(request, token):
     key = [str(token)]
@@ -1209,6 +1214,7 @@ def solicitacao_loja_listagem(request, token):
     [dsae[x].update(keya) for x in range(a)]
     return render(request, 'solicitacao_loja_listagem.html', {'lista': dsae, 't': key})
 
+
 def solicitacao_loja_ver(request, token, name):
     key = [str(token)]
     keya = {'token': token}
@@ -1217,7 +1223,7 @@ def solicitacao_loja_ver(request, token, name):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-    day = db.collection("msg_destaca_loja").where('name','==',f'{name}').stream()
+    day = db.collection("msg_destaca_loja").where('name', '==', f'{name}').stream()
     dey = [{'id': x.id} for x in day]
     diy = db.collection("msg_destaca_loja").where('name', '==', f'{name}').stream()
     doy = [x.to_dict() for x in diy]
@@ -1225,6 +1231,7 @@ def solicitacao_loja_ver(request, token, name):
     [dey[x].update(doy[x]) for x in range(a)]
     [dey[x].update(keya) for x in range(a)]
     return render(request, 'solicitacao_loja_ver.html', {'lista': dey, 't': key})
+
 
 def solicitacao_loja_remover(request, token, id):
     key = [str(token)]
@@ -1238,6 +1245,7 @@ def solicitacao_loja_remover(request, token, id):
         return redirect('solicitacao_loja_remover_sucesso', token=token)
     return render(request, 'solicitacao_loja_remover.html', {'t': key})
 
+
 def solicitacao_loja_remover_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
@@ -1246,6 +1254,7 @@ def solicitacao_loja_remover_sucesso(request, token):
     if usa == []:
         return redirect('user_index', token=token)
     return render(request, 'solicitacao_loja_remover_sucesso.html', {'t': key})
+
 
 def banners_imagem(request, token):
     key = [str(token)]
@@ -1288,7 +1297,8 @@ def banners_imagem(request, token):
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
         return redirect('banners_imagem_sucesso', token=token)
-    return render(request,'banners_imagem.html', {'t': key, 'lista': dados8})
+    return render(request, 'banners_imagem.html', {'t': key, 'lista': dados8})
+
 
 def banners_imagem_sucesso(request, token):
     key = [str(token)]
@@ -1298,6 +1308,7 @@ def banners_imagem_sucesso(request, token):
     if usa == []:
         return redirect('user_index', token=token)
     return render(request, 'banners_imagem_sucesso.html', {'t': key})
+
 
 def banners_imagem_remover(request, token):
     key = [str(token)]
@@ -1319,7 +1330,8 @@ def banners_imagem_remover(request, token):
             'img': firestore.ArrayRemove([f'{imagem}'])
         })
         return redirect('banners_imagem_remover_sucesso', token=token)
-    return render(request,'banners_imagem_remover.html', {'t': key, 'lista': dados2})
+    return render(request, 'banners_imagem_remover.html', {'t': key, 'lista': dados2})
+
 
 def banners_imagem_remover_sucesso(request, token):
     key = [str(token)]
@@ -1328,7 +1340,7 @@ def banners_imagem_remover_sucesso(request, token):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-    return render(request,'banners_imagem_remover_sucesso.html', {'t': key})
+    return render(request, 'banners_imagem_remover_sucesso.html', {'t': key})
 
 
 # PARTE DE USUARIO
@@ -1449,9 +1461,9 @@ def user_criar_loja(request, token):
                 'viewsWhats': 0,
                 'user': f'{str(token)}',
             })
-        abx = db.collection(f"users/{token}/loja").where('uemail','==',f'{email}').stream()
+        abx = db.collection(f"users/{token}/loja").where('uemail', '==', f'{email}').stream()
         abv = [{'id': x.id} for x in abx]
-        pvc = db.collection(f"categorias/{categoria}/lojas").where('uemail','==',f'{email}').stream()
+        pvc = db.collection(f"categorias/{categoria}/lojas").where('uemail', '==', f'{email}').stream()
         pvcz = [{'id': x.id} for x in pvc]
         apv = db.collection(f"categorias/{categoria}/lojas").document(f"{pvcz[0]['id']}")
         apv.update({
@@ -1659,54 +1671,54 @@ def user_remover_imagens(request, token, cat, id):
     ad = [{'id': x.id} for x in ac]
     ae = db.collection(f"categorias/{cat}/lojas").where('uemail', '==', f'{user.email}').stream()
     docs = [x.to_dict() for x in ae]
-    if request.method == 'POST':
-        tipo_imagem = request.POST['tipo_imagem']
-        imagem = request.POST['imagem']
-        formform = db.collection(f'categorias/{cat}/lojas').document(ad[0]['id'])
-        if tipo_imagem == 'normal':
-            formform.update({
-                'img': firestore.ArrayRemove([f'{imagem}'])
-            })
-        elif tipo_imagem == 'ofertas':
-            formform.update({
-                'img_ofertas': firestore.ArrayRemove([f'{imagem}'])
-            })
-        elif tipo_imagem == 'destacados':
-            formform.update({
-                'img_destacados': firestore.ArrayRemove([f'{imagem}'])
-            })
-        elif tipo_imagem == 'cupons':
-            formform.update({
-                'img_cupons': firestore.ArrayRemove([f'{imagem}'])
-            })
-        ffa = db.collection(f'users').where('email', '==', f'{user.email}').stream()
-        yas = [{'id': x.id} for x in ffa]
-        forfor = db.collection(f"users/{yas[0]['id']}/loja").where('uemail', '==', f'{user.email}').stream()
-        fsa = [{'id': x.id} for x in forfor]
-        ffae = db.collection(f'users').where('email', '==', f'{user.email}').stream()
-        yase = [{'id': x.id} for x in ffae]
-        final_final = db.collection(f"users/{yase[0]['id']}/loja").document(f"{fsa[0]['id']}")
-        if tipo_imagem == 'normal':
-            final_final.update({
-                'img': firestore.ArrayRemove([f'{imagem}'])
-            })
-        elif tipo_imagem == 'ofertas':
-            final_final.update({
-                'img_ofertas': firestore.ArrayRemove([f'{imagem}'])
-            })
-        elif tipo_imagem == 'destacados':
-            final_final.update({
-                'img_destacados': firestore.ArrayRemove([f'{imagem}'])
-            })
-        elif tipo_imagem == 'cupons':
-            final_final.update({
-                'img_cupons': firestore.ArrayRemove([f'{imagem}'])
-            })
-        else:
-            final_final.update({
-                'img': firestore.ArrayRemove([f'{imagem}'])
-            })
-        return redirect('user_remover_imagens_sucesso.html', token=token)
+    lixo1 = request.GET.get('lixo1')
+    lixo2 = request.GET.get('lixo1')
+    lixo3 = request.GET.get('lixo1')
+    lixo4 = request.GET.get('lixo1')
+    imagem1 = request.GET.get('imagem1')
+    imagem2 = request.GET.get('imagem2')
+    imagem3 = request.GET.get('imagem3')
+    imagem4 = request.GET.get('imagem4')
+    formform = db.collection(f'categorias/{cat}/lojas').document(ad[0]['id'])
+    if lixo1 == 'normal':
+        formform.update({
+            'img': firestore.ArrayRemove([f'{imagem1}'])
+        })
+    elif lixo2 == 'ofertas':
+        formform.update({
+            'img_ofertas': firestore.ArrayRemove([f'{imagem2}'])
+        })
+    elif lixo3 == 'destacados':
+        formform.update({
+            'img_destacados': firestore.ArrayRemove([f'{imagem3}'])
+        })
+    elif lixo4 == 'cupons':
+        formform.update({
+            'img_cupons': firestore.ArrayRemove([f'{imagem4}'])
+        })
+    ffa = db.collection(f'users').where('email', '==', f'{user.email}').stream()
+    yas = [{'id': x.id} for x in ffa]
+    forfor = db.collection(f"users/{yas[0]['id']}/loja").where('uemail', '==', f'{user.email}').stream()
+    fsa = [{'id': x.id} for x in forfor]
+    ffae = db.collection(f'users').where('email', '==', f'{user.email}').stream()
+    yase = [{'id': x.id} for x in ffae]
+    final_final = db.collection(f"users/{yase[0]['id']}/loja").document(f"{fsa[0]['id']}")
+    if lixo1 == 'normal':
+        final_final.update({
+            'img': firestore.ArrayRemove([f'{imagem1}'])
+        })
+    elif lixo2 == 'ofertas':
+        final_final.update({
+            'img_ofertas': firestore.ArrayRemove([f'{imagem2}'])
+        })
+    elif lixo3 == 'destacados':
+        final_final.update({
+            'img_destacados': firestore.ArrayRemove([f'{imagem3}'])
+        })
+    elif lixo4 == 'cupons':
+        final_final.update({
+            'img_cupons': firestore.ArrayRemove([f'{imagem4}'])
+        })
     return render(request, 'user_remover_imagens.html', {'lista': docs, 't': key})
 
 
@@ -1751,6 +1763,7 @@ def user_remover_loja_sucesso(request, token):
         return redirect('index', token=token)
     return render(request, 'user_remover_loja_sucesso.html', {'t': key})
 
+
 def user_enviar_solicitacao_loja(request, token):
     key = [str(token)]
     user = auth.get_user(token)
@@ -1760,9 +1773,9 @@ def user_enviar_solicitacao_loja(request, token):
         return redirect('index', token=token)
     if request.method == 'POST':
         mensagem = request.POST['mensagem']
-        dados = db.collection(f"users/{token}/loja").where('uemail','==',f'{user.email}').stream()
+        dados = db.collection(f"users/{token}/loja").where('uemail', '==', f'{user.email}').stream()
         d = [{'id': x.id} for x in dados]
-        dados2 = db.collection(f"users/{token}/loja").where('uemail','==',f'{user.email}').stream()
+        dados2 = db.collection(f"users/{token}/loja").where('uemail', '==', f'{user.email}').stream()
         da = [x.to_dict() for x in dados2]
         a = len(d)
         [d[x].update(da[x]) for x in range(a)]
@@ -1777,6 +1790,7 @@ def user_enviar_solicitacao_loja(request, token):
         })
         return redirect('user_enviar_solicitacao_loja_sucesso', token=token)
     return render(request, 'user_enviar_solicitacao_loja.html', {'t': key})
+
 
 def user_enviar_solicitacao_loja_sucesso(request, token):
     key = [str(token)]

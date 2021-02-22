@@ -14,7 +14,7 @@
                 <h6>Imagens da capa</h6>
                 <div class="row">
                     {% for image in docs.img %}
-                    <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
+                    <img style="width: 300px;" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
                     {% endfor %}
                 </div>
             </div>
@@ -25,10 +25,8 @@
             <div class="form-group">
                 <h6>Imagens do stories</h6>
                 <div class="row">
-
-                    <br>
                     {% for image in docs.img_destacados %}
-                    <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
+                    <img style="width: 300px;" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
                     {% endfor %}
                 </div>
             </div>
@@ -41,7 +39,7 @@
                 <div class="row">
                     <br>
                     {% for image in docs.img_cupons %}
-                    <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
+                    <img style="width: 300px;" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
                     {% endfor %}
                 </div>
             </div>
@@ -53,7 +51,7 @@
                 <h6>Imagens das ofertas</h6>
                 <div class="row">
                     {% for image in docs.img_ofertas %}
-                    <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
+                    <img style="width: 300px;" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
                     {% endfor %}
                 </div>
             </div>
