@@ -880,7 +880,7 @@ def desapegos_dados(request, token, id, nome, cod):
         destaque = request.POST['destaque']
         cidade = request.POST['cidade']
         estado = request.POST['estado']
-        anunciante = request.POST['estado']
+        anunciante = request.POST['anunciante']
         number = request.POST['number']
         price = price.replace(',', '.')
         price = float(price)
