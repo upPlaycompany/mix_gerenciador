@@ -554,6 +554,9 @@ def lojas_dados(request, token, id, nome, cod):
                     'whatsapp': f"{whatsapp}"
 
                 })
+            r12 = db.collection('msg_destaca_loja').where('name','==',f"{da[0]['name']}")
+            r13 = [{'id': x.id} for x in r12]
+            r14 = db.collection('msg_destaca_loja').document(f"{da[0]['id']}").delete()
         elif des == False:
             desdes = db.collection(f'destaque_home').where('lid', '==', f'{cod}').stream()
             da = [{'id': x.id} for x in desdes]
@@ -561,8 +564,8 @@ def lojas_dados(request, token, id, nome, cod):
             dw = [x.to_dict() for x in dasdas]
             a = len(da)
             [da[x].update(dw[x]) for x in range(a)]
-
             db.collection('destaque_home').document(f"{da[0]['id']}").delete()
+
         else:
             desdes = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{name}').stream()
             da = [{'id': x.id} for x in desdes]
