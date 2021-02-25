@@ -1224,7 +1224,7 @@ def solicitacao_loja_listagem(request, token):
     return render(request, 'solicitacao_loja_listagem.html', {'lista': dsae, 't': key})
 
 
-def solicitacao_loja_ver(request, token, name):
+def solicitacao_loja_ver(request, token, cat, name):
     key = [str(token)]
     keya = {'token': token}
     user = auth.get_user(token)
@@ -1236,9 +1236,16 @@ def solicitacao_loja_ver(request, token, name):
     dey = [{'id': x.id} for x in day]
     diy = db.collection("msg_destaca_loja").where('name', '==', f'{name}').stream()
     doy = [x.to_dict() for x in diy]
+    duy = db.collection(f"categorias/{cat}/lojas").where('name', '==', f'{name}').stream()
+    dry = [{'idLoja': x.id} for x in duy]
+    dxy = db.collection(f"categorias/{cat}/lojas").where('name', '==', f'{name}').stream()
+    dpy = [x.to_dict() for x in dxy]
     a = len(dey)
+    b = len(dry)
+    [dry[x].update(dpy[x]) for x in range(b)]
     [dey[x].update(doy[x]) for x in range(a)]
     [dey[x].update(keya) for x in range(a)]
+    [dey[x].update(dry[x]) for x in range(a)]
     return render(request, 'solicitacao_loja_ver.html', {'lista': dey, 't': key})
 
 
