@@ -556,7 +556,7 @@ def lojas_dados(request, token, id, nome, cod):
                 })
             r12 = db.collection('msg_destaca_loja').where('name','==',f"{da[0]['name']}")
             r13 = [{'id': x.id} for x in r12]
-            r14 = db.collection('msg_destaca_loja').document(f"{da[0]['id']}").delete()
+            db.collection('msg_destaca_loja').document(f"{r13[0]['id']}").delete()
         elif des == False:
             desdes = db.collection(f'destaque_home').where('lid', '==', f'{cod}').stream()
             da = [{'id': x.id} for x in desdes]
