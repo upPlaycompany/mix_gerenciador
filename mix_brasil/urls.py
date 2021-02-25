@@ -74,7 +74,7 @@ urlpatterns = [
     path('remover_usuario/<str:token>/<str:id>/<str:e>/', views.remover_usuario, name='remover_usuario'),
     path('remover_usuario_sucesso/<str:token>/', views.remover_usuario_sucesso, name='remover_usuario_sucesso'),
 
-
+'''
     path('user_index/<str:token>/', views.user_index, name='user_index'),
     path('user_criar_loja/<str:token>/', views.user_criar_loja, name='user_criar_loja'),
     path('user_criar_loja_sucesso/<str:token>/', views.user_criar_loja_sucesso, name='user_criar_loja_sucesso'),
@@ -88,4 +88,5 @@ urlpatterns = [
     path('user_remover_imagens_sucesso/<str:token>/', views.user_remover_imagens_sucesso, name='user_remover_imagens_sucesso'),
     path('user_enviar_solicitacao_loja/<str:token>/', views.user_enviar_solicitacao_loja, name='user_enviar_solicitacao_loja'),
     path('user_enviar_solicitacao_loja_sucesso/<str:token>/', views.user_enviar_solicitacao_loja_sucesso, name='user_enviar_solicitacao_loja_sucesso'),
+'''
 ]

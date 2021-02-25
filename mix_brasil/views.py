@@ -63,21 +63,21 @@ def logar(request):
         #    con = [{'id': x.id} for x in consulta]
         #    for x in con:
         #        if str(x['id']) == user['localId']:
-    #
-    #           return redirect('index', token=key)
-    #       else:
-    #           return redirect('login_erro')
-    # elif options == 'user':
-    #    consulta = db.collection('users').where('email', '==', f'{email}').stream()
-    #   con = [{'id': x.id} for x in consulta]
-    #    for x in con:
-    #        if str(x['id']) == user['localId']:
-    #
-    #          return redirect('user_index', token=user['localId'])
-    #       else:
-    #           return HttpResponseRedirect('login_erro')
-    # else:
-    #   return redirect('login_erro')
+        #
+        #           return redirect('index', token=key)
+        #       else:
+        #           return redirect('login_erro')
+        # elif options == 'user':
+        #    consulta = db.collection('users').where('email', '==', f'{email}').stream()
+        #   con = [{'id': x.id} for x in consulta]
+        #    for x in con:
+        #        if str(x['id']) == user['localId']:
+        #
+        #          return redirect('user_index', token=user['localId'])
+        #       else:
+        #           return HttpResponseRedirect('login_erro')
+        # else:
+        #   return redirect('login_erro')
     return render(request, 'login.html')
 
 
@@ -1349,6 +1349,7 @@ def banners_imagem_remover_sucesso(request, token):
     return render(request, 'banners_imagem_remover_sucesso.html', {'t': key})
 
 
+'''
 # PARTE DE USUARIO
 def user_criar_loja(request, token):
     key = [str(token)]
@@ -1806,3 +1807,4 @@ def user_enviar_solicitacao_loja_sucesso(request, token):
     if usa == []:
         return redirect('index', token=token)
     return render(request, 'user_enviar_solicitacao_loja_sucesso.html', {'t': key})
+'''
