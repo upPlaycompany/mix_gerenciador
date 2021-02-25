@@ -554,7 +554,7 @@ def lojas_dados(request, token, id, nome, cod):
                     'whatsapp': f"{whatsapp}"
 
                 })
-            r12 = db.collection('msg_destaca_loja').where('name','==',f"{da[0]['name']}")
+            r12 = db.collection('msg_destaca_loja').where('name','==',f"{da[0]['name']}").stream()
             r13 = [{'id': x.id} for x in r12]
             db.collection('msg_destaca_loja').document(f"{r13[0]['id']}").delete()
         elif des == False:
