@@ -49,29 +49,35 @@ def logar(request):
     if request.method == "POST":
         email = request.POST['email']
         password = request.POST['password']
-        options = request.POST['options']
         user = authent.sign_in_with_email_and_password(email, password)
         key = str(user['localId'])
-        if options == 'admin':
-            consulta = db.collection('admin').where('email', '==', f'{email}').stream()
-            con = [{'id': x.id} for x in consulta]
-            for x in con:
-                if str(x['id']) == user['localId']:
-
-                    return redirect('index', token=key)
-                else:
-                    return redirect('login_erro')
-        elif options == 'user':
-            consulta = db.collection('users').where('email', '==', f'{email}').stream()
-            con = [{'id': x.id} for x in consulta]
-            for x in con:
-                if str(x['id']) == user['localId']:
-
-                    return redirect('user_index', token=user['localId'])
-                else:
-                    return HttpResponseRedirect('login_erro')
-        else:
-            return redirect('login_erro')
+        consulta = db.collection('admin').where('email', '==', f'{email}').stream()
+        con = [{'id': x.id} for x in consulta]
+        for x in con:
+            if str(x['id']) == user['localId']:
+                return redirect('index', token=key)
+            else:
+                return redirect('login_erro')
+        # if options == 'admin':
+        #   consulta = db.collection('admin').where('email', '==', f'{email}').stream()
+        #    con = [{'id': x.id} for x in consulta]
+        #    for x in con:
+        #        if str(x['id']) == user['localId']:
+    #
+    #           return redirect('index', token=key)
+    #       else:
+    #           return redirect('login_erro')
+    # elif options == 'user':
+    #    consulta = db.collection('users').where('email', '==', f'{email}').stream()
+    #   con = [{'id': x.id} for x in consulta]
+    #    for x in con:
+    #        if str(x['id']) == user['localId']:
+    #
+    #          return redirect('user_index', token=user['localId'])
+    #       else:
+    #           return HttpResponseRedirect('login_erro')
+    # else:
+    #   return redirect('login_erro')
     return render(request, 'login.html')
 
 

@@ -59,24 +59,6 @@
                     </div>
                     <form method="post">
                         {% csrf_token %}
-                        <div class="select-role">
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn active">
-                                    <input type="radio" name="options" id="admin" value="admin">
-                                    <div class="icon"><img src="{% static 'vendors/images/briefcase.svg' %}" class="svg"
-                                                           alt=""></div>
-                                    <span>Eu sou</span>
-                                    Administrador
-                                </label>
-                                <label class="btn">
-                                    <input type="radio" name="options" id="user" value="user" checked>
-                                    <div class="icon"><img src="{% static 'vendors/images/person.svg' %}" class="svg"
-                                                           alt=""></div>
-                                    <span>Eu sou</span>
-                                    Usuário
-                                </label>
-                            </div>
-                        </div>
                         <div class="input-group custom">
                             <input type="text" class="form-control form-control-lg" name="email"
                                    placeholder="E-mail">
@@ -107,7 +89,6 @@
                                 </div>
                             </div>
                         </div>
-                </div>
                 </form>
             </div>
         </div>
