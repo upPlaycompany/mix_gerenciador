@@ -74,19 +74,19 @@ urlpatterns = [
     path('remover_usuario/<str:token>/<str:id>/<str:e>/', views.remover_usuario, name='remover_usuario'),
     path('remover_usuario_sucesso/<str:token>/', views.remover_usuario_sucesso, name='remover_usuario_sucesso'),
 
-'''
-    path('user_index/<str:token>/', views.user_index, name='user_index'),
-    path('user_criar_loja/<str:token>/', views.user_criar_loja, name='user_criar_loja'),
-    path('user_criar_loja_sucesso/<str:token>/', views.user_criar_loja_sucesso, name='user_criar_loja_sucesso'),
-    path('user_loja_dados/<str:token>/', views.user_loja_dados, name='user_loja_dados'),
-    path('user_loja_dados_sucesso/<str:token>/', views.user_loja_dados_sucesso, name='user_loja_dados_sucesso'),
-    path('user_adicionar_imagem/<str:token>/<str:cat>/<str:id>/', views.user_adicionar_imagem, name='user_adicionar_imagem'),
-    path('user_adicionar_imagem_sucesso/<str:token>/<str:cat>/<str:id>/', views.user_adicionar_imagem_sucesso, name='user_adicionar_imagem_sucesso'),
-    path('user_remover_loja/<str:token>/<str:cat>/<str:id>/', views.user_remover_loja, name='user_remover_loja'),
-    path('user_remover_loja_sucesso/<str:token>/', views.user_remover_loja_sucesso, name='user_remover_loja_sucesso'),
-    path('user_remover_imagens/<str:token>/<str:cat>/<str:id>/', views.user_remover_imagens, name='user_remover_imagens'),
-    path('user_remover_imagens_sucesso/<str:token>/', views.user_remover_imagens_sucesso, name='user_remover_imagens_sucesso'),
-    path('user_enviar_solicitacao_loja/<str:token>/', views.user_enviar_solicitacao_loja, name='user_enviar_solicitacao_loja'),
-    path('user_enviar_solicitacao_loja_sucesso/<str:token>/', views.user_enviar_solicitacao_loja_sucesso, name='user_enviar_solicitacao_loja_sucesso'),
-'''
+
+    #path('user_index/<str:token>/', views.user_index, name='user_index'),
+    #path('user_criar_loja/<str:token>/', views.user_criar_loja, name='user_criar_loja'),
+    #path('user_criar_loja_sucesso/<str:token>/', views.user_criar_loja_sucesso, name='user_criar_loja_sucesso'),
+    #path('user_loja_dados/<str:token>/', views.user_loja_dados, name='user_loja_dados'),
+    #path('user_loja_dados_sucesso/<str:token>/', views.user_loja_dados_sucesso, name='user_loja_dados_sucesso'),
+    #path('user_adicionar_imagem/<str:token>/<str:cat>/<str:id>/', views.user_adicionar_imagem, name='user_adicionar_imagem'),
+    #path('user_adicionar_imagem_sucesso/<str:token>/<str:cat>/<str:id>/', views.user_adicionar_imagem_sucesso, name='user_adicionar_imagem_sucesso'),
+    #path('user_remover_loja/<str:token>/<str:cat>/<str:id>/', views.user_remover_loja, name='user_remover_loja'),
+    #path('user_remover_loja_sucesso/<str:token>/', views.user_remover_loja_sucesso, name='user_remover_loja_sucesso'),
+    #path('user_remover_imagens/<str:token>/<str:cat>/<str:id>/', views.user_remover_imagens, name='user_remover_imagens'),
+    #path('user_remover_imagens_sucesso/<str:token>/', views.user_remover_imagens_sucesso, name='user_remover_imagens_sucesso'),
+    #path('user_enviar_solicitacao_loja/<str:token>/', views.user_enviar_solicitacao_loja, name='user_enviar_solicitacao_loja'),
+    #path('user_enviar_solicitacao_loja_sucesso/<str:token>/', views.user_enviar_solicitacao_loja_sucesso, name='user_enviar_solicitacao_loja_sucesso'),
+
 ]
