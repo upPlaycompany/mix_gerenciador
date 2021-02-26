@@ -963,7 +963,7 @@ def desapegos_dados(request, token, id, nome, cod):
             })
             pop = db.collection(f"desapego/{id}/desapegos").where('name','==', f"{name}").stream()
             ppp = [{'id': x.id} for x in pop]
-            pap = db.collection('nsg_destaca_desapego').where('idAds', '==', f"{ppp[0]['id']}").stream()
+            pap = db.collection('msg_destaca_desapego').where('idAds', '==', f"{ppp[0]['id']}").stream()
             pup = [{'id': x.id} for x in pap]
             db.collection(f"msg_destaca_desapego").document(f"{pup[0]['id']}").delete()
         elif des == False:
