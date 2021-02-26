@@ -420,8 +420,8 @@ def categoria_listagem(request, token):
 
 
 def lojas_listagem(request, token, id):
-    q_cidade = request.GET.get('q_cidade')
     q_estado = request.GET.get('q_estado')
+    q_cidade = request.GET.get('q_cidade')
     estados_link = requests.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados')
     estados = estados_link.json()
     if q_estado:
