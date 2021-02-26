@@ -447,28 +447,6 @@ def lojas_listagem(request, token, id):
         [docs[x].update(docs2[x]) for x in range(a)]
         [docs[x].update(categoria) for x in range(a)]
         [docs[x].update(keya) for x in range(a)]
-    elif q_estado:
-        lojas = db.collection(f'categorias/{id}/lojas').where('estado', '==', f'{q_estado}').stream()
-        docs = [{'id': x.id} for x in lojas]
-        lojas2 = db.collection(f'categorias/{id}/lojas').where('estado', '==', f'{q_estado}').stream()
-        docs2 = [y.to_dict() for y in lojas2]
-        a = len(docs)
-        dzz = [{'categoria': f'{id}', 'token': str(token)}]
-        categoria = {'categoria': f'{id}'}
-        [docs[x].update(docs2[x]) for x in range(a)]
-        [docs[x].update(categoria) for x in range(a)]
-        [docs[x].update(keya) for x in range(a)]
-    elif q_cidade and q_estado:
-        lojas = db.collection(f'categorias/{id}/lojas').where('cidade', '==', f'{q_cidade}').where('estado', '==', f"{q_estado}").stream()
-        docs = [{'id': x.id} for x in lojas]
-        lojas2 = db.collection(f'categorias/{id}/lojas').where('cidade', '==', f'{q_cidade}').where('estado', '==', f"{q_estado}").stream()
-        docs2 = [y.to_dict() for y in lojas2]
-        a = len(docs)
-        dzz = [{'categoria': f'{id}', 'token': str(token)}]
-        categoria = {'categoria': f'{id}'}
-        [docs[x].update(docs2[x]) for x in range(a)]
-        [docs[x].update(categoria) for x in range(a)]
-        [docs[x].update(keya) for x in range(a)]
     else:
         lojas = db.collection(f'categorias/{id}/lojas').stream()
         docs = [{'id': x.id} for x in lojas]

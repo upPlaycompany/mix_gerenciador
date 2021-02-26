@@ -25,6 +25,7 @@
         <label>Selecione a cidade desejada</label>
         <div class="input-group">
             <select class="form-control" name="q_cidade">
+                <option selected>Selecione uma opção</option>
                 {% for municipios in ibge_mun %}
                 <option value="{{ municipios.nome }}">{{ municipios.nome }}</option>
                 {% endfor %}
