@@ -70,7 +70,7 @@ urlpatterns = [
     path('usuario_dados/<str:token>/<str:id>/', views.usuario_dados, name='usuario_dados'),
     path('atualizar_usuario_sucesso/<str:token>/', views.atualizar_usuario_sucesso, name='atualizar_usuario_sucesso'),
     path('usuario_listagem/<str:token>/', views.usuario_listagem, name='usuario_listagem'),
-    path('adicionar_imagem_perfil/<str:token>/<str:id>/', views.adicionar_imagem_perfil, name='adicionar_imagem_perfil'),
+    #path('adicionar_imagem_perfil/<str:token>/<str:id>/', views.adicionar_imagem_perfil, name='adicionar_imagem_perfil'),
     path('remover_usuario/<str:token>/<str:id>/<str:e>/', views.remover_usuario, name='remover_usuario'),
     path('remover_usuario_sucesso/<str:token>/', views.remover_usuario_sucesso, name='remover_usuario_sucesso'),
 
