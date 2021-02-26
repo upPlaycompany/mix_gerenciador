@@ -846,7 +846,8 @@ def categoria_desapego_listagem(request, token):
 
 
 def desapegos_listagem(request, token, id):
-    query = request.GET.get('query')
+    q_cidade = request.GET.get('q_cidade')
+    q_estado = request.GET.get('q_estado')
     key = [str(token)]
     keya = {'token': str(token)}
     user = auth.get_user(token)
@@ -854,10 +855,32 @@ def desapegos_listagem(request, token, id):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-    if query:
-        desapegos = db.collection(f'desapego/{id}/desapegos').where('name', '==', f"{query}").stream()
+    if q_cidade:
+        desapegos = db.collection(f'desapego/{id}/desapegos').where('cidade', '==', f"{q_cidade}").stream()
         docs = [{'id': x.id} for x in desapegos]
-        lojas2 = db.collection(f'desapego/{id}/desapegos').where('name', '==', f"{query}").stream()
+        lojas2 = db.collection(f'desapego/{id}/desapegos').where('cidade', '==', f"{q_cidade}").stream()
+        docs2 = [y.to_dict() for y in lojas2]
+        a = len(docs)
+        dzz = [{'categoria': f'{id}', 'token': str(token)}]
+        categoria = {'categoria': f'{id}'}
+        [docs[x].update(docs2[x]) for x in range(a)]
+        [docs[x].update(categoria) for x in range(a)]
+        [docs[x].update(keya) for x in range(a)]
+    elif q_estado:
+        desapegos = db.collection(f'desapego/{id}/desapegos').where('estado', '==', f"{q_estado}").stream()
+        docs = [{'id': x.id} for x in desapegos]
+        lojas2 = db.collection(f'desapego/{id}/desapegos').where('cidade', '==', f"{q_estado}").stream()
+        docs2 = [y.to_dict() for y in lojas2]
+        a = len(docs)
+        dzz = [{'categoria': f'{id}', 'token': str(token)}]
+        categoria = {'categoria': f'{id}'}
+        [docs[x].update(docs2[x]) for x in range(a)]
+        [docs[x].update(categoria) for x in range(a)]
+        [docs[x].update(keya) for x in range(a)]
+    elif q_cidade and q_estado:
+        desapegos = db.collection(f'desapego/{id}/desapegos').where('cidade', '==', f"{q_cidade}").where('estado', '==', f"{q_estado}").stream()
+        docs = [{'id': x.id} for x in desapegos]
+        lojas2 = db.collection(f'desapego/{id}/desapegos').where('cidade', '==', f"{q_cidade}").where('estadp', '==', f"{q_estado}").stream()
         docs2 = [y.to_dict() for y in lojas2]
         a = len(docs)
         dzz = [{'categoria': f'{id}', 'token': str(token)}]

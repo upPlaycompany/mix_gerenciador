@@ -7,14 +7,25 @@
 
 {% block content %}
 <form method="get">
-    <div class="col-lg-12">
+    <div class="col-lg-6">
         <div class="input-group">
-            <input type="text" class="form-control" name="query" placeholder="Buscar por nome">
-            <span class="input-group-btn">
-        <button class="btn btn-primary" type="submit">Pesquisar</button>
-      </span>
+            <select class="form-control" name="q_cidade">
+                <option selected>Selecione a cidade desejada</option>
+                <option value="Porto Velho">Porto Velho</option>
+                <option value="Manaus">Manaus</option>
+            </select>
         </div>
     </div>
+    <div class="col-lg-6">
+        <div class="input-group">
+            <select class="form-control" name="q_estado">
+                <option selected>Selecione o estado desejado</option>
+                <option value="RO">RO</option>
+                <option value="AM">AM</option>
+            </select>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Pesquisar</button>
 </form>
 <br>
 <br>
