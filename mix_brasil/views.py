@@ -831,8 +831,16 @@ def categoria_desapego_listagem(request, token):
 
 
 def desapegos_listagem(request, token, id):
-    q_cidade = request.GET.get('q_cidade')
     q_estado = request.GET.get('q_estado')
+    q_cidade = request.GET.get('q_cidade')
+    estados_link = requests.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados')
+    estados = estados_link.json()
+    if q_estado:
+        municipios_link = requests.get(
+            f"http://servicodados.ibge.gov.br/api/v1/localidades/estados/{q_estado}/municipios")
+        municipios = municipios_link.json()
+    else:
+        municipios = {'null': 0}
     key = [str(token)]
     keya = {'token': str(token)}
     user = auth.get_user(token)
@@ -851,28 +859,6 @@ def desapegos_listagem(request, token, id):
         [docs[x].update(docs2[x]) for x in range(a)]
         [docs[x].update(categoria) for x in range(a)]
         [docs[x].update(keya) for x in range(a)]
-    elif q_estado:
-        desapegos = db.collection(f'desapego/{id}/desapegos').where('estado', '==', f"{q_estado}").stream()
-        docs = [{'id': x.id} for x in desapegos]
-        lojas2 = db.collection(f'desapego/{id}/desapegos').where('cidade', '==', f"{q_estado}").stream()
-        docs2 = [y.to_dict() for y in lojas2]
-        a = len(docs)
-        dzz = [{'categoria': f'{id}', 'token': str(token)}]
-        categoria = {'categoria': f'{id}'}
-        [docs[x].update(docs2[x]) for x in range(a)]
-        [docs[x].update(categoria) for x in range(a)]
-        [docs[x].update(keya) for x in range(a)]
-    elif q_cidade and q_estado:
-        desapegos = db.collection(f'desapego/{id}/desapegos').where('cidade', '==', f"{q_cidade}").where('estado', '==', f"{q_estado}").stream()
-        docs = [{'id': x.id} for x in desapegos]
-        lojas2 = db.collection(f'desapego/{id}/desapegos').where('cidade', '==', f"{q_cidade}").where('estadp', '==', f"{q_estado}").stream()
-        docs2 = [y.to_dict() for y in lojas2]
-        a = len(docs)
-        dzz = [{'categoria': f'{id}', 'token': str(token)}]
-        categoria = {'categoria': f'{id}'}
-        [docs[x].update(docs2[x]) for x in range(a)]
-        [docs[x].update(categoria) for x in range(a)]
-        [docs[x].update(keya) for x in range(a)]
     else:
         desapegos = db.collection(f'desapego/{id}/desapegos').stream()
         docs = [{'id': x.id} for x in desapegos]
@@ -884,7 +870,7 @@ def desapegos_listagem(request, token, id):
         [docs[x].update(docs2[x]) for x in range(a)]
         [docs[x].update(categoria) for x in range(a)]
         [docs[x].update(keya) for x in range(a)]
-    return render(request, 'desapegos_listagem.html', {'lista': docs, 'order': dzz, 't': key})
+    return render(request, 'desapegos_listagem.html', {'lista': docs, 'order': dzz, 't': key, 'ibge_uf': estados, 'ibge_mun': municipios})
 
 
 def desapegos_dados(request, token, id, nome, cod):
