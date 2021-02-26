@@ -422,6 +422,13 @@ def categoria_listagem(request, token):
 def lojas_listagem(request, token, id):
     q_cidade = request.GET.get('q_cidade')
     q_estado = request.GET.get('q_estado')
+    estados_link = requests.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados')
+    estados = estados_link.json()
+    if q_estado:
+        municipios_link = request.get(f"http://servicodados.ibge.gov.br/api/v1/localidades/estados/{q_estado}/municipios")
+        municipios = municipios_link.json()
+    else:
+        municipios = {'null': 0}
     key = [str(token)]
     keya = {'token': str(token)}
     user = auth.get_user(token)
@@ -473,7 +480,7 @@ def lojas_listagem(request, token, id):
         [docs[x].update(docs2[x]) for x in range(a)]
         [docs[x].update(categoria) for x in range(a)]
         [docs[x].update(keya) for x in range(a)]
-    return render(request, 'lojas_listagem.html', {'lista': docs, 'order': dzz, 't': key})
+    return render(request, 'lojas_listagem.html', {'lista': docs, 'order': dzz, 't': key, 'ibge_uf': estados, 'ibge_mun': municipios})
 
 
 def lojas_dados(request, token, id, nome, cod):

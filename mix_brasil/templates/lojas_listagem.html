@@ -8,23 +8,31 @@
 {% block content %}
 <form method="get">
     <div class="col-lg-6">
-        <div class="input-group">
-            <select class="form-control" name="q_cidade">
-                <option selected>Selecione a cidade desejada</option>
-                <option value="Porto Velho">Porto Velho</option>
-                <option value="Manaus">Manaus</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-lg-6">
+        <label>Selecione o estado desejado</label>
         <div class="input-group">
             <select class="form-control" name="q_estado">
-                <option selected>Selecione o estado desejado</option>
-                <option value="RO">RO</option>
-                <option value="AM">AM</option>
+                {% for estados in ibge_uf %}
+                <option value="{{ estados.id }}">{{ estados.nome }}</option>
+                {% endfor %}
             </select>
         </div>
     </div>
+    <button class="btn btn-primary" type="submit">Selecionar estado</button>
+</form>
+{% if q_estado %}
+<form method="get">
+    <div class="col-lg-6">
+        <label>Selecione a cidade desejada</label>
+        <div class="input-group">
+            <select class="form-control" name="q_cidade">
+                {% for municipios in ibge_mun %}
+                <option value="{{ municipios.nome }}">{{ municipios.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</form>
+{% endif %}
     <button class="btn btn-primary" type="submit">Pesquisar</button>
 </form>
 <br>
