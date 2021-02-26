@@ -425,7 +425,7 @@ def lojas_listagem(request, token, id):
     estados_link = requests.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados')
     estados = estados_link.json()
     if q_estado:
-        municipios_link = request.get(f"http://servicodados.ibge.gov.br/api/v1/localidades/estados/{q_estado}/municipios")
+        municipios_link = requests.get(f"http://servicodados.ibge.gov.br/api/v1/localidades/estados/{q_estado}/municipios")
         municipios = municipios_link.json()
     else:
         municipios = {'null': 0}
