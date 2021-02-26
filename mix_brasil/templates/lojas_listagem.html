@@ -53,14 +53,5 @@
 </div>
 
 
-{% for dzz in order %}
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <div class="form-group">
-            <span><a href="{% url 'criar_loja' token=dzz.token id=dzz.categoria %}"><button type="button"
-                                                                                            class="btn btn-success">Criar loja</button></a></span>
-        </div>
-    </div>
-</div>
-{% endfor %}
+
 {% endblock %}

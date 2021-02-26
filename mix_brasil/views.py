@@ -130,43 +130,43 @@ def deslogar(request):
     return HttpResponseRedirect("/")
 
 
-def criar_usuario(request):
-    if request.method == 'POST':
-        name = request.POST['name']
-        phone = request.POST['phone']
-        email = request.POST['email']
-        password = request.POST['password']
-        cep = request.POST['cep']
-        if cep != "":
-            url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
-            headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
-            link = requests.get(url, headers=headers, verify=False)
-            cde = link.json()
-        else:
-            cde = {}
-        user = auth.create_user(email=email, password=password)
-        dados = db.collection('users').document(user.uid)
-        dados.set({
-            'name': f'{name}',
-            'phone': f'{phone}',
-            'email': f'{email}',
-            'img': None,
-            'address': {
-                'city': f"{cde['cidade']['nome']}",
-                'district': f"{cde['bairro']}",
-                'lat': f"{cde['latitude']}",
-                'long': f"{cde['longitude']}",
-                'state': f"{cde['estado']['sigla']}",
-                'street': f"{cde['logradouro']}",
-                'zipCode': f"{cde['cep']}"
-            }
-        })
-        return redirect('criar_usuario_sucesso')
-    return render(request, 'criar_usuario.html')
+#def criar_usuario(request):
+ #   if request.method == 'POST':
+  #      name = request.POST['name']
+   #     phone = request.POST['phone']
+    #    email = request.POST['email']
+     #   password = request.POST['password']
+      #  cep = request.POST['cep']
+       # if cep != "":
+        #    url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+         #   headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+          #  link = requests.get(url, headers=headers, verify=False)
+           # cde = link.json()
+        #else:
+         #   cde = {}
+        #user = auth.create_user(email=email, password=password)
+        #dados = db.collection('users').document(user.uid)
+        #dados.set({
+            #'name': f'{name}',
+            #'phone': f'{phone}',
+            #'email': f'{email}',
+            #'img': None,
+            #'address': {
+             #   'city': f"{cde['cidade']['nome']}",
+            #    'district': f"{cde['bairro']}",
+           #     'lat': f"{cde['latitude']}",
+          #      'long': f"{cde['longitude']}",
+         #       'state': f"{cde['estado']['sigla']}",
+        #        'street': f"{cde['logradouro']}",
+       #         'zipCode': f"{cde['cep']}"
+      #      }
+     #   })
+    #    return redirect('criar_usuario_sucesso')
+   # return render(request, 'criar_usuario.html')
 
 
-def criar_usuario_sucesso(request):
-    return render(request, 'criar_usuario_sucesso.html')
+#def criar_usuario_sucesso(request):
+ #   return render(request, 'criar_usuario_sucesso.html')
 
 
 def usuario_listagem(request, token):
@@ -288,7 +288,7 @@ def remover_usuario_sucesso(request, token):
     return render(request, 'remover_usuario_sucesso.html', {'t': key})
 
 
-def adicionar_imagem_perfil(request, token, id):
+'''def adicionar_imagem_perfil(request, token, id):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
@@ -313,11 +313,11 @@ def adicionar_imagem_perfil(request, token, id):
         })
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
-        return redirect('adicionar_imagem_perfil_sucesso', token=token)
-    return render(request, 'adicionar_imagem_perfil.html', {'t': key})
+      return redirect('adicionar_imagem_perfil_sucesso', token=token)
+    return render(request, 'adicionar_imagem_perfil.html', {'t': key})'''
 
 
-def criar_loja(request, token, id):
+'''def criar_loja(request, token, id):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
@@ -388,17 +388,17 @@ def criar_loja(request, token, id):
                     'whatsapp': f"{whatsapp}"
                 })
         return redirect('criar_loja_sucesso', token=token)
-    return render(request, 'criar_loja.html', {'t': key})
+    return render(request, 'criar_loja.html', {'t': key})'''
 
 
-def criar_loja_sucesso(request, token):
+'''def criar_loja_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-    return render(request, 'criar_loja_sucesso.html', {'t': key})
+    return render(request, 'criar_loja_sucesso.html', {'t': key})'''
 
 
 def categoria_listagem(request, token):
@@ -717,7 +717,7 @@ def remover_loja_sucesso(request, token):
     return render(request, 'remover_loja_sucesso.html', {'t': key})
 
 
-def criar_desapego(request, token, id):
+'''def criar_desapego(request, token, id):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
@@ -791,17 +791,17 @@ def criar_desapego(request, token, id):
                     'created': firestore.firestore.SERVER_TIMESTAMP,
                 })
         return redirect('criar_loja_sucesso', token=token)
-    return render(request, 'criar_desapego.html', {'t': key})
+    return render(request, 'criar_desapego.html', {'t': key})'''
 
 
-def criar_desapego_sucesso(request, token):
+'''def criar_desapego_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-    return render(request, 'criar_desapego_sucesso.html', {'t': key})
+    return render(request, 'criar_desapego_sucesso.html', {'t': key})'''
 
 
 def categoria_desapego_listagem(request, token):
