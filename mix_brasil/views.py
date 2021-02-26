@@ -598,7 +598,7 @@ def atualizar_loja_sucesso(request, token):
     return render(request, 'atualizar_loja_sucesso.html', {'t': key})
 
 
-def adicionar_imagens_loja(request, token, id, cod):
+'''def adicionar_imagens_loja(request, token, id, cod):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
@@ -637,20 +637,20 @@ def adicionar_imagens_loja(request, token, id, cod):
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
         return redirect('adicionar_imagens_loja_sucesso', token=token)
-    return render(request, 'adicionar_imagens_loja.html', {'t': key})
+    return render(request, 'adicionar_imagens_loja.html', {'t': key})'''
 
 
-def adicionar_imagens_loja_sucesso(request, token):
+'''def adicionar_imagens_loja_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-    return render(request, 'adicionar_imagens_loja_sucesso.html', {'t': key})
+    return render(request, 'adicionar_imagens_loja_sucesso.html', {'t': key})'''
 
 
-def remover_imagens_loja(request, token, id, name, cod):
+'''def remover_imagens_loja(request, token, id, name, cod):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
@@ -680,17 +680,17 @@ def remover_imagens_loja(request, token, id, name, cod):
                 'img_cupons': firestore.ArrayRemove([f'{imagem}'])
             })
         return redirect('remover_imagens_loja_sucesso', token=token)
-    return render(request, 'remover_imagens_loja.html', {'lista': docs, 't': key})
+    return render(request, 'remover_imagens_loja.html', {'lista': docs, 't': key})'''
 
 
-def remover_imagens_loja_sucesso(request, token):
+'''def remover_imagens_loja_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-    return render(request, 'remover_imagens_loja_sucesso.html', {'t': key})
+    return render(request, 'remover_imagens_loja_sucesso.html', {'t': key})'''
 
 
 def remover_loja(request, token, id, cod):
@@ -1039,7 +1039,7 @@ def atualizar_desapego_sucesso(request, token):
     return render(request, 'atualizar_desapego_sucesso.html', {'t': key})
 
 
-def adicionar_imagens_desapego(request, token, id, cod):
+'''def adicionar_imagens_desapego(request, token, id, cod):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
@@ -1065,20 +1065,20 @@ def adicionar_imagens_desapego(request, token, id, cod):
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
         return redirect('adicionar_imagens_desapego_sucesso', token=token)
-    return render(request, 'adicionar_imagens_desapego.html', {'t': key})
+    return render(request, 'adicionar_imagens_desapego.html', {'t': key})'''
 
 
-def adicionar_imagens_desapego_sucesso(request, token):
+'''def adicionar_imagens_desapego_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
-    return render(request, 'adicionar_imagens_desapego_sucesso.html', {'t': key})
+    return render(request, 'adicionar_imagens_desapego_sucesso.html', {'t': key})'''
 
 
-def remover_imagens_desapego(request, token, id, name, cod):
+'''def remover_imagens_desapego(request, token, id, name, cod):
     key = [str(token)]
     keya = {'token': str(token)}
     user = auth.get_user(token)
@@ -1098,10 +1098,10 @@ def remover_imagens_desapego(request, token, id, name, cod):
         })
 
         return redirect('remover_imagens_desapego_sucesso', token=token)
-    return render(request, 'remover_imagens_desapego.html', {'lista': docs, 't': key})
+    return render(request, 'remover_imagens_desapego.html', {'lista': docs, 't': key})'''
 
 
-def remover_imagens_desapego_sucesso(request, token):
+'''def remover_imagens_desapego_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
@@ -1109,7 +1109,7 @@ def remover_imagens_desapego_sucesso(request, token):
     for x in usa:
         if str(x['email']) != user.email:
             return redirect('user_index')
-    return render(request, 'remover_imagens_desapego_sucesso.html', {'t': key})
+    return render(request, 'remover_imagens_desapego_sucesso.html', {'t': key})'''
 
 
 def remover_desapego(request, token, id, cod):
