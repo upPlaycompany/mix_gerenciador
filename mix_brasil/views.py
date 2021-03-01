@@ -1383,12 +1383,17 @@ def banners_imagem_remover_sucesso(request, token):
 
 def dicas_mix_imagens(request, token):
     key = [str(token)]
-    keya = {'token': token}
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('user_index', token=token)
+    dados7 = db.collection('dicas_mix').stream()
+    dados8 = [{'id': x.id} for x in dados7]
+    dados9 = db.collection('dicas_mix').stream()
+    dados10 = [x.to_dict() for x in dados9]
+    b = len(dados8)
+    [dados8[x].update(dados10[x]) for x in range(b)]
     if request.method == 'POST':
         img = request.FILES['img']
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
@@ -1412,7 +1417,6 @@ def dicas_mix_imagens(request, token):
         formform.update({
             'img': firestore.ArrayUnion([f'{url}'])
         })
-
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
         return redirect('dicas_mix_imagens', token=token)
