@@ -15,7 +15,7 @@
             <p>Mensagem da loja solicitante: {{ dey.mensagem }}</p>
             <br>
             <p>Clique no botão para destacar a página</p>
-            <a href="{% url 'lojas_dados' token=dey.token id=dey.categoria nome=dey.name cod=dey.idLoja %}"><button type="button" class="btn btn-success">Ir para página da loja</button></a>
+            <a href="{% url 'lojas_dados' token=dey.token id=dey.idCat nome=dey.name cod=dey.idLoja %}"><button type="button" class="btn btn-success">Ir para página da loja</button></a>
             <br>
             <p>Clique no botão para deletar a solicitação</p>
             <a href="{% url 'solicitacao_loja_remover' token=dey.token id=dey.id %}"><button type="button" class="btn btn-danger">Deletar solicitação</button></a>
