@@ -507,7 +507,7 @@ def lojas_dados(request, token, id, nome, cod):
         formform.update(
             {
                 'name': f'{name}',
-                'whatsapp': f'{whatsapp}',
+                'number': f'{whatsapp}',
                 'trabalhe_conosco': f'{trabalhe_conosco}',
                 'price': price,
                 'destaque': des,
@@ -542,7 +542,7 @@ def lojas_dados(request, token, id, nome, cod):
                     'created': firestore.firestore.SERVER_TIMESTAMP,
                     'promocao': f"{promocao}",
                     'trabalheConosco': f"{trabalhe_conosco}",
-                    'whatsapp': f"{whatsapp}"
+                    'number': f"{whatsapp}"
 
                 })
             else:
@@ -560,7 +560,7 @@ def lojas_dados(request, token, id, nome, cod):
                     'created': firestore.firestore.SERVER_TIMESTAMP,
                     'promocao': f"{promocao}",
                     'trabalheConosco': f"{trabalhe_conosco}",
-                    'whatsapp': f"{whatsapp}"
+                    'number': f"{whatsapp}"
 
                 })
             r12 = db.collection('msg_destaca_loja').where('name','==',f"{da[0]['name']}").stream()
