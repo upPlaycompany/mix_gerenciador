@@ -563,6 +563,30 @@ def lojas_dados(request, token, id, nome, cod):
                     'number': f"{whatsapp}"
 
                 })
+            dados10 = db.collection(f"categorias/{id}/lojas").where('name', '==', f"{name}").stream()
+            dados11 = [{'id': x.id} for x in dados10]
+            dados12 = db.collection(f"categorias/{id}/lojas").where('name', '==', f"{name}").stream()
+            dados13 = [x.to_dict() for x in dados12]
+            a = len(dados11)
+            categoria = {'categoria': f'{id}'}
+            [dados11[x].update(dados13[x]) for x in range(a)]
+            [dados11[x].update(categoria) for x in range(a)]
+            [dados11[x].update(cde) for x in range(a)]
+
+            dados14 = db.collection(f"categorias/{id}/lojas").where('name', '==', f"{name}").stream()
+            dados15 = [{'id': x.id} for x in dados14]
+            dados16 = db.collection(f"categorias/{id}/lojas").where('name', '==', f"{name}").stream()
+            dados17 = [x.to_dict() for x in dados16]
+            a = len(dados15)
+            [dados15[x].update(dados17[x]) for x in range(a)]
+            [dados15[x].update(categoria) for x in range(a)]
+            [dados15[x].update(cde) for x in range(a)]
+            final = db.collection(f"users/{dados11[0]['user']}/lojas").stream()
+            final2 = [{'id': x.id} for x in final]
+            final3 = db.collection(f"users/{dados15[0]['user']}/lojas").document(f"{final2[0]['id']}")
+            final3.update({
+                'status': 3
+            })
             r12 = db.collection('msg_destaca_loja').where('name','==',f"{da[0]['name']}").stream()
             r13 = [{'id': x.id} for x in r12]
             db.collection('msg_destaca_loja').document(f"{r13[0]['id']}").delete()
