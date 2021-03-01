@@ -265,6 +265,19 @@
 
                     </ul>
                 </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="micon dw dw-list3"></span><span class="mtext">Dicas Mix</span>
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            {% for key in t %}
+                            <a href="{% url 'banners_imagem' token=key %}">Imagens</a>
+                            {% endfor %}
+                        </li>
+
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

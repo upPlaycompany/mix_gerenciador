@@ -1380,6 +1380,82 @@ def banners_imagem_remover_sucesso(request, token):
         return redirect('user_index', token=token)
     return render(request, 'banners_imagem_remover_sucesso.html', {'t': key})
 
+def dicas_mix_imagens(request, token):
+    key = [str(token)]
+    keya = {'token': token}
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    if request.method == 'POST':
+        img = request.FILES['img']
+        imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
+        imagem_mix.save()
+        dados = db.collection('dicas_mix').stream()
+        dados2 = [{'id': x.id} for x in dados]
+        dados3 = db.collection('dicas_mix').stream()
+        dados4 = [x.to_dict() for x in dados3]
+        a = len(dados2)
+        [dados2[x].update(dados4[x]) for x in range(a)]
+        arquivo = sto.blob(f"dicas_mix/{dados2[0]['id']}/{img}")
+        arquivo.upload_from_filename(f"/app/mix_brasil/settings/imagem/{img}")
+        url = arquivo.generate_signed_url(
+            expiration=datetime.timedelta(weeks=200),
+            method="GET",
+        )
+        url = str(url)
+        dados5 = db.collection('dicas_mix').stream()
+        dados6 = [{'id': x.id} for x in dados5]
+        formform = db.collection(f'dicas_mix').document(f"{dados6[0]['id']}")
+        formform.update({
+            'img': firestore.ArrayUnion([f'{url}'])
+        })
+
+        IMAGEM_MIX.objects.all().delete()
+        os.remove(f"/app/mix_brasil/settings/imagem/{img}")
+        return redirect('dicas_mix_imagens', token=token)
+    return render(request, 'dicas_mix_imagens.html', {'t': key, 'lista': dados8})
+
+def dicas_mix_imagens_sucesso(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    return render(request, 'dicas_mix_imagens_sucesso.html', {'t': key})
+
+def dicas_mix_imagens_remover(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    dados = db.collection('dicas_mix').stream()
+    dados2 = [{'id': x.id} for x in dados]
+    dados3 = db.collection('dicas_mix').stream()
+    dados4 = [x.to_dict() for x in dados3]
+    a = len(dados2)
+    [dados2[x].update(dados4[x]) for x in range(a)]
+    if request.method == 'POST':
+        imagem = request.POST['imagem']
+        formform = db.collection(f'dicas_mix').document(f"{dados2[0]['id']}")
+        formform.update({
+            'img': firestore.ArrayRemove([f'{imagem}'])
+        })
+        return redirect('dicas_mix_imagens_remover_sucesso', token=token)
+    return render(request, 'dicas_mix_imagens_remover.html', {'t': key, 'lista': dados2})
+
+def dicas_mix_imagens_remover_sucesso(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('user_index', token=token)
+    return render(request, 'dicas_mix_imagens_remover_sucesso.html', {'t': key})
 
 '''
 # PARTE DE USUARIO

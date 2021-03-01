@@ -64,6 +64,10 @@ urlpatterns = [
     path('banners_imagem_sucesso/<str:token>/', views.banners_imagem_sucesso, name='banners_imagem_sucesso'),
     path('banners_imagem_remover/<str:token>/', views.banners_imagem_remover, name='banners_imagem_remover'),
     path('banners_imagem_remover_sucesso/<str:token>/', views.banners_imagem_remover_sucesso, name='banners_imagem_remover_sucesso'),
+    path('dicas_mix_imagens/<str:token>/', views.dicas_mix_imagens, name='dicas_mix_imagens'),
+    path('dicas_mix_imagens_sucesso/<str:token>/', views.dicas_mix_imagens_sucesso(), name='dicas_mix_imagens_sucesso'),
+    path('dicas_mix_imagens_remover/<str:token>/', views.dicas_mix_imagens_remover(), name='dicas_mix_imagens_remover'),
+    path('dicas_mix_imagens_remover_sucesso/<str:token>/', views.dicas_mix_imagens_remover_sucesso(), name='dicas_mix_imagens_remover_sucesso'),
 
     #path('criar_usuario/', views.criar_usuario, name='criar_usuario'),
     #path('criar_usuario_sucesso/', views.criar_usuario_sucesso, name='criar_usuario_sucesso'),

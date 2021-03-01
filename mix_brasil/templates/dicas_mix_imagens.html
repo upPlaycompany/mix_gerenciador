@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Adicionar imagens ao Dicas Mix</h2>
+{% endblock title %}
+
+{% block content %}
+{% for dados8 in lista %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <div class="row">
+                    {% for image in dados8.img %}
+                    <img style="width: 300px;" class="card-img-top" src="{{ image|cut:"'"|cut:"["|cut:"]" }}">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <label>Selecionar imagem</label>
+                <input type="file" accept="image/jpeg" class="form-control" name="img" required>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+                <span><button type="submit" class="btn btn-success">Adicionar imagem</button></span>
+            </div>
+        </div>
+    </div>
+</form>
+{% endfor %}
+<br>
+<br>
+{% for key in t %}
+<div class="form-group">
+    <a href="{% url 'dicas_mix_imagens_remover' token=key %}"><button type="submit" class="btn btn-danger">Remover banner</button></a>
+</div>
+{% endfor %}
+<br>
+<br>
+{% endblock %}
