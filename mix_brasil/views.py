@@ -211,7 +211,8 @@ def usuario_dados(request, token, id):
         link = requests.get(url, headers=headers, verify=False)
         cde = link.json()
     else:
-        cde = {}
+        abc = {'id': 0}
+        cde = abc.json()
     dados = db.collection(f'users').document(f'{id}')
     dad = dados.get()
     abc = dad.to_dict()
