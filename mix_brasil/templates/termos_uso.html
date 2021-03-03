@@ -51,9 +51,7 @@
 <div class="login-wrap d-flex align-items-center flex-wrap justify-content-center">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-md-6 col-lg-7">
-                <img src="{% static 'vendors/images/login-page-img.png' %}" alt="">
-            </div>
+
             <h2>1. Termos</h2>
             <p>Ao acessar ao site <a href='mix-brasil.herokuapp.com'>MIX BRASIL</a>, concorda em cumprir estes termos de
                 serviço, todas as leis e regulamentos aplicáveis ​​e concorda que é responsável pelo cumprimento de
@@ -115,9 +113,8 @@
         </div>
     </div>
 </div>
-</div>
 <footer>
-    <p class="text-center"><a href="{% url 'politica_privacidade' %}"><h6>Política de privacidade</h6></a> - <a href="{% url 'termos_servico' %}"><h6>Termos de Uso</h6></a></p>
+    <p class="text-center"><a href="{% url 'politica_privacidade' %}">Política de privacidade</a> - <a href="{% url 'termos_servico' %}">Termos de Uso</a></p>
 </footer>
 <!-- js -->
 <script src="{% static 'vendors/scripts/core.js' %}"></script>
