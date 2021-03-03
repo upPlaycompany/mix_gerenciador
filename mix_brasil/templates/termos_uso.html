@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <!-- Basic Page Info -->
+    <meta charset="utf-8">
+    <title>MIX BRASIL - Gerenciador</title>
+
+    <!-- Site favicon -->
+
+
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendors/styles/core.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'vendors/styles/icon-font.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'vendors/styles/style.css' %}">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+    <script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-119386393-1');
+
+
+
+    </script>
+</head>
+<body class="login-page">
+<div class="login-header box-shadow">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <div class="brand-logo">
+            <a href="{% url 'logar' %}">
+                <img src="{% static 'src/images/logo-mix-2.png' %}" alt="">
+            </a>
+        </div>
+        <div class="login-menu">
+            <ul>
+                <li><a href="{% url 'logar' %}">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="login-wrap d-flex align-items-center flex-wrap justify-content-center">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 col-lg-7">
+                <img src="{% static 'vendors/images/login-page-img.png' %}" alt="">
+            </div>
+            <h2>1. Termos</h2>
+            <p>Ao acessar ao site <a href='mix-brasil.herokuapp.com'>MIX BRASIL</a>, concorda em cumprir estes termos de
+                serviço, todas as leis e regulamentos aplicáveis ​​e concorda que é responsável pelo cumprimento de
+                todas as leis locais aplicáveis. Se você não concordar com algum desses termos, está proibido de usar ou
+                acessar este site. Os materiais contidos neste site são protegidos pelas leis de direitos autorais e
+                marcas comerciais aplicáveis.</p>
+            <h2>2. Uso de Licença</h2>
+            <p>É concedida permissão para baixar temporariamente uma cópia dos materiais (informações ou software) no
+                site MIX BRASIL , apenas para visualização transitória pessoal e não comercial. Esta é a concessão de
+                uma licença, não uma transferência de título e, sob esta licença, você não pode: </p>
+            <ol>
+                <li>modificar ou copiar os materiais; </li>
+                <li>usar os materiais para qualquer finalidade comercial ou para exibição pública (comercial ou não
+                    comercial); 
+                </li>
+                <li>tentar descompilar ou fazer engenharia reversa de qualquer software contido no site MIX BRASIL; 
+                </li>
+                <li>remover quaisquer direitos autorais ou outras notações de propriedade dos materiais; ou </li>
+                <li>transferir os materiais para outra pessoa ou 'espelhe' os materiais em qualquer outro servidor.</li>
+            </ol>
+            <p>Esta licença será automaticamente rescindida se você violar alguma dessas restrições e poderá ser
+                rescindida por MIX BRASIL a qualquer momento. Ao encerrar a visualização desses materiais ou após o
+                término desta licença, você deve apagar todos os materiais baixados em sua posse, seja em formato
+                eletrónico ou impresso.</p>
+            <h2>3. Isenção de responsabilidade</h2>
+            <ol>
+                <li>Os materiais no site da MIX BRASIL são fornecidos 'como estão'. MIX BRASIL não oferece garantias,
+                    expressas ou implícitas, e, por este meio, isenta e nega todas as outras garantias, incluindo, sem
+                    limitação, garantias implícitas ou condições de comercialização, adequação a um fim específico ou
+                    não violação de propriedade intelectual ou outra violação de direitos.
+                </li>
+                <li>Além disso, o MIX BRASIL não garante ou faz qualquer representação relativa à precisão, aos
+                    resultados prováveis ​​ou à confiabilidade do uso dos materiais em seu site ou de outra forma
+                    relacionado a esses materiais ou em sites vinculados a este site.
+                </li>
+            </ol>
+            <h2>4. Limitações</h2>
+            <p>Em nenhum caso o MIX BRASIL ou seus fornecedores serão responsáveis ​​por quaisquer danos (incluindo, sem
+                limitação, danos por perda de dados ou lucro ou devido a interrupção dos negócios) decorrentes do uso ou
+                da incapacidade de usar os materiais em MIX BRASIL, mesmo que MIX BRASIL ou um representante autorizado
+                da MIX BRASIL tenha sido notificado oralmente ou por escrito da possibilidade de tais danos. Como
+                algumas jurisdições não permitem limitações em garantias implícitas, ou limitações de responsabilidade
+                por danos conseqüentes ou incidentais, essas limitações podem não se aplicar a você.</p>
+            <h2>5. Precisão dos materiais</h2>
+            <p>Os materiais exibidos no site da MIX BRASIL podem incluir erros técnicos, tipográficos ou fotográficos.
+                MIX BRASIL não garante que qualquer material em seu site seja preciso, completo ou atual. MIX BRASIL
+                pode fazer alterações nos materiais contidos em seu site a qualquer momento, sem aviso prévio. No
+                entanto, MIX BRASIL não se compromete a atualizar os materiais.</p>
+            <h2>6. Links</h2>
+            <p>O MIX BRASIL não analisou todos os sites vinculados ao seu site e não é responsável pelo conteúdo de
+                nenhum site vinculado. A inclusão de qualquer link não implica endosso por MIX BRASIL do site. O uso de
+                qualquer site vinculado é por conta e risco do usuário.</p>            </p>            <h3>
+            Modificações</h3>
+            <p>O MIX BRASIL pode revisar estes termos de serviço do site a qualquer momento, sem aviso prévio. Ao usar
+                este site, você concorda em ficar vinculado à versão atual desses termos de serviço.</p>
+            <h3>Lei aplicável</h3>
+            <p>Estes termos e condições são regidos e interpretados de acordo com as leis do MIX BRASIL e você se
+                submete irrevogavelmente à jurisdição exclusiva dos tribunais naquele estado ou localidade.</p>
+        </div>
+    </div>
+</div>
+</div>
+<footer>
+    <p><a href="{% url 'politica_privacidade' %}"><h6>Política de privacidade</h6></a> - <a
+        href="{% url 'termos_servico' %}"><h6>Termos de Uso</h6></a></p>
+</footer>
+<!-- js -->
+<script src="{% static 'vendors/scripts/core.js' %}"></script>
+<script src="{% static 'vendors/scripts/script.min.js' %}"></script>
+<script src="{% static 'vendors/scripts/process.js' %}"></script>
+<script src="{% static 'vendors/scripts/layout-settings.js' %}"></script>
+</body>
+</html>

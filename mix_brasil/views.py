@@ -1486,6 +1486,12 @@ def dicas_mix_imagens_remover_sucesso(request, token):
         return redirect('user_index', token=token)
     return render(request, 'dicas_mix_imagens_remover_sucesso.html', {'t': key})
 
+def politica_privacidade(request):
+    return render(request, 'politica_privacidade.html')
+
+def termos_uso(request):
+    return render(request, 'termos_uso.html')
+
 '''
 # PARTE DE USUARIO
 def user_criar_loja(request, token):
