@@ -1502,7 +1502,7 @@ def solicitacao_exclusao_dados(request):
             'email': f"{email}",
             'username': f"{username}"
         })
-        return redirect('solicitar_exclusao_dados_sucesso')
+        return redirect('solicitacao_exclusao_dados_sucesso')
     return render(request, 'solicitacao_exclusao_dados.html')
 
 
