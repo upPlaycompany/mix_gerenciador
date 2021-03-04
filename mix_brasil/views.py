@@ -1523,6 +1523,7 @@ def solicitacao_exclusao_dados_listagem(request, token):
     ident = db.collection('solicitacao_exclusao_dados').stream()
     doz = [x.to_dict() for x in ident]
     a = len(docs)
+    [docs[x].update(doz[x]) for x in range(a)]
     [docs[x].update(keya) for x in range(a)]
     return render(request, 'solicitacao_exclusao_dados_listagem.html', {'lista': docs, 't': key})
 
