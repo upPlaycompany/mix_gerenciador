@@ -250,6 +250,11 @@
                             <a href="{% url 'solicitacao_desapego_listagem' token=key %}">Ver solicitações de desapego</a>
                             {% endfor %}
                         </li>
+                        <li>
+                            {% for key in t %}
+                            <a href="{% url 'solicitacao_exclusao_dados_listagem' token=key %}">Ver solicitações de exclusão de dados</a>
+                            {% endfor %}
+                        </li>
                     </ul>
                 </li>
                  <li class="dropdown">
@@ -278,6 +283,7 @@
 
                     </ul>
                 </li>
+
             </ul>
         </div>
     </div>

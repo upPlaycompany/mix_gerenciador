@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% include 'user_base.html' %}
+
+{% block title %}
+<h2>Listagem de usuários</h2>
+{% endblock title %}
+
+{% block content %}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Nome de usuário</th>
+        <th>E-mail</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for docs in lista %}
+    <tr>
+        <td>{{ docs.username }}
+        </td>
+        <td>{{ docs.email }}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
