@@ -78,7 +78,9 @@ urlpatterns = [
     path('remover_usuario/<str:token>/<str:id>/<str:e>/', views.remover_usuario, name='remover_usuario'),
     path('remover_usuario_sucesso/<str:token>/', views.remover_usuario_sucesso, name='remover_usuario_sucesso'),
     path('politica_privacidade/', views.politica_privacidade, name='politica_privacidade'),
-    path('termos_uso/', views.termos_uso, name='termos_uso')
+    path('termos_uso/', views.termos_uso, name='termos_uso'),
+    path('solicitacao_exclusao_dados/', views.solicitacao_exclusao_dados, name='solicitacao_exclusao_dados'),
+    path('solicitacao_exclusao_dados_sucesso/', views.solicitacao_exclusao_dados_sucesso, name='solicitacao_exclusao_dados_sucesso'),
 
 
     #path('user_index/<str:token>/', views.user_index, name='user_index'),

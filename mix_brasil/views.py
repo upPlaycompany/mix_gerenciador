@@ -1492,6 +1492,21 @@ def politica_privacidade(request):
 def termos_uso(request):
     return render(request, 'termos_uso.html')
 
+def solicitacao_exclusao_dados(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        username = request.POST['username']
+        abc = db.collection('solicitacao_exclusao_dados').document()
+        abc.set({
+            'email': f"{email}",
+            'username': f"{username}"
+        })
+        return redirect('solicitar_exclusao_dados_sucesso')
+    return render(request, 'solicitacao_exclusao_dados.html')
+
+def solicitacao_exclusao_dados_sucesso(request):
+    return render(request, 'solicitacao_exclusao_dados_sucesso.html')
+
 '''
 # PARTE DE USUARIO
 def user_criar_loja(request, token):
