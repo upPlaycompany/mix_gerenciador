@@ -1520,7 +1520,7 @@ def solicitacao_exclusao_dados_listagem(request, token):
         return redirect('login')
     usuarios = db.collection('solicitacao_exclusao_dados').stream()
     doz = [{'id': x.id} for x in usuarios]
-    ident = db.collection('users').stream()
+    ident = db.collection('solicitacao_exclusao_dados').stream()
     docs = [x.to_dict() for x in ident]
     a = len(doz)
     [doz[x].update(keya) for x in range(a)]
