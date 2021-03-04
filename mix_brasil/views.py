@@ -1519,11 +1519,11 @@ def solicitacao_exclusao_dados_listagem(request, token):
     if usa == []:
         return redirect('login')
     usuarios = db.collection('solicitacao_exclusao_dados').stream()
-    doz = [{'id': x.id} for x in usuarios]
+    docs = [{'id': x.id} for x in usuarios]
     ident = db.collection('solicitacao_exclusao_dados').stream()
-    docs = [x.to_dict() for x in ident]
-    a = len(doz)
-    [doz[x].update(keya) for x in range(a)]
+    doz = [x.to_dict() for x in ident]
+    a = len(docs)
+    [docs[x].update(keya) for x in range(a)]
     return render(request, 'solicitacao_exclusao_dados_listagem.html', {'lista': docs, 't': key})
 
 
