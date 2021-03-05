@@ -12,8 +12,10 @@
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
                 <div class="row">
+                    {% for dados2 in lista %}
                     <img style="width: 300px;" class="card-img-top" src="{{ dados2.img|cut:"'"|cut:"["|cut:"]" }}">
                     <h6>{{ dados2.id }}</h6>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -36,5 +38,4 @@
         </div>
     </div>
 </form>
-{% endfor %}
 {% endblock %}
