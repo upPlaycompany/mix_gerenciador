@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Remoção bem-sucedida</h2>
+{% endblock title %}
+
+{% block content %}
+{% for key in t %}
+<a href="{% url 'dicas_mix_imagens_desapegos' token=key %}"><button type="button" class="btn btn-success">Volte para tela de dicas</button></a>
+{% endfor %}
+{% endblock %}

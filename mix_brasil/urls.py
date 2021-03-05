@@ -68,6 +68,10 @@ urlpatterns = [
     path('dicas_mix_imagens_sucesso/<str:token>/', views.dicas_mix_imagens_sucesso, name='dicas_mix_imagens_sucesso'),
     path('dicas_mix_imagens_remover/<str:token>/', views.dicas_mix_imagens_remover, name='dicas_mix_imagens_remover'),
     path('dicas_mix_imagens_remover_sucesso/<str:token>/', views.dicas_mix_imagens_remover_sucesso, name='dicas_mix_imagens_remover_sucesso'),
+    path('dicas_mix_imagens_desapegos/<str:token>/', views.dicas_mix_imagens_desapego, name='dicas_mix_imagens_desapegos'),
+    path('dicas_mix_imagens_desapegos_sucesso/<str:token>/', views.dicas_mix_imagens_desapegos_sucesso, name='dicas_mix_imagens_desapegos_sucesso'),
+    path('dicas_mix_imagens_desapegos_remover/<str:token>/', views.dicas_mix_imagens_desapegos_remover, name='dicas_mix_imagens_desapegos_remover'),
+    path('dicas_mix_imagens_desapegos_remover_sucesso/<str:token>/', views.dicas_mix_imagens_desapegos_remover_sucesso, name='dicas_mix_imagens_desapegos_remover_sucesso'),
 
     #path('criar_usuario/', views.criar_usuario, name='criar_usuario'),
     #path('criar_usuario_sucesso/', views.criar_usuario_sucesso, name='criar_usuario_sucesso'),

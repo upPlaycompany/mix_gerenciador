@@ -1407,9 +1407,9 @@ def dicas_mix_imagens(request, token):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('login')
-    dados7 = db.collection('dicas_mix').stream()
+    dados7 = db.collection('dicas_mix_lojas').stream()
     dados8 = [{'id': x.id} for x in dados7]
-    dados9 = db.collection('dicas_mix').stream()
+    dados9 = db.collection('dicas_mix_Lojas').stream()
     dados10 = [x.to_dict() for x in dados9]
     b = len(dados8)
     [dados8[x].update(dados10[x]) for x in range(b)]
@@ -1417,28 +1417,26 @@ def dicas_mix_imagens(request, token):
         img = request.FILES['img']
         imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
         imagem_mix.save()
-        dados = db.collection('dicas_mix').stream()
+        dados = db.collection('dicas_mix_lojas').stream()
         dados2 = [{'id': x.id} for x in dados]
-        dados3 = db.collection('dicas_mix').stream()
+        dados3 = db.collection('dicas_mix_lojas').stream()
         dados4 = [x.to_dict() for x in dados3]
         a = len(dados2)
         [dados2[x].update(dados4[x]) for x in range(a)]
-        arquivo = sto.blob(f"dicas_mix/{dados2[0]['id']}/{img}")
+        arquivo = sto.blob(f"dicas_mix_lojas/{dados2[0]['id']}/{img}")
         arquivo.upload_from_filename(f"/app/mix_brasil/settings/imagem/{img}")
         url = arquivo.generate_signed_url(
             expiration=datetime.timedelta(weeks=200),
             method="GET",
         )
         url = str(url)
-        dados5 = db.collection('dicas_mix').stream()
-        dados6 = [{'id': x.id} for x in dados5]
-        formform = db.collection(f'dicas_mix').document(f"{dados6[0]['id']}")
-        formform.update({
-            'img': firestore.ArrayUnion([f'{url}'])
+        formform = db.collection(f'dicas_mix_lojas').document()
+        formform.set({
+            'img': f"{url}"
         })
         IMAGEM_MIX.objects.all().delete()
         os.remove(f"/app/mix_brasil/settings/imagem/{img}")
-        return redirect('dicas_mix_imagens', token=token)
+        return redirect('dicas_mix_imagens_sucesso', token=token)
     return render(request, 'dicas_mix_imagens.html', {'t': key, 'lista': dados8})
 
 
@@ -1459,23 +1457,99 @@ def dicas_mix_imagens_remover(request, token):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('login')
-    dados = db.collection('dicas_mix').stream()
+    dados = db.collection('dicas_mix_lojas').stream()
     dados2 = [{'id': x.id} for x in dados]
-    dados3 = db.collection('dicas_mix').stream()
+    dados3 = db.collection('dicas_mix_lojas').stream()
     dados4 = [x.to_dict() for x in dados3]
     a = len(dados2)
     [dados2[x].update(dados4[x]) for x in range(a)]
     if request.method == 'POST':
         imagem = request.POST['imagem']
-        formform = db.collection(f'dicas_mix').document(f"{dados2[0]['id']}")
-        formform.update({
-            'img': firestore.ArrayRemove([f'{imagem}'])
-        })
+        db.collection(f'dicas_mix_lojas').document(f"{imagem}").delete()
         return redirect('dicas_mix_imagens_remover_sucesso', token=token)
     return render(request, 'dicas_mix_imagens_remover.html', {'t': key, 'lista': dados2})
 
 
 def dicas_mix_imagens_remover_sucesso(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('login')
+    return render(request, 'dicas_mix_imagens_remover_sucesso.html', {'t': key})
+
+def dicas_mix_imagens_desapegos(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('login')
+    dados7 = db.collection('dicas_mix_desapegos').stream()
+    dados8 = [{'id': x.id} for x in dados7]
+    dados9 = db.collection('dicas_mix_desapegos').stream()
+    dados10 = [x.to_dict() for x in dados9]
+    b = len(dados8)
+    [dados8[x].update(dados10[x]) for x in range(b)]
+    if request.method == 'POST':
+        img = request.FILES['img']
+        imagem_mix = IMAGEM_MIX.objects.create(imagem=img)
+        imagem_mix.save()
+        dados = db.collection('dicas_mix_desapegos').stream()
+        dados2 = [{'id': x.id} for x in dados]
+        dados3 = db.collection('dicas_mix_desapegos').stream()
+        dados4 = [x.to_dict() for x in dados3]
+        a = len(dados2)
+        [dados2[x].update(dados4[x]) for x in range(a)]
+        arquivo = sto.blob(f"dicas_mix_desapegos/{dados2[0]['id']}/{img}")
+        arquivo.upload_from_filename(f"/app/mix_brasil/settings/imagem/{img}")
+        url = arquivo.generate_signed_url(
+            expiration=datetime.timedelta(weeks=200),
+            method="GET",
+        )
+        url = str(url)
+        formform = db.collection(f'dicas_mix_desapegos').document()
+        formform.set({
+            'img': f"{url}"
+        })
+        IMAGEM_MIX.objects.all().delete()
+        os.remove(f"/app/mix_brasil/settings/imagem/{img}")
+        return redirect('dicas_mix_imagens_desapegos_sucesso', token=token)
+    return render(request, 'dicas_mix_imagens_desapegos.html', {'t': key, 'lista': dados8})
+
+
+def dicas_mix_imagens_desapegos_sucesso(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('login')
+    return render(request, 'dicas_mix_imagens_desapegos_sucesso.html', {'t': key})
+
+
+def dicas_mix_imagens_desapegos_remover(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('login')
+    dados = db.collection('dicas_mix_desapegos').stream()
+    dados2 = [{'id': x.id} for x in dados]
+    dados3 = db.collection('dicas_mix_desapegos').stream()
+    dados4 = [x.to_dict() for x in dados3]
+    a = len(dados2)
+    [dados2[x].update(dados4[x]) for x in range(a)]
+    if request.method == 'POST':
+        imagem = request.POST['imagem']
+        db.collection(f'dicas_mix_desapegos').document(f"{imagem}").delete()
+        return redirect('dicas_mix_imagens_desapegos_sucesso', token=token)
+    return render(request, 'dicas_mix_imagens_desapegos_remover.html', {'t': key, 'lista': dados2})
+
+
+def dicas_mix_imagens_remover_desapegos_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
