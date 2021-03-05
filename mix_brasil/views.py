@@ -1545,18 +1545,18 @@ def dicas_mix_imagens_desapegos_remover(request, token):
     if request.method == 'POST':
         imagem = request.POST['imagem']
         db.collection(f'dicas_mix_desapegos').document(f"{imagem}").delete()
-        return redirect('dicas_mix_imagens_desapegos_sucesso', token=token)
+        return redirect('dicas_mix_imagens_desapegos_remover_sucesso', token=token)
     return render(request, 'dicas_mix_imagens_desapegos_remover.html', {'t': key, 'lista': dados2})
 
 
-def dicas_mix_imagens_remover_desapegos_sucesso(request, token):
+def dicas_mix_imagens_desapego_remover_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('login')
-    return render(request, 'dicas_mix_imagens_remover_sucesso.html', {'t': key})
+    return render(request, 'dicas_mix_imagens_desapegos_remover_sucesso.html', {'t': key})
 
 
 def politica_privacidade(request):
