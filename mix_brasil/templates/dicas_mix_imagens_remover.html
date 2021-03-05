@@ -5,7 +5,6 @@
 {% endblock title %}
 
 {% block content %}
-{% for dados2 in lista %}
 <form method="post">
     {% csrf_token %}
     <div class="row">
@@ -38,4 +37,5 @@
         </div>
     </div>
 </form>
+
 {% endblock %}
