@@ -5,14 +5,16 @@
 {% endblock title %}
 
 {% block content %}
-{% for dados8 in lista %}
+
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="form-group">
                 <div class="row">
-                    <img style="width: 300px;" class="card-img-top" src="{{ dados8|cut:"'"|cut:"["|cut:"]" }}">
+                    {% for dados8 in lista %}
+                    <img style="width: 300px;" class="card-img-top" src="{{ dados8.img|cut:"'"|cut:"["|cut:"]" }}">
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -33,12 +35,14 @@
         </div>
     </div>
 </form>
-{% endfor %}
+
 <br>
 <br>
 {% for key in t %}
 <div class="form-group">
-    <a href="{% url 'dicas_mix_imagens_remover' token=key %}"><button type="submit" class="btn btn-danger">Remover banner</button></a>
+    <a href="{% url 'dicas_mix_imagens_remover' token=key %}">
+        <button type="submit" class="btn btn-danger">Remover banner</button>
+    </a>
 </div>
 {% endfor %}
 <br>
