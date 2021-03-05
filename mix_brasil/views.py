@@ -123,8 +123,8 @@ def index(request, token):
     bb = [{'id': x.id} for x in aa]
     cc = db.collection('categorias/oticas/lojas').stream()
     dd = [{'id': x.id} for x in cc]
-    contagem_lojas = len(c) + len(e) + len(g) + len(i) + len(k) + len(m) + len(o) + len(q) + len(s) + len(u) + len(
-        w) + len(y) + len(aa) + len(cc)
+    contagem_lojas = len(d) + len(f) + len(h) + len(j) + len(l) + len(n) + len(p) + len(r) + len(t) + len(v) + len(
+        x) + len(z) + len(bb) + len(dd)
 
     aaa = db.collection('desapego/agro_industria/desapegos').stream()
     bbb = [{'id': x.id} for x in aaa]
