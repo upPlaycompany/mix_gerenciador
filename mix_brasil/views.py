@@ -1549,7 +1549,7 @@ def dicas_mix_imagens_desapegos_remover(request, token):
     return render(request, 'dicas_mix_imagens_desapegos_remover.html', {'t': key, 'lista': dados2})
 
 
-def dicas_mix_imagens_desapego_remover_sucesso(request, token):
+def dicas_mix_imagens_desapegos_remover_sucesso(request, token):
     key = [str(token)]
     user = auth.get_user(token)
     us = db.collection('admin').where('email', '==', f'{user.email}').stream()
