@@ -92,7 +92,76 @@ def index(request, token):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('login')
-    return render(request, 'index.html', {'t': key})
+    a = db.collection('users').stream()
+    b = [{'id': x.id} for x in a]
+    contagem_user = len(b)
+    c = db.collection('categorias/academia_sumplementos/lojas').stream()
+    d = [{'id': x.id} for x in c]
+    e = db.collection('categorias/agencia_viagens/lojas').stream()
+    f = [{'id': x.id} for x in e]
+    g = db.collection('categorias/automoveis/lojas').stream()
+    h = [{'id': x.id} for x in g]
+    i = db.collection('categorias/brinquedos/lojas').stream()
+    j = [{'id': x.id} for x in i]
+    k = db.collection('categorias/cama_mesa_banho/lojas').stream()
+    l = [{'id': x.id} for x in k]
+    m = db.collection('categorias/cosmetico_beleza/lojas').stream()
+    n = [{'id': x.id} for x in m]
+    o = db.collection('categorias/decoracao/lojas').stream()
+    p = [{'id': x.id} for x in o]
+    q = db.collection('categorias/drogarias/lojas').stream()
+    r = [{'id': x.id} for x in q]
+    s = db.collection('categorias/eletronicos/lojas').stream()
+    t = [{'id': x.id} for x in s]
+    u = db.collection('categorias/fornecedores/lojas').stream()
+    v = [{'id': x.id} for x in u]
+    w = db.collection('categorias/materias_construcao/lojas').stream()
+    x = [{'id': x.id} for x in w]
+    y = db.collection('categorias/modulados/lojas').stream()
+    z = [{'id': x.id} for x in y]
+    aa = db.collection('categorias/musica_hobbies/lojas').stream()
+    bb = [{'id': x.id} for x in aa]
+    cc = db.collection('categorias/oticas/lojas').stream()
+    dd = [{'id': x.id} for x in cc]
+    contagem_lojas = len(c) + len(e) + len(g) + len(i) + len(k) + len(m) + len(o) + len(q) + len(s) + len(u) + len(
+        w) + len(y) + len(aa) + len(cc)
+
+    aaa = db.collection('desapego/agro_industria/desapegos').stream()
+    bbb = [{'id': x.id} for x in aaa]
+    ccc = db.collection('desapego/animais_estimacao/desapegos').stream()
+    ddd = [{'id': x.id} for x in ccc]
+    eee = db.collection('desapego/artigos_infantis/desapegos').stream()
+    fff = [{'id': x.id} for x in eee]
+    ggg = db.collection('desapego/autos_e_pecas/desapegos').stream()
+    hhh = [{'id': x.id} for x in ggg]
+    iii = db.collection('desapego/comercio_escritorio/desapegos').stream()
+    jjj = [{'id': x.id} for x in iii]
+    kkk = db.collection('desapego/eletronicos_celulares/desapegos').stream()
+    lll = [{'id': x.id} for x in kkk]
+    mmm = db.collection('desapego/esporte_lazer/desapegos').stream()
+    nnn = [{'id': x.id} for x in mmm]
+    ooo = db.collection('desapego/imoveis/desapegos').stream()
+    ppp = [{'id': x.id} for x in ooo]
+    qqq = db.collection('desapego/moda_beleza/desapegos').stream()
+    rrr = [{'id': x.id} for x in qqq]
+    sss = db.collection('desapego/musicas_hobbies/desapegos').stream()
+    ttt = [{'id': x.id} for x in sss]
+    uuu = db.collection('desapego/para_sua_casa/desapegos').stream()
+    vvv = [{'id': x.id} for x in uuu]
+    www = db.collection('desapego/servicos/desapegos').stream()
+    xxx = [{'id': x.id} for x in www]
+    yyy = db.collection('desapego/vagas_empregos/desapegos').stream()
+    zzz = [{'id': x.id} for x in yyy]
+    contagem_desapego = len(bbb) + len(ddd) + len(fff) + len(hhh) + len(jjj) + len(lll) + len(nnn) + len(ppp) + len(
+        rrr) + len(ttt) + len(vvv) + len(xxx) + len(zzz)
+    coa = db.collection('destaque_home').stream()
+    coe = [{'id': x.id} for x in coa]
+    contagem_destaque_lojas = len(coe)
+    cap = db.collection('destaque_desapego').stream()
+    cip = [{'id': x.id} for x in cap]
+    contagem_destaque_desapegos = len(cip)
+    numeros = [{'usuarios': int(contagem_user), 'lojas': int(contagem_lojas), 'desapegos': int(contagem_desapego), 'destaque_lojas': int(contagem_destaque_lojas), 'destaque_desapegos': int(contagem_destaque_desapegos)}]
+    return render(request, 'index.html', {'t': key, 'lista': numeros})
 
 
 def base(request, token):
@@ -1478,6 +1547,7 @@ def dicas_mix_imagens_remover_sucesso(request, token):
     if usa == []:
         return redirect('login')
     return render(request, 'dicas_mix_imagens_remover_sucesso.html', {'t': key})
+
 
 def dicas_mix_imagens_desapegos(request, token):
     key = [str(token)]
