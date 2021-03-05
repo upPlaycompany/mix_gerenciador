@@ -1409,7 +1409,7 @@ def dicas_mix_imagens(request, token):
         return redirect('login')
     dados7 = db.collection('dicas_mix_lojas').stream()
     dados8 = [{'id': x.id} for x in dados7]
-    dados9 = db.collection('dicas_mix_Lojas').stream()
+    dados9 = db.collection('dicas_mix_lojas').stream()
     dados10 = [x.to_dict() for x in dados9]
     b = len(dados8)
     [dados8[x].update(dados10[x]) for x in range(b)]
