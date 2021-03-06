@@ -545,7 +545,8 @@ def lojas_dados(request, token, id, nome, cod):
         link = requests.get(url, headers=headers, verify=False)
         cde = link.json()
     else:
-        cde = {'0': 0}
+        abd = "{'sem_dados': '0'}"
+        cde = json.loads(abd)
     dados = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{nome}').stream()
     abc = [x.to_dict() for x in dados]
     dados2 = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{nome}').stream()
@@ -973,10 +974,14 @@ def desapegos_dados(request, token, id, nome, cod):
     if usa == []:
         return redirect('login')
     cep = request.GET.get("cep")
-    url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
-    headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
-    link = requests.get(url, headers=headers, verify=False)
-    cde = link.json()
+    if cep != "":
+        url = f"https://www.cepaberto.com/api/v3/cep?cep={cep}"
+        headers = {'Authorization': 'Token token=866968b5a2faee988b72d9c44dc63d52'}
+        link = requests.get(url, headers=headers, verify=False)
+        cde = link.json()
+    else:
+        abd = "{'sem_dados': '0'}"
+        cde = json.loads(abd)
     dados = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{nome}').stream()
     abc = [x.to_dict() for x in dados]
     dados2 = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{nome}').stream()
