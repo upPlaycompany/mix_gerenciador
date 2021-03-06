@@ -10,7 +10,7 @@
     <div class="card card-box text-center">
         <div class="card-body">
             <h5 class="card-title">{{ dsae.name }}</h5>
-            <p class="card-text">{{ dsae.email}}, {{ dsae.whatsapp }}. {{ dsae.created }}</p>
+            <p class="card-text">{{ dsae.email}}, {{ dsae.whatsapp }}. {{ dsae.created }}, {{ dsae.pagamento }}</p>
             <a href="{% url 'solicitacao_loja_ver' token=dsae.token cat=dsae.idCat name=dsae.name %}" class="btn btn-primary">Ver
                 solicitação</a>
         </div>

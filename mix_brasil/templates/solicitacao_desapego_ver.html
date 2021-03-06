@@ -13,6 +13,7 @@
             <p>Nome do desapego: {{ dey.name }}</p>
             <p>Número do whats do anunciante: {{ dey.number }}</p>
             <p>Mensagem da loja solicitante: {{ dey.mensagem }}</p>
+            <p>Tipo de pagamento: {{ dey.pagamento }}</p>
             <br>
             <p>Clique no botão para destacar a página</p>
             <a href="{% url 'desapegos_dados' token=dey.token id=dey.idCat nome=dey.name cod=dey.idAds %}"><button type="button" class="btn btn-success">Ir para página do desapego</button></a>

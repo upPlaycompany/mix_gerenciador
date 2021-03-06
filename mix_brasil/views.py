@@ -979,7 +979,10 @@ def desapegos_dados(request, token, id, nome, cod):
         link = requests.get(url, headers=headers, verify=False)
         cde = link.json()
     else:
-        cde = {}
+        abd = {
+            'sem_dados': 0
+        }
+        cde = abd.json()
     dados = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{nome}').stream()
     abc = [x.to_dict() for x in dados]
     dados2 = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{nome}').stream()
@@ -995,6 +998,7 @@ def desapegos_dados(request, token, id, nome, cod):
         descricao = request.POST['descricao']
         price = request.POST['price']
         destaque = request.POST['destaque']
+        bairro = request.POST['bairro']
         cidade = request.POST['cidade']
         estado = request.POST['estado']
         anunciante = request.POST['anunciante']
@@ -1012,6 +1016,7 @@ def desapegos_dados(request, token, id, nome, cod):
                 'descricao': f'{descricao}',
                 'price': price,
                 'destaque': des,
+                'bairro': f'{bairro}',
                 'cidade': f'{cidade}',
                 'estado': f'{estado}',
                 'anunciante': f'{anunciante}',
@@ -1035,6 +1040,7 @@ def desapegos_dados(request, token, id, nome, cod):
                 'did': f"{da[0]['id']}",
                 'name': f"{da[0]['name']}",
                 'price': da[0]['price'],
+                'bairro': da[0]['bairro'],
                 'cidade': da[0]['cidade'],
                 'estado': da[0]['estado'],
                 'anunciante': f"{da[0]['anunciante']}",
