@@ -50,7 +50,8 @@
 
 <br>
 <br>
-<div class="row">
+{% if estado != "" %}
+<div class="row" hidden>
     <div class="col-xl-3 mb-30">
         <div class="card-box height-100-p widget-style1">
             <div class="d-flex flex-wrap align-items-center">
@@ -124,6 +125,7 @@
         </div>
     </div>
 </div>
+{% else %}
 <br>
 {% for numeros_pesq in lista2 %}
 <h3>Dashboard com filtro</h3>
