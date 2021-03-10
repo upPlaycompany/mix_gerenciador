@@ -161,7 +161,225 @@ def index(request, token):
     cip = [{'id': x.id} for x in cap]
     contagem_destaque_desapegos = len(cip)
     numeros = [{'usuarios': int(contagem_user), 'lojas': int(contagem_lojas), 'desapegos': int(contagem_desapego), 'destaque_lojas': int(contagem_destaque_lojas), 'destaque_desapegos': int(contagem_destaque_desapegos)}]
-    return render(request, 'index.html', {'t': key, 'lista': numeros})
+    estado = request.GET.get('estado')
+    municipio = request.GET.get('municipio')
+    estados_link = requests.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados')
+    estados = estados_link.json()
+    if estado:
+        municipios_link = requests.get(
+            f"http://servicodados.ibge.gov.br/api/v1/localidades/estados/{estado}/municipios")
+        municipios = municipios_link.json()
+    else:
+        municipios = {'null': 0}
+    if municipio and estado:
+        ccccc = db.collection('categorias/academia_sumplementos/lojas').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        ddddd = [{'id': x.id} for x in ccccc]
+        eeee = db.collection('categorias/agencia_viagens/lojas').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        ffff = [{'id': x.id} for x in eeee]
+        gggg = db.collection('categorias/automoveis/lojas').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        hhhh = [{'id': x.id} for x in gggg]
+        iiii = db.collection('categorias/brinquedos/lojas').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        jjjj = [{'id': x.id} for x in iiii]
+        kkkk = db.collection('categorias/cama_mesa_banho/lojas').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        llll = [{'id': x.id} for x in kkkk]
+        mmmm = db.collection('categorias/cosmetico_beleza/lojas').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        nnnn = [{'id': x.id} for x in mmmm]
+        oooo = db.collection('categorias/decoracao/lojas').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        pppp = [{'id': x.id} for x in oooo]
+        qqqq = db.collection('categorias/drogarias/lojas').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        rrrr = [{'id': x.id} for x in qqqq]
+        ssss = db.collection('categorias/eletronicos/lojas').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        tttt = [{'id': x.id} for x in ssss]
+        uuuu = db.collection('categorias/fornecedores/lojas').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        vvvv = [{'id': x.id} for x in uuuu]
+        wwww = db.collection('categorias/materias_construcao/lojas').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        xxxx = [{'id': x.id} for x in wwww]
+        yyyy = db.collection('categorias/modulados/lojas').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        zzzz = [{'id': x.id} for x in yyyy]
+        aaaa = db.collection('categorias/musica_hobbies/lojas').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        bbbb = [{'id': x.id} for x in aaaa]
+        cccc = db.collection('categorias/oticas/lojas').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        dddd = [{'id': x.id} for x in cccc]
+        contagem_lojas_pesq = len(ddddd) + len(ffff) + len(hhhh) + len(jjjj) + len(llll) + len(nnnn) + len(pppp) + len(rrrr) + len(tttt) + len(vvvv) + len(
+            xxxx) + len(zzzz) + len(bbbb) + len(dddd)
+        aax = db.collection('desapego/agro_industria/desapegos').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        bbx = [{'id': x.id} for x in aax]
+        ccx = db.collection('desapego/animais_estimacao/desapegos').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        ddx = [{'id': x.id} for x in ccx]
+        eex = db.collection('desapego/artigos_infantis/desapegos').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        ffx = [{'id': x.id} for x in eex]
+        ggx = db.collection('desapego/autos_e_pecas/desapegos').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        hhx = [{'id': x.id} for x in ggx]
+        iix = db.collection('desapego/comercio_escritorio/desapegos').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        jjx = [{'id': x.id} for x in iix]
+        kkx = db.collection('desapego/eletronicos_celulares/desapegos').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        llx = [{'id': x.id} for x in kkx]
+        mmx = db.collection('desapego/esporte_lazer/desapegos').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        nnx = [{'id': x.id} for x in mmx]
+        oox = db.collection('desapego/imoveis/desapegos').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        ppx = [{'id': x.id} for x in oox]
+        qqx = db.collection('desapego/moda_beleza/desapegos').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        rrx = [{'id': x.id} for x in qqx]
+        ssx = db.collection('desapego/musicas_hobbies/desapegos').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        ttx = [{'id': x.id} for x in ssx]
+        uux = db.collection('desapego/para_sua_casa/desapegos').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        vvx = [{'id': x.id} for x in uux]
+        wwx = db.collection('desapego/servicos/desapegos').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        xxy = [{'id': x.id} for x in wwx]
+        yyx = db.collection('desapego/vagas_empregos/desapegos').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        zzx = [{'id': x.id} for x in yyx]
+        contagem_desapego_pesq = len(bbx) + len(ddx) + len(ffx) + len(hhx) + len(jjx) + len(llx) + len(nnx) + len(ppx) + len(
+            rrx) + len(ttx) + len(vvx) + len(xxy) + len(zzx)
+        coaa = db.collection('destaque_home').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        coee = [{'id': x.id} for x in coaa]
+        contagem_destaque_lojas_pesq = len(coee)
+        capp = db.collection('destaque_desapego').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
+        cipp = [{'id': x.id} for x in capp]
+        contagem_destaque_desapegos_pesq = len(cipp)
+        numeros_pesq = numeros = [{'lojas': int(contagem_lojas_pesq), 'desapegos': int(contagem_desapego_pesq), 'destaque_lojas': int(contagem_destaque_lojas_pesq), 'destaque_desapegos': int(contagem_destaque_desapegos_pesq)}]
+    elif municipio:
+        ccccc = db.collection('categorias/academia_sumplementos/lojas').where('cidade','==',f'{municipio}').stream()
+        ddddd = [{'id': x.id} for x in ccccc]
+        eeee = db.collection('categorias/agencia_viagens/lojas').where('cidade','==',f'{municipio}').stream()
+        ffff = [{'id': x.id} for x in eeee]
+        gggg = db.collection('categorias/automoveis/lojas').where('cidade','==',f'{municipio}').stream()
+        hhhh = [{'id': x.id} for x in gggg]
+        iiii = db.collection('categorias/brinquedos/lojas').where('cidade','==',f'{municipio}').stream()
+        jjjj = [{'id': x.id} for x in iiii]
+        kkkk = db.collection('categorias/cama_mesa_banho/lojas').where('cidade','==',f'{municipio}').stream()
+        llll = [{'id': x.id} for x in kkkk]
+        mmmm = db.collection('categorias/cosmetico_beleza/lojas').where('cidade','==',f'{municipio}').stream()
+        nnnn = [{'id': x.id} for x in mmmm]
+        oooo = db.collection('categorias/decoracao/lojas').where('cidade','==',f'{municipio}').stream()
+        pppp = [{'id': x.id} for x in oooo]
+        qqqq = db.collection('categorias/drogarias/lojas').where('cidade','==',f'{municipio}').stream()
+        rrrr = [{'id': x.id} for x in qqqq]
+        ssss = db.collection('categorias/eletronicos/lojas').where('cidade','==',f'{municipio}').stream()
+        tttt = [{'id': x.id} for x in ssss]
+        uuuu = db.collection('categorias/fornecedores/lojas').where('cidade','==',f'{municipio}').stream()
+        vvvv = [{'id': x.id} for x in uuuu]
+        wwww = db.collection('categorias/materias_construcao/lojas').where('cidade','==',f'{municipio}').stream()
+        xxxx = [{'id': x.id} for x in wwww]
+        yyyy = db.collection('categorias/modulados/lojas').where('cidade','==',f'{municipio}').stream()
+        zzzz = [{'id': x.id} for x in yyyy]
+        aaaa = db.collection('categorias/musica_hobbies/lojas').where('cidade','==',f'{municipio}').stream()
+        bbbb = [{'id': x.id} for x in aaaa]
+        cccc = db.collection('categorias/oticas/lojas').where('cidade','==',f'{municipio}').stream()
+        dddd = [{'id': x.id} for x in cccc]
+        contagem_lojas_pesq = len(ddddd) + len(ffff) + len(hhhh) + len(jjjj) + len(llll) + len(nnnn) + len(pppp) + len(
+            rrrr) + len(tttt) + len(vvvv) + len(
+            xxxx) + len(zzzz) + len(bbbb) + len(dddd)
+        aax = db.collection('desapego/agro_industria/desapegos').where('cidade','==',f'{municipio}').stream()
+        bbx = [{'id': x.id} for x in aax]
+        ccx = db.collection('desapego/animais_estimacao/desapegos').where('cidade','==',f'{municipio}').stream()
+        ddx = [{'id': x.id} for x in ccx]
+        eex = db.collection('desapego/artigos_infantis/desapegos').where('cidade','==',f'{municipio}').stream()
+        ffx = [{'id': x.id} for x in eex]
+        ggx = db.collection('desapego/autos_e_pecas/desapegos').where('cidade','==',f'{municipio}').stream()
+        hhx = [{'id': x.id} for x in ggx]
+        iix = db.collection('desapego/comercio_escritorio/desapegos').where('cidade','==',f'{municipio}').stream()
+        jjx = [{'id': x.id} for x in iix]
+        kkx = db.collection('desapego/eletronicos_celulares/desapegos').where('cidade','==',f'{municipio}').stream()
+        llx = [{'id': x.id} for x in kkx]
+        mmx = db.collection('desapego/esporte_lazer/desapegos').where('cidade','==',f'{municipio}').stream()
+        nnx = [{'id': x.id} for x in mmx]
+        oox = db.collection('desapego/imoveis/desapegos').where('cidade','==',f'{municipio}').stream()
+        ppx = [{'id': x.id} for x in oox]
+        qqx = db.collection('desapego/moda_beleza/desapegos').where('cidade','==',f'{municipio}').stream()
+        rrx = [{'id': x.id} for x in qqx]
+        ssx = db.collection('desapego/musicas_hobbies/desapegos').where('cidade','==',f'{municipio}').stream()
+        ttx = [{'id': x.id} for x in ssx]
+        uux = db.collection('desapego/para_sua_casa/desapegos').where('cidade','==',f'{municipio}').stream()
+        vvx = [{'id': x.id} for x in uux]
+        wwx = db.collection('desapego/servicos/desapegos').where('cidade','==',f'{municipio}').stream()
+        xxy = [{'id': x.id} for x in wwx]
+        yyx = db.collection('desapego/vagas_empregos/desapegos').where('cidade','==',f'{municipio}').stream()
+        zzx = [{'id': x.id} for x in yyx]
+        contagem_desapego_pesq = len(bbx) + len(ddx) + len(ffx) + len(hhx) + len(jjx) + len(llx) + len(nnx) + len(
+            ppx) + len(
+            rrx) + len(ttx) + len(vvx) + len(xxy) + len(zzx)
+        coaa = db.collection('destaque_home').where('cidade','==',f'{municipio}').stream()
+        coee = [{'id': x.id} for x in coaa]
+        contagem_destaque_lojas_pesq = len(coee)
+        capp = db.collection('destaque_desapego').where('cidade','==',f'{municipio}').stream()
+        cipp = [{'id': x.id} for x in capp]
+        contagem_destaque_desapegos_pesq = len(cipp)
+        numeros_pesq = numeros = [{'lojas': int(contagem_lojas_pesq), 'desapegos': int(contagem_desapego_pesq),
+                                   'destaque_lojas': int(contagem_destaque_lojas_pesq),
+                                   'destaque_desapegos': int(contagem_destaque_desapegos_pesq)}]
+    elif estado:
+        ccccc = db.collection('categorias/academia_sumplementos/lojas').where('estado','==',f'{estado}').stream()
+        ddddd = [{'id': x.id} for x in ccccc]
+        eeee = db.collection('categorias/agencia_viagens/lojas').where('estado','==',f'{estado}').stream()
+        ffff = [{'id': x.id} for x in eeee]
+        gggg = db.collection('categorias/automoveis/lojas').where('estado','==',f'{estado}').stream()
+        hhhh = [{'id': x.id} for x in gggg]
+        iiii = db.collection('categorias/brinquedos/lojas').where('estado','==',f'{estado}').stream()
+        jjjj = [{'id': x.id} for x in iiii]
+        kkkk = db.collection('categorias/cama_mesa_banho/lojas').where('estado','==',f'{estado}').stream()
+        llll = [{'id': x.id} for x in kkkk]
+        mmmm = db.collection('categorias/cosmetico_beleza/lojas').where('estado','==',f'{estado}').stream()
+        nnnn = [{'id': x.id} for x in mmmm]
+        oooo = db.collection('categorias/decoracao/lojas').where('estado','==',f'{estado}').stream()
+        pppp = [{'id': x.id} for x in oooo]
+        qqqq = db.collection('categorias/drogarias/lojas').where('estado','==',f'{estado}').stream()
+        rrrr = [{'id': x.id} for x in qqqq]
+        ssss = db.collection('categorias/eletronicos/lojas').where('estado','==',f'{estado}').stream()
+        tttt = [{'id': x.id} for x in ssss]
+        uuuu = db.collection('categorias/fornecedores/lojas').where('estado','==',f'{estado}').stream()
+        vvvv = [{'id': x.id} for x in uuuu]
+        wwww = db.collection('categorias/materias_construcao/lojas').where('estado','==',f'{estado}').stream()
+        xxxx = [{'id': x.id} for x in wwww]
+        yyyy = db.collection('categorias/modulados/lojas').where('estado','==',f'{estado}').stream()
+        zzzz = [{'id': x.id} for x in yyyy]
+        aaaa = db.collection('categorias/musica_hobbies/lojas').where('estado','==',f'{estado}').stream()
+        bbbb = [{'id': x.id} for x in aaaa]
+        cccc = db.collection('categorias/oticas/lojas').where('estado','==',f'{estado}').stream()
+        dddd = [{'id': x.id} for x in cccc]
+        contagem_lojas_pesq = len(ddddd) + len(ffff) + len(hhhh) + len(jjjj) + len(llll) + len(nnnn) + len(pppp) + len(
+            rrrr) + len(tttt) + len(vvvv) + len(
+            xxxx) + len(zzzz) + len(bbbb) + len(dddd)
+        aax = db.collection('desapego/agro_industria/desapegos').where('estado','==',f'{estado}').stream()
+        bbx = [{'id': x.id} for x in aax]
+        ccx = db.collection('desapego/animais_estimacao/desapegos').where('estado','==',f'{estado}').stream()
+        ddx = [{'id': x.id} for x in ccx]
+        eex = db.collection('desapego/artigos_infantis/desapegos').where('estado','==',f'{estado}').stream()
+        ffx = [{'id': x.id} for x in eex]
+        ggx = db.collection('desapego/autos_e_pecas/desapegos').where('estado','==',f'{estado}').stream()
+        hhx = [{'id': x.id} for x in ggx]
+        iix = db.collection('desapego/comercio_escritorio/desapegos').where('estado','==',f'{estado}').stream()
+        jjx = [{'id': x.id} for x in iix]
+        kkx = db.collection('desapego/eletronicos_celulares/desapegos').where('estado','==',f'{estado}').stream()
+        llx = [{'id': x.id} for x in kkx]
+        mmx = db.collection('desapego/esporte_lazer/desapegos').where('estado','==',f'{estado}').stream()
+        nnx = [{'id': x.id} for x in mmx]
+        oox = db.collection('desapego/imoveis/desapegos').where('estado','==',f'{estado}').stream()
+        ppx = [{'id': x.id} for x in oox]
+        qqx = db.collection('desapego/moda_beleza/desapegos').where('estado','==',f'{estado}').stream()
+        rrx = [{'id': x.id} for x in qqx]
+        ssx = db.collection('desapego/musicas_hobbies/desapegos').where('estado','==',f'{estado}').stream()
+        ttx = [{'id': x.id} for x in ssx]
+        uux = db.collection('desapego/para_sua_casa/desapegos').where('estado','==',f'{estado}').stream()
+        vvx = [{'id': x.id} for x in uux]
+        wwx = db.collection('desapego/servicos/desapegos').where('estado','==',f'{estado}').stream()
+        xxy = [{'id': x.id} for x in wwx]
+        yyx = db.collection('desapego/vagas_empregos/desapegos').where('estado','==',f'{estado}').stream()
+        zzx = [{'id': x.id} for x in yyx]
+        contagem_desapego_pesq = len(bbx) + len(ddx) + len(ffx) + len(hhx) + len(jjx) + len(llx) + len(nnx) + len(
+            ppx) + len(
+            rrx) + len(ttx) + len(vvx) + len(xxy) + len(zzx)
+        coaa = db.collection('destaque_home').where('estado','==',f'{estado}').stream()
+        coee = [{'id': x.id} for x in coaa]
+        contagem_destaque_lojas_pesq = len(coee)
+        capp = db.collection('destaque_desapego').where('estado','==',f'{estado}').stream()
+        cipp = [{'id': x.id} for x in capp]
+        contagem_destaque_desapegos_pesq = len(cipp)
+        numeros_pesq = numeros = [{'lojas': int(contagem_lojas_pesq), 'desapegos': int(contagem_desapego_pesq),
+                                   'destaque_lojas': int(contagem_destaque_lojas_pesq),
+                                   'destaque_desapegos': int(contagem_destaque_desapegos_pesq)}]
+    else:
+        numeros_pesq = [{'id': '0'}]
+    return render(request, 'index.html', {'t': key, 'lista': numeros, 'lista2': numeros_pesq, 'ibge_uf': estados, 'ibge_mun': municipios})
 
 
 def base(request, token):
