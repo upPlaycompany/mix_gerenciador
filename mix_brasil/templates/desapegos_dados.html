@@ -84,20 +84,16 @@
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Cidade</label>
-                {% if not dec.cidade.nome %}
                 <input type="text" class="form-control" name="cidade" value="{{ dec.cidade }}">
-                {% else %}
-                <input type="text" class="form-control" name="cidade" value="{{ dec.cidade.nome }}">
-                {% endif %}
             </div>
         </div>
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Estado</label>
-                {% if not dec.estado.sigla %}
+                {% if not dec.uf %}
                 <input type="text" class="form-control" name="estado" value="{{ dec.estado }}">
                 {% else %}
-                <input type="text" class="form-control" name="estado" value="{{ dec.estado.sigla }}">
+                <input type="text" class="form-control" name="estado" value="{{ dec.uf }}">
                 {% endif %}
             </div>
         </div>

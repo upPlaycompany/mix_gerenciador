@@ -540,8 +540,9 @@ def lojas_dados(request, token, id, nome, cod):
         return redirect('login')
     cep = request.GET.get("cep")
     if cep != "":
-        url = f"viacep.com.br/ws/{cep}/json/"
-        link = requests.get(url, verify=False)
+        url = f"http://cep.la/{cep}"
+        headers = {'Accept: application/json'}
+        link = requests.get(url, headers=headers, verify=False)
         cde = link.json()
     else:
         abd = "{'sem_dados': '0'}"
@@ -974,8 +975,9 @@ def desapegos_dados(request, token, id, nome, cod):
         return redirect('login')
     cep = request.GET.get("cep")
     if cep != "":
-        url = f"https://viacep.com.br/ws/{cep}/json/"
-        link = requests.get(url, verify=False)
+        url = f"http://cep.la/{cep}"
+        headers = {'Accept: application/json'}
+        link = requests.get(url, headers=headers, verify=False)
         cde = link.json()
     else:
         abd = "{'sem_dados': '0'}"

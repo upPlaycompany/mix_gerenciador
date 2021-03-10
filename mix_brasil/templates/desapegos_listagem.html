@@ -36,6 +36,7 @@
 </form>
 <br>
 <br>
+
 <div class="card-deck mb-20">
     {% for docs in lista %}
     <a href="{% url 'desapegos_dados' token=docs.token id=docs.categoria nome=docs.name cod=docs.id %}">

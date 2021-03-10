@@ -69,11 +69,7 @@
         <div class="col-md-3 col-sm-12">
             <div class="form-group">
                 <label>Cidade</label>
-                {% if not dec.localidade %}
                 <input type="text" class="form-control" name="cidade" value="{{ dec.cidade }}">
-                {% else %}
-                <input type="text" class="form-control" name="cidade" value="{{ dec.localidade }}">
-                {% endif %}
             </div>
         </div>
         <div class="col-md-3 col-sm-12">
