@@ -541,12 +541,14 @@ def lojas_dados(request, token, id, nome, cod):
     cep = request.GET.get("cep")
     if cep != "":
         url = f"http://cep.la/{cep}"
-        headers = {'Accept: application/json'}
-        link = requests.get(url, headers=headers, verify=False)
+        headers = {'Accept': 'application/json'}
+        link = requests.api.request('GET', url, headers=headers)
         cde = link.json()
     else:
-        abd = "{'sem_dados': '0'}"
-        cde = json.loads(abd)
+        url = f"http://cep.la/0000001"
+        headers = {'Accept': 'application/json'}
+        link = requests.api.request('GET', url, headers=headers)
+        cde = link.json()
     dados = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{nome}').stream()
     abc = [x.to_dict() for x in dados]
     dados2 = db.collection(f'categorias/{id}/lojas').where('name', '==', f'{nome}').stream()
@@ -980,7 +982,7 @@ def desapegos_dados(request, token, id, nome, cod):
         link = requests.api.request('GET', url, headers=headers)
         cde = link.json()
     else:
-        url = f"http://cep.la/{cep}"
+        url = f"http://cep.la/0000001"
         headers = {'Accept': 'application/json'}
         link = requests.api.request('GET', url, headers=headers)
         cde = link.json()
