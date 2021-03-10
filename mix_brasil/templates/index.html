@@ -25,7 +25,7 @@
             <select class="form-control" name="estado">
                 <option selected>Selecione uma opção</option>
                 {% for estados in ibge_uf %}
-                <option value="{{ estados.id }}">{{ estados.nome }}</option>
+                <option value="{{ estados.id }}">{{ estados.id }}</option>
                 {% endfor %}
             </select>
         </div>
