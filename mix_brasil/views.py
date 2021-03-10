@@ -977,11 +977,13 @@ def desapegos_dados(request, token, id, nome, cod):
     if cep != "":
         url = f"http://cep.la/{cep}"
         headers = {'Accept: application/json'}
-        link = requests.get(url, headers=headers, verify=False)
+        link = requests.get(url, headers=headers)
         cde = link.json()
     else:
-        abd = "{'sem_dados': '0'}"
-        cde = json.loads(abd)
+        url = f"http://cep.la/0000001"
+        headers = {'Accept: application/json'}
+        link = requests.get(url, headers=headers)
+        cde = link.json()
     dados = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{nome}').stream()
     abc = [x.to_dict() for x in dados]
     dados2 = db.collection(f'desapego/{id}/desapegos').where('name', '==', f'{nome}').stream()
