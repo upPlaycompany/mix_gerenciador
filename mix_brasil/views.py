@@ -974,7 +974,7 @@ def desapegos_dados(request, token, id, nome, cod):
         return redirect('login')
     cep = request.GET.get("cep")
     if cep != "":
-        url = f"viacep.com.br/ws/{cep}/json/"
+        url = f"https://viacep.com.br/ws/{cep}/json/"
         link = requests.get(url, verify=False)
         cde = link.json()
     else:
