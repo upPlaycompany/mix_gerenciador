@@ -10,7 +10,7 @@
     <div class="card card-box text-center">
         <div class="card-body">
             <h5 class="card-title">{{ bca.name }}</h5>
-            <p class="card-text">{{{ bca.whatsapp }}. {{ bca.created }}</p>
+            <p class="card-text">{{ bca.whatsapp }}. {{ bca.created }}</p>
             {% if bca.diff > 7 %}
             <p>Renovar</p>
             {% else %}
