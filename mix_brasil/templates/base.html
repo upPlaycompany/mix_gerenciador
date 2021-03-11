@@ -295,7 +295,12 @@
                     <ul class="submenu">
                         <li>
                             {% for key in t %}
-                            <a href="{% url 'destaque_lojas_listagem' token=key %}">Loja</a>
+                            <a href="{% url 'destaque_lojas_listagem' token=key %}">Lojas</a>
+                            {% endfor %}
+                        </li>
+                        <li>
+                            {% for key in t %}
+                            <a href="{% url 'destaque_desapego_listagem' token=key %}">Desapegos</a>
                             {% endfor %}
                         </li>
                     </ul>

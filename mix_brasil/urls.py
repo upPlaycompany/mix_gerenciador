@@ -90,6 +90,10 @@ urlpatterns = [
     path('destaque_lojas_ver/<str:token>/<str:lid>/', views.destaque_lojas_ver, name='destaque_lojas_ver'),
     path('renovar_destaque_loja/<str:token>/<str:lid>/', views.renovar_destaque_loja, name='renovar_destaque_loja'),
     path('renovar_destaque_loja_sucesso/<str:token>/', views.renovar_destaque_loja_sucesso, name='renovar_destaque_loja_sucesso'),
+    path('destaque_desapego_listagem/<str:token>/', views.destaque_desapego_listagem, name='destaque_desapego_listagem'),
+    path('destaque_desapego_ver/<str:token>/<str:lid>/', views.destaque_desapego_ver, name='destaque_desapego_ver'),
+    path('renovar_destaque_desapego/<str:token>/<str:lid>/', views.renovar_destaque_desapego, name='renovar_destaque_desapego'),
+    path('renovar_destaque_desapego_sucesso/<str:token>/', views.renovar_destaque_desapego_sucesso, name='renovar_destaque_desapego_sucesso'),
 
 
     #path('user_index/<str:token>/', views.user_index, name='user_index'),

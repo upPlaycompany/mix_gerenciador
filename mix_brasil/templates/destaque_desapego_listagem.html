@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Listagem de desapegos destacadas</h2>
+{% endblock title %}
+
+{% block content %}
+{% for bca in lista %}
+<span><div class="col-sm-12 col-md-4 mb-30">
+    <div class="card card-box text-center">
+        <div class="card-body">
+            <h5 class="card-title">{{ bca.name }}</h5>
+            <p class="card-text">{{ bca.created }}</p>
+            {% if bca.diff > 7 %}
+            <a href="{% url 'destaque_desapego_ver' token=bca.token lid=bca.lid %}" class="btn btn-primary">Renovar destaque</a>
+            {% else %}
+            <h6>No prazo</h6>
+            {% endif %}
+        </div>
+    </div>
+</div></span>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Detalhes da loja destacada</h2>
+{% endblock title %}
+
+{% block content %}
+{% for bca in lista %}
+<div class="col-md-8 col-sm-12">
+    <div class="blog-detail card-box overflow-hidden mb-30">
+        <div class="blog-caption">
+            <p>Código do desapego: {{ bca.id }}</p>
+            <p>Nome do desapego: {{ bca.name }}</p>
+            <p>Número do whats da desapego: {{ bca.whatsapp }}</p>
+            <a href="{% url 'renovar_destaque_desapego' token=bca.token lid=bca.lid %}" class="btn btn-primary">Ir para confirmação de renovação</a>
+            </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

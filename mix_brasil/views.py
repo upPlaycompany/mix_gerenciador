@@ -1837,6 +1837,76 @@ def solicitacao_exclusao_dados_listagem(request, token):
     [docs[x].update(keya) for x in range(a)]
     return render(request, 'solicitacao_exclusao_dados_listagem.html', {'lista': docs, 't': key})
 
+def destaque_desapego_listagem(request, token):
+    key = [str(token)]
+    keya = {'token': str(token)}
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('login')
+    abc = db.collection('destaque_desapego').stream()
+    bca = [{'id': x.id} for x in abc]
+    dob = db.collection('destaque_desapego').stream()
+    poa = [x.to_dict() for x in dob]
+    a = len(bca)
+    [bca[x].update(poa[x]) for x in range(a)]
+    [bca[x].update(keya) for x in range(a)]
+    data_atual = datetime.datetime.now(datetime.timezone.utc)
+    [bca[x].update({'diff': abs((data_atual - bca[x]['created']).days)}) for x in range(a)]
+    return render(request, 'destaque_desapego_listagem.html', {'t': key, 'lista': bca})
+
+
+def destaque_desapego_ver(request, token, did):
+    key = [str(token)]
+    keya = {'token': str(token)}
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('login')
+    abc = db.collection('destaque_desapego').where('did', '==', f'{did}').stream()
+    dee = [{'id': x.id} for x in abc]
+    ghi = db.collection('destaque_desapego').where('did', '==', f'{did}').stream()
+    jkl = [x.to_dict() for x in ghi]
+    a = len(dee)
+    [dee[x].update(jkl[x]) for x in range(a)]
+    [dee[x].update(keya) for x in range(a)]
+
+    return render(request, 'destaque_desapego_ver.html', {'t': key, 'lista': dee})
+
+def renovar_destaque_desapego(request, token, did):
+    key = [str(token)]
+    keya = {'token': str(token)}
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('login')
+    if request.method == 'POST':
+        abc = db.collection('destaque_desapego').where('did', '==', f'{did}').stream()
+        dee = [{'id': x.id} for x in abc]
+        ghi = db.collection('destaque_desapego').where('did', '==', f'{did}').stream()
+        jkl = [x.to_dict() for x in ghi]
+        a = len(dee)
+        [dee[x].update(jkl[x]) for x in range(a)]
+        [dee[x].update(keya) for x in range(a)]
+        aaa = db.collection('destaque_desapego').document(f"{dee[0]['id']}")
+        aaa.update({
+            "created": firestore.firestore.SERVER_TIMESTAMP
+        })
+        return redirect('renovar_destaque_desapego_sucesso', token=token)
+    return render(request, 'renovar_destaque_desapego.html', {'t': key})
+
+def renovar_destaque_desapego_sucesso(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('login')
+    return render(request, 'renovar_destaque_desapego_sucesso.html', {'t': key})
+
 def destaque_lojas_listagem(request, token):
     key = [str(token)]
     keya = {'token': str(token)}
@@ -1906,8 +1976,6 @@ def renovar_destaque_loja_sucesso(request, token):
     if usa == []:
         return redirect('login')
     return render(request, 'renovar_destaque_loja_sucesso.html', {'t': key})
-
-
 
 '''
 # PARTE DE USUARIO
