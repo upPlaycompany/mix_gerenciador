@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Detalhes da loja destacada</h2>
+{% endblock title %}
+
+{% block content %}
+{% for bca in lista %}
+<div class="col-md-8 col-sm-12">
+    <div class="blog-detail card-box overflow-hidden mb-30">
+        <div class="blog-caption">
+            <p>Código da loja: {{ bca.id }}</p>
+            <p>Nome da loja: {{ bca.name }}</p>
+            <p>Número do whats da loja: {{ bca.whatsapp }}</p>
+            </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

@@ -85,7 +85,9 @@ urlpatterns = [
     path('termos_uso/', views.termos_uso, name='termos_uso'),
     path('solicitacao_exclusao_dados/', views.solicitacao_exclusao_dados, name='solicitacao_exclusao_dados'),
     path('solicitacao_exclusao_dados_sucesso/', views.solicitacao_exclusao_dados_sucesso, name='solicitacao_exclusao_dados_sucesso'),
-    path('solicitacao_exclusao_dados_listagem/<str:token>/', views.solicitacao_exclusao_dados_listagem, name='solicitacao_exclusao_dados_listagem')
+    path('solicitacao_exclusao_dados_listagem/<str:token>/', views.solicitacao_exclusao_dados_listagem, name='solicitacao_exclusao_dados_listagem'),
+    path('destaque_lojas_listagem/<str:token>/', views.destaque_lojas_listagem, name='destaque_lojas_listagem'),
+    path('destaque_lojas_ver/<str:token>/<str:lid>/', views.destaque_lojas_ver, name='destaque_lojas_ver'),
 
 
     #path('user_index/<str:token>/', views.user_index, name='user_index'),
