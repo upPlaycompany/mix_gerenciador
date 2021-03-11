@@ -1845,7 +1845,7 @@ def destaque_lojas_listagem(request, token):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('login')
-    abc = db.collection('destaque_home').stram()
+    abc = db.collection('destaque_home').stream()
     bca = [{'id': x.id} for x in abc]
     dob = db.collection('destaque_home').stream()
     poa = [x.to_dict() for x in dob]
@@ -1853,6 +1853,25 @@ def destaque_lojas_listagem(request, token):
     [bca[x].update(poa[x]) for x in range(a)]
     [bca[x].update(keya) for x in range(a)]
     return render(request, 'destaque_lojas_listagem.html', {'t': key, 'lista': bca})
+
+
+def destaque_lojas_ver(request, token, lid):
+    key = [str(token)]
+    keya = {'token': str(token)}
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('login')
+    abc = db.collection('destaque_home').where('lid', '==', f'{lid}').stream()
+    dee = [{'id': x.id} for x in abc]
+    ghi = db.collection('destaque_home').where('lid', '==', f'{lid}').stream()
+    jkl = [x.to_dict() for x in ghi]
+    a = len(dee)
+    [dee[x].update(jkl[x]) for x in range(a)]
+    [dee[x].update(keya) for x in range(a)]
+    return render(request, 'destaque_lojas_ver.html', {'t': key, 'lista': dee})
+
 
 
 

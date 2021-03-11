@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Listagem de lojas destacadas</h2>
+{% endblock title %}
+
+{% block content %}
+{% for bca in lista %}
+<span><div class="col-sm-12 col-md-4 mb-30">
+    <div class="card card-box text-center">
+        <div class="card-body">
+            <h5 class="card-title">{{ bca.name }}</h5>
+            <p class="card-text">{{{ bca.whatsapp }}. {{ bca.created }}</p>
+        </div>
+    </div>
+</div></span>
+{% endfor %}
+
+{% endblock %}
