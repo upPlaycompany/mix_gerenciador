@@ -1905,7 +1905,7 @@ def renovar_destaque_loja_sucesso(request, token):
     usa = [x.to_dict() for x in us]
     if usa == []:
         return redirect('login')
-    return render(request, 'renovar_destaque_loja_sucesso', {'t': key})
+    return render(request, 'renovar_destaque_loja_sucesso.html', {'t': key})
 
 
 
