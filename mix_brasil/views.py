@@ -162,15 +162,14 @@ def index(request, token):
     contagem_destaque_desapegos = len(cip)
     numeros = [{'usuarios': int(contagem_user), 'lojas': int(contagem_lojas), 'desapegos': int(contagem_desapego), 'destaque_lojas': int(contagem_destaque_lojas), 'destaque_desapegos': int(contagem_destaque_desapegos)}]
     estado = request.GET.get('estado')
+    q_estado = estado
     municipio = request.GET.get('municipio')
     estados_link = requests.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados')
     estados = estados_link.json()
-    if estado:
+    if q_estado:
         municipios_link = requests.get(
             f"http://servicodados.ibge.gov.br/api/v1/localidades/estados/{estado}/municipios")
         municipios = municipios_link.json()
-    else:
-        municipios = {'null': 0}
     if municipio and estado:
         ccccc = db.collection('categorias/academia_sumplementos/lojas').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
         ddddd = [{'id': x.id} for x in ccccc]
@@ -236,8 +235,9 @@ def index(request, token):
         capp = db.collection('destaque_desapego').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
         cipp = [{'id': x.id} for x in capp]
         contagem_destaque_desapegos_pesq = len(cipp)
-        numeros_pesq = [{'lojas': int(contagem_lojas_pesq), 'desapegos': int(contagem_desapego_pesq), 'destaque_lojas': int(contagem_destaque_lojas_pesq), 'destaque_desapegos': int(contagem_destaque_desapegos_pesq)}]
+        numeros_pesq = numeros = [{'lojas': int(contagem_lojas_pesq), 'desapegos': int(contagem_desapego_pesq), 'destaque_lojas': int(contagem_destaque_lojas_pesq), 'destaque_desapegos': int(contagem_destaque_desapegos_pesq)}]
     elif municipio:
+
         ccccc = db.collection('categorias/academia_sumplementos/lojas').where('cidade','==',f'{municipio}').stream()
         ddddd = [{'id': x.id} for x in ccccc]
         eeee = db.collection('categorias/agencia_viagens/lojas').where('cidade','==',f'{municipio}').stream()
@@ -304,10 +304,11 @@ def index(request, token):
         capp = db.collection('destaque_desapego').where('cidade','==',f'{municipio}').stream()
         cipp = [{'id': x.id} for x in capp]
         contagem_destaque_desapegos_pesq = len(cipp)
-        numeros_pesq = [{'lojas': int(contagem_lojas_pesq), 'desapegos': int(contagem_desapego_pesq),
+        numeros_pesq = numeros = [{'lojas': int(contagem_lojas_pesq), 'desapegos': int(contagem_desapego_pesq),
                                    'destaque_lojas': int(contagem_destaque_lojas_pesq),
                                    'destaque_desapegos': int(contagem_destaque_desapegos_pesq)}]
-    elif estado:
+    else:
+
         ccccc = db.collection('categorias/academia_sumplementos/lojas').where('estado','==',f'{estado}').stream()
         ddddd = [{'id': x.id} for x in ccccc]
         eeee = db.collection('categorias/agencia_viagens/lojas').where('estado','==',f'{estado}').stream()
@@ -377,8 +378,6 @@ def index(request, token):
         numeros_pesq = [{'lojas': int(contagem_lojas_pesq), 'desapegos': int(contagem_desapego_pesq),
                                    'destaque_lojas': int(contagem_destaque_lojas_pesq),
                                    'destaque_desapegos': int(contagem_destaque_desapegos_pesq)}]
-    else:
-        numeros_pesq = [{'id': 0}]
     return render(request, 'index.html', {'t': key, 'lista': numeros, 'lista2': numeros_pesq, 'ibge_uf': estados, 'ibge_mun': municipios})
 
 

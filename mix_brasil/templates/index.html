@@ -33,6 +33,7 @@
     <button class="btn btn-primary" type="submit">Selecionar estado</button>
 </form>
 <br>
+
 <form method="get">
     <div class="col-lg-6">
         <label>Selecione a cidade desejada</label>
@@ -50,159 +51,8 @@
 
 <br>
 <br>
-{% if estado or municipio %}
+{% if estado %}
 <div class="row" hidden>
-    <div class="col-xl-3 mb-30">
-        <div class="card-box height-100-p widget-style1">
-            <div class="d-flex flex-wrap align-items-center">
-                <div class="progress-data">
-                    {% for numeros in lista %}
-                    <h3>{{ numeros.usuarios }}</h3>
-                    {% endfor %}
-                </div>
-                <div class="widget-data">
-                    <div class="h4 mb-0">Usuários cadastrados</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 mb-30">
-        <div class="card-box height-100-p widget-style1">
-            <div class="d-flex flex-wrap align-items-center">
-                <div class="progress-data">
-                    {% for numeros in lista %}
-                    <h3>{{ numeros.lojas }}</h3>
-                    {% endfor %}
-                </div>
-                <div class="widget-data">
-                    <div class="h5 mb-0">Número de lojas cadastradas</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 mb-30">
-        <div class="card-box height-100-p widget-style1">
-            <div class="d-flex flex-wrap align-items-center">
-                <div class="progress-data">
-                    {% for numeros in lista %}
-                    <h3>{{ numeros.desapegos }}</h3>
-                    {% endfor %}
-                </div>
-                <div class="widget-data">
-                    <div class="h5 mb-0">Número de desapegos</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xl-3 mb-30">
-        <div class="card-box height-100-p widget-style1">
-            <div class="d-flex flex-wrap align-items-center">
-                <div class="progress-data">
-                    {% for numeros in lista %}
-                    <h3>{{ numeros.destaque_lojas }}</h3>
-                    {% endfor %}
-                </div>
-                <div class="widget-data">
-                    <div class="h4 mb-0">Número de lojas destacadas</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 mb-30">
-        <div class="card-box height-100-p widget-style1">
-            <div class="d-flex flex-wrap align-items-center">
-                <div class="progress-data">
-                    {% for numeros in lista %}
-                    <h3>{{ numeros.destaque_desapegos }}</h3>
-                    {% endfor %}
-                </div>
-                <div class="widget-data">
-                    <div class="h4 mb-0">Número de desapegos destacadas</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<br>
-<h3>Dashboard com filtro</h3>
-<br>
-<div class="row">
-    <div class="col-xl-3 mb-30" hidden>
-        <div class="card-box height-100-p widget-style1">
-            <div class="d-flex flex-wrap align-items-center">
-                <div class="progress-data">
-                    {% for numeros in lista %}
-                    <h3>{{ numeros.usuarios }}</h3>
-                    {% endfor %}
-                </div>
-                <div class="widget-data">
-                    <div class="h4 mb-0">Usuários cadastrados</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 mb-30">
-        <div class="card-box height-100-p widget-style1">
-            <div class="d-flex flex-wrap align-items-center">
-                <div class="progress-data">
-                    {% for numeros_pesq in lista2 %}
-                    <h3>{{ numeros_pesq.lojas }}</h3>
-                    {% endfor %}
-                </div>
-                <div class="widget-data">
-                    <div class="h5 mb-0">Número de lojas cadastradas</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 mb-30">
-        <div class="card-box height-100-p widget-style1">
-            <div class="d-flex flex-wrap align-items-center">
-                <div class="progress-data">
-                    {% for numeros_pesq in lista2 %}
-                    <h3>{{ numeros_pesq.desapegos }}</h3>
-                    {% endfor %}
-                </div>
-                <div class="widget-data">
-                    <div class="h5 mb-0">Número de desapegos</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 mb-30">
-        <div class="card-box height-100-p widget-style1">
-            <div class="d-flex flex-wrap align-items-center">
-                <div class="progress-data">
-                    {% for numeros_pesq in lista2 %}
-                    <h3>{{ numeros_pesq.destaque_lojas }}</h3>
-                    {% endfor %}
-                </div>
-                <div class="widget-data">
-                    <div class="h4 mb-0">Número de lojas destacadas</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 mb-30">
-        <div class="card-box height-100-p widget-style1">
-            <div class="d-flex flex-wrap align-items-center">
-                <div class="progress-data">
-                    {% for numeros_pesq in lista2 %}
-                    <h3>{{ numeros_pesq.destaque_desapegos }}</h3>
-                    {% endfor %}
-                </div>
-                <div class="widget-data">
-                    <div class="h4 mb-0">Número de desapegos destacadas</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% else %}
-<div class="row" >
     <div class="col-xl-3 mb-30">
         <div class="card-box height-100-p widget-style1">
             <div class="d-flex flex-wrap align-items-center">
@@ -338,5 +188,141 @@
         </div>
     </div>
 </div>
-{% endif %}
+{% else %}
+<div class="row" hidden>
+    <div class="col-xl-3 mb-30">
+        <div class="card-box height-100-p widget-style1">
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="progress-data">
+                    {% for numeros in lista %}
+                    <h3>{{ numeros.usuarios }}</h3>
+                    {% endfor %}
+                </div>
+                <div class="widget-data">
+                    <div class="h4 mb-0">Usuários cadastrados</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 mb-30">
+        <div class="card-box height-100-p widget-style1">
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="progress-data">
+                    {% for numeros in lista %}
+                    <h3>{{ numeros.lojas }}</h3>
+                    {% endfor %}
+                </div>
+                <div class="widget-data">
+                    <div class="h5 mb-0">Número de lojas cadastradas</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 mb-30">
+        <div class="card-box height-100-p widget-style1">
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="progress-data">
+                    {% for numeros in lista %}
+                    <h3>{{ numeros.desapegos }}</h3>
+                    {% endfor %}
+                </div>
+                <div class="widget-data">
+                    <div class="h5 mb-0">Número de desapegos</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-3 mb-30">
+        <div class="card-box height-100-p widget-style1">
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="progress-data">
+                    {% for numeros in lista %}
+                    <h3>{{ numeros.destaque_lojas }}</h3>
+                    {% endfor %}
+                </div>
+                <div class="widget-data">
+                    <div class="h4 mb-0">Número de lojas destacadas</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 mb-30">
+        <div class="card-box height-100-p widget-style1">
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="progress-data">
+                    {% for numeros in lista %}
+                    <h3>{{ numeros.destaque_desapegos }}</h3>
+                    {% endfor %}
+                </div>
+                <div class="widget-data">
+                    <div class="h4 mb-0">Número de desapegos destacadas</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+<h3 hidden>Dashboard com filtro</h3>
+<br>
+<div class="row">
+    <div class="col-xl-3 mb-30">
+        <div class="card-box height-100-p widget-style1">
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="progress-data">
+                    {% for numeros_pesq in lista2 %}
+                    <h3>{{ numeros_pesq.lojas }}</h3>
+                    {% endfor %}
+                </div>
+                <div class="widget-data">
+                    <div class="h5 mb-0">Número de lojas cadastradas</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 mb-30">
+        <div class="card-box height-100-p widget-style1">
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="progress-data">
+                    {% for numeros_pesq in lista2 %}
+                    <h3>{{ numeros_pesq.desapegos }}</h3>
+                    {% endfor %}
+                </div>
+                <div class="widget-data">
+                    <div class="h5 mb-0">Número de desapegos</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 mb-30">
+        <div class="card-box height-100-p widget-style1">
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="progress-data">
+                    {% for numeros_pesq in lista2 %}
+                    <h3>{{ numeros_pesq.destaque_lojas }}</h3>
+                    {% endfor %}
+                </div>
+                <div class="widget-data">
+                    <div class="h4 mb-0">Número de lojas destacadas</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 mb-30">
+        <div class="card-box height-100-p widget-style1">
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="progress-data">
+                    {% for numeros_pesq in lista2 %}
+                    <h3>{{ numeros_pesq.destaque_desapegos }}</h3>
+                    {% endfor %}
+                </div>
+                <div class="widget-data">
+                    <div class="h4 mb-0">Número de desapegos destacadas</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
