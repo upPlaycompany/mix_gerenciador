@@ -170,6 +170,8 @@ def index(request, token):
         municipios_link = requests.get(
             f"http://servicodados.ibge.gov.br/api/v1/localidades/estados/{estado}/municipios")
         municipios = municipios_link.json()
+    else:
+        municipios = [{'': ''}]
     if municipio and estado:
         ccccc = db.collection('categorias/academia_sumplementos/lojas').where('cidade','==',f'{municipio}').where('estado','==',f'{estado}').stream()
         ddddd = [{'id': x.id} for x in ccccc]
