@@ -1852,7 +1852,7 @@ def destaque_lojas_listagem(request, token):
     a = len(bca)
     [bca[x].update(poa[x]) for x in range(a)]
     [bca[x].update(keya) for x in range(a)]
-    dat = firestore.firestore.SERVER_TIMESTAMP
+    dat = firestore.firestore.SERVER_TIMESTAMP.date()
     data_atual = dat
     data_plano = bca[0]['created']
     float('p')
