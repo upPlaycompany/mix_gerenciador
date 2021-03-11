@@ -12,7 +12,7 @@
             <p>Código do desapego: {{ bca.id }}</p>
             <p>Nome do desapego: {{ bca.name }}</p>
             <p>Número do whats da desapego: {{ bca.whatsapp }}</p>
-            <a href="{% url 'renovar_destaque_desapego' token=bca.token lid=bca.lid %}" class="btn btn-primary">Ir para confirmação de renovação</a>
+            <a href="{% url 'renovar_destaque_desapego' token=bca.token did=bca.did %}" class="btn btn-primary">Ir para confirmação de renovação</a>
             </div>
     </div>
 </div>
