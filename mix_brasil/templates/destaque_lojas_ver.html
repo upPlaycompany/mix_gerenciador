@@ -12,7 +12,7 @@
             <p>Código da loja: {{ bca.id }}</p>
             <p>Nome da loja: {{ bca.name }}</p>
             <p>Número do whats da loja: {{ bca.whatsapp }}</p>
-
+            <a href="{% url 'renovar_destaque_loja' token=bca.token lid=bca.lid %}" class="btn btn-primary">Ir para confirmação de renovação</a>
             </div>
     </div>
 </div>
