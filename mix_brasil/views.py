@@ -1852,8 +1852,8 @@ def destaque_lojas_listagem(request, token):
     a = len(bca)
     [bca[x].update(poa[x]) for x in range(a)]
     [bca[x].update(keya) for x in range(a)]
-    data_anual = firestore.firestore.SERVER_TIMESTAMP
-    data_plano = dee[0]['created']
+    data_anual = str(firestore.firestore.SERVER_TIMESTAMP)
+    data_plano = bca[0]['created']
     float('p')
     return render(request, 'destaque_lojas_listagem.html', {'t': key, 'lista': bca})
 
