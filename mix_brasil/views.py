@@ -1852,6 +1852,9 @@ def destaque_lojas_listagem(request, token):
     a = len(bca)
     [bca[x].update(poa[x]) for x in range(a)]
     [bca[x].update(keya) for x in range(a)]
+    data_anual = firestore.firestore.SERVER_TIMESTAMP
+    data_plano = dee[0]['created']
+    float('p')
     return render(request, 'destaque_lojas_listagem.html', {'t': key, 'lista': bca})
 
 
@@ -1870,6 +1873,7 @@ def destaque_lojas_ver(request, token, lid):
     a = len(dee)
     [dee[x].update(jkl[x]) for x in range(a)]
     [dee[x].update(keya) for x in range(a)]
+
     return render(request, 'destaque_lojas_ver.html', {'t': key, 'lista': dee})
 
 
