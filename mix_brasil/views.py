@@ -1852,7 +1852,7 @@ def destaque_lojas_listagem(request, token):
     a = len(bca)
     [bca[x].update(poa[x]) for x in range(a)]
     [bca[x].update(keya) for x in range(a)]
-    dat = datetime.datetime.now()
+    dat = datetime.datetime.now(datetime.timezone.utc)
     data_atual = dat
     data_plano = bca[0]['created']
     dif = abs((data_atual - data_plano).days)
