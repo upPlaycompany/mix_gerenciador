@@ -1855,6 +1855,7 @@ def destaque_lojas_listagem(request, token):
     dat = datetime.datetime.now()
     data_atual = dat
     data_plano = bca[0]['created']
+    dif = abs((d2 - d1).days)
     float('p')
     return render(request, 'destaque_lojas_listagem.html', {'t': key, 'lista': bca})
 
