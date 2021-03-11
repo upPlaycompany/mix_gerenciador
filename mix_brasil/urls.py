@@ -88,6 +88,8 @@ urlpatterns = [
     path('solicitacao_exclusao_dados_listagem/<str:token>/', views.solicitacao_exclusao_dados_listagem, name='solicitacao_exclusao_dados_listagem'),
     path('destaque_lojas_listagem/<str:token>/', views.destaque_lojas_listagem, name='destaque_lojas_listagem'),
     path('destaque_lojas_ver/<str:token>/<str:lid>/', views.destaque_lojas_ver, name='destaque_lojas_ver'),
+    path('renovar_destaque_loja/<str:token>/<str:lid>/', views.renovar_destaque_loja, name='renovar_destaque_loja'),
+    path('renovar_destaque_loja_sucesso/<str:token>/', views.renovar_destaque_loja_sucesso, name='renovar_destaque_loja_sucesso'),
 
 
     #path('user_index/<str:token>/', views.user_index, name='user_index'),

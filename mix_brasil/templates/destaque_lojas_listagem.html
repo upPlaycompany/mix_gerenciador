@@ -10,9 +10,9 @@
     <div class="card card-box text-center">
         <div class="card-body">
             <h5 class="card-title">{{ bca.name }}</h5>
-            <p class="card-text">{{ bca.whatsapp }}. {{ bca.created }}</p>
+            <p class="card-text">{{ bca.created }}</p>
             {% if bca.diff > 7 %}
-            <a href="{% url 'destaque_lojas_ver' token=bca.token lid=bca.lid %}" class="btn btn-primary">Dados do destaque</a>
+            <a href="{% url 'destaque_lojas_ver' token=bca.token lid=bca.lid %}" class="btn btn-primary">Renovar destaque</a>
             {% else %}
             <h6>No prazo</h6>
             {% endif %}

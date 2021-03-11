@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Renovação bem-sucedida</h2>
+{% endblock title %}
+
+{% block content %}
+{% for key in t %}
+<a href="{% url 'destaque_lojas_listagem' token=key %}"><button type="button" class="btn btn-success">Volte para tela de listagem de destaques</button></a>
+{% endfor %}
+{% endblock %}

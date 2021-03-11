@@ -1875,9 +1875,37 @@ def destaque_lojas_ver(request, token, lid):
 
     return render(request, 'destaque_lojas_ver.html', {'t': key, 'lista': dee})
 
+def renovar_destaque_loja(request, token, lid):
+    key = [str(token)]
+    keya = {'token': str(token)}
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('login')
+    if request.method == 'POST':
+        abc = db.collection('destaque_home').where('lid', '==', f'{lid}').stream()
+        dee = [{'id': x.id} for x in abc]
+        ghi = db.collection('destaque_home').where('lid', '==', f'{lid}').stream()
+        jkl = [x.to_dict() for x in ghi]
+        a = len(dee)
+        [dee[x].update(jkl[x]) for x in range(a)]
+        [dee[x].update(keya) for x in range(a)]
+        aaa = db.collection('destaque_home').document(f"{dee[0]['id']}")
+        aaa.update({
+            "created": firestore.firestore.SERVER_TIMESTAMP
+        })
+        return redirect('renovar_destaque_loja_sucesso', token=token)
+    return render(request, 'renovar_destaque_loja.html', {'t': key})
 
-
-
+def renovar_destaque_loja_sucesso(request, token):
+    key = [str(token)]
+    user = auth.get_user(token)
+    us = db.collection('admin').where('email', '==', f'{user.email}').stream()
+    usa = [x.to_dict() for x in us]
+    if usa == []:
+        return redirect('login')
+    return render(request, 'renovar_destaque_loja_sucesso', {'t': key})
 
 
 
