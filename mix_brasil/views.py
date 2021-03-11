@@ -239,9 +239,9 @@ def index(request, token):
         capp = db.collection('destaque_desapego').where('cidade','==',f'{municipio}').stream()
         cipp = [{'id': x.id} for x in capp]
         contagem_destaque_desapegos_pesq = len(cipp)
-        numeros_pesq = numeros = [{'lojas': int(contagem_lojas_pesq), 'desapegos': int(contagem_desapego_pesq),
-                                   'destaque_lojas': int(contagem_destaque_lojas_pesq),
-                                   'destaque_desapegos': int(contagem_destaque_desapegos_pesq)}]
+        numeros_pesq = numeros = [{'lojas_pesq': int(contagem_lojas_pesq), 'desapegos_pesq': int(contagem_desapego_pesq),
+                                   'destaque_lojas_pesq': int(contagem_destaque_lojas_pesq),
+                                   'destaque_desapegos_pesq': int(contagem_destaque_desapegos_pesq)}]
     elif estado:
         ccccc = db.collection('categorias/academia_sumplementos/lojas').where('estado','==',f'{estado}').stream()
         ddddd = [{'id': x.id} for x in ccccc]
@@ -309,13 +309,13 @@ def index(request, token):
         capp = db.collection('destaque_desapego').where('estado','==',f'{estado}').stream()
         cipp = [{'id': x.id} for x in capp]
         contagem_destaque_desapegos_pesq = len(cipp)
-        numeros_pesq = [{'lojas': int(contagem_lojas_pesq), 'desapegos': int(contagem_desapego_pesq),
-                                   'destaque_lojas': int(contagem_destaque_lojas_pesq),
-                                   'destaque_desapegos': int(contagem_destaque_desapegos_pesq)}]
+        numeros_pesq = [{'lojas_pesq': int(contagem_lojas_pesq), 'desapegos_pesq': int(contagem_desapego_pesq),
+                                   'destaque_lojas_pesq': int(contagem_destaque_lojas_pesq),
+                                   'destaque_desapegos_pesq': int(contagem_destaque_desapegos_pesq)}]
     else:
-        numeros_pesq = [{'lojas': int(0), 'desapegos': int(0),
-                         'destaque_lojas': int(0),
-                         'destaque_desapegos': int(0)}]
+        numeros_pesq = [{'lojas_pesq': int(0), 'desapegos_pesq': int(0),
+                         'destaque_lojas_pesq': int(0),
+                         'destaque_desapegos_pesq': int(0)}]
     return render(request, 'index.html', {'t': key, 'lista': numeros, 'lista2': numeros_pesq, 'ibge_uf': estados, 'ibge_mun': municipios})
 
 
