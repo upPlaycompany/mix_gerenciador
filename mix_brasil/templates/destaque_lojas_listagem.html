@@ -11,6 +11,10 @@
         <div class="card-body">
             <h5 class="card-title">{{ bca.name }}</h5>
             <p class="card-text">{{{ bca.whatsapp }}. {{ bca.created }}</p>
+            {% if bca.diff > 7 %}
+            <p>Renovar</p>
+            {% else %}
+            <p>No prazo</p>
         </div>
     </div>
 </div></span>
