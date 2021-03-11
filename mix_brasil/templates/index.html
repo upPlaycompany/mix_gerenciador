@@ -125,9 +125,41 @@
         </div>
     </div>
 </div>
+<br>
+<form method="get">
+    <div class="col-lg-6">
+        <label>Selecione o estado desejado</label>
+        <div class="input-group">
+            <select class="form-control" name="estado">
+                <option selected>Selecione uma opção</option>
+                {% for estados in ibge_uf %}
+                <option value="{{ estados.sigla }}">{{ estados.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Selecionar estado</button>
+</form>
+<br>
+<br>
+<h3>Filtrar dados por estado e município</h3>
+<form method="get">
+    <div class="col-lg-6">
+        <label>Selecione a cidade desejada</label>
+        <div class="input-group">
+            <select class="form-control" name="municipio">
+                <option selected>Selecione uma opção</option>
+                {% for municipios in ibge_mun %}
+                <option value="{{ municipios.nome }}">{{ municipios.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Pesquisar</button>
+</form>
 
 <br>
-<h3>Dashboard com filtro</h3>
+<h3>Dados filtrados do {{ estado }}</h3>
 <br>
 <div class="row">
     <div class="col-xl-3 mb-30">
