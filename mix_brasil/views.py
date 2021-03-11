@@ -378,7 +378,7 @@ def index(request, token):
                                    'destaque_lojas': int(contagem_destaque_lojas_pesq),
                                    'destaque_desapegos': int(contagem_destaque_desapegos_pesq)}]
     else:
-        numeros_pesq = [{'id': '0'}]
+        numeros_pesq = 0
     return render(request, 'index.html', {'t': key, 'lista': numeros, 'lista2': numeros_pesq, 'ibge_uf': estados, 'ibge_mun': municipios})
 
 
