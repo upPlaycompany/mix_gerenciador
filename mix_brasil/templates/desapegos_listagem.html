@@ -43,7 +43,7 @@
     {% for docs in lista %}
     <a href="{% url 'desapegos_dados' token=docs.token id=docs.categoria nome=docs.name cod=docs.id %}">
         <div class="profile-photo">
-            <img class="avatar-photo" alt="" src="{{ docs.img.0|cut:"'" }}">
+            <img class="avatar-photo" width="50%" alt="" src="{{ docs.img.0|cut:"'" }}">
         </div>
         <strong>{{ docs.name }}       </strong>
     </a>
