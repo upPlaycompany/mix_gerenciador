@@ -102,16 +102,16 @@
 <form method="get">
     <div class="col-lg-6">
         <label>Selecione o estado desejado</label>
-        <div class="input-group">
+       <span><div class="input-group">
             <select class="form-control" name="estado">
                 <option selected>Selecione uma opção</option>
                 {% for estados in ibge_uf %}
                 <option value="{{ estados.sigla }}">{{ estados.nome }}</option>
                 {% endfor %}
             </select>
-        </div>
+       </div></span><span><button class="btn btn-primary" type="submit">Selecionar estado</button></span>
     </div>
-    <button class="btn btn-primary" type="submit">Selecionar estado</button>
+
 </form>
 <br>
 <form method="get">
