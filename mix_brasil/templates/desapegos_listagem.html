@@ -42,8 +42,7 @@
 <div class="card-deck mb-20">
     {% for docs in lista %}
     <a href="{% url 'desapegos_dados' token=docs.token id=docs.categoria nome=docs.name cod=docs.id %}">
-        <div class="profile-photo">
-            <img class="avatar-photo" style="max-width: 80%; max-height: 80px;" alt="" src="{{ docs.img.0|cut:"'" }}">
+        <div style="width: 100px; height: 100px; background: url('{{ docs.img.0|cut:"'" }}'; background-size: 100%; border-radius: 100%;">
         </div>
         <strong>{{ docs.name }}       </strong>
     </a>
