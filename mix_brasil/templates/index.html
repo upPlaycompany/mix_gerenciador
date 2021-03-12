@@ -102,7 +102,6 @@
 <form method="get">
     <div class="col-lg-6">
         <div class="input-group">
-            <div class="input-group">
             <select class="form-control" name="estado">
                 <option selected>Selecione uma opção</option>
                 {% for estados in ibge_uf %}
@@ -110,10 +109,9 @@
                 {% endfor %}
             </select>
         </div>
-            <span class="input-group-btn">
+        <span class="input-group-btn">
         <button class="btn btn-primary" type="submit">Selecionar estado</button>
       </span>
-        </div>
     </div>
 </form>
 <br>
@@ -121,13 +119,13 @@
     <div class="col-lg-6">
         <div class="input-group">
             <div class="input-group">
-            <select class="form-control" name="municipio">
-                <option selected>Selecione uma opção</option>
-                {% for municipios in ibge_mun %}
-                <option value="{{ municipios.nome }}">{{ municipios.nome }}</option>
-                {% endfor %}
-            </select>
-        </div>
+                <select class="form-control" name="municipio">
+                    <option selected>Selecione uma opção</option>
+                    {% for municipios in ibge_mun %}
+                    <option value="{{ municipios.nome }}">{{ municipios.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
             <span class="input-group-btn">
         <button class="btn btn-primary" type="submit">Selecionar municipio</button>
       </span>
