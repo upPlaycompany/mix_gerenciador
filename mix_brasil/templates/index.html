@@ -108,27 +108,23 @@
                 <option value="{{ estados.sigla }}">{{ estados.nome }}</option>
                 {% endfor %}
             </select>
+            <span class="input-group-btn">
+        <button class="btn btn-primary" type="submit">Selecionar municipio</button></span>
         </div>
-        <span class="input-group-btn">
-        <button class="btn btn-primary" type="submit">Selecionar estado</button>
-      </span>
     </div>
 </form>
 <br>
 <form method="get">
     <div class="col-lg-6">
         <div class="input-group">
-            <div class="input-group">
-                <select class="form-control" name="municipio">
-                    <option selected>Selecione uma opção</option>
-                    {% for municipios in ibge_mun %}
-                    <option value="{{ municipios.nome }}">{{ municipios.nome }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+            <select class="form-control" name="municipio">
+                <option selected>Selecione uma opção</option>
+                {% for municipios in ibge_mun %}
+                <option value="{{ municipios.nome }}">{{ municipios.nome }}</option>
+                {% endfor %}
+            </select>
             <span class="input-group-btn">
-        <button class="btn btn-primary" type="submit">Selecionar municipio</button>
-      </span>
+        <button class="btn btn-primary" type="submit">Selecionar municipio</button></span>
         </div>
     </div>
 </form>
