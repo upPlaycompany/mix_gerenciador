@@ -15,6 +15,8 @@
                 <option value="{{ estados.sigla }}">{{ estados.nome }}</option>
                 {% endfor %}
             </select>
+            <div style="width: 30px;">
+            </div>
             <span class="input-group-btn">
         <button class="btn btn-primary" type="submit">Selecionar estado</button></span>
         </div>
@@ -31,6 +33,8 @@
                 <option value="{{ municipios.nome }}">{{ municipios.nome }}</option>
                 {% endfor %}
             </select>
+            <div style="width: 30px;">
+            </div>
             <span class="input-group-btn">
         <button class="btn btn-primary" type="submit">Selecionar municipio</button></span>
         </div>
@@ -42,7 +46,7 @@
 <div class="card-deck mb-20">
     {% for docs in lista %}
     <a href="{% url 'desapegos_dados' token=docs.token id=docs.categoria nome=docs.name cod=docs.id %}" style="padding-right: 40px;">
-        <div style="width: 100px; height: 100px; background: url('{{ docs.img.0|cut:"'" }}'); background-size: 100%; border-radius: 100%;">
+        <div style="width: 100px; height: 100px; background: url('{{ docs.img.0|cut:"'" }}') no-repeat; background-size: 100%; border-radius: 100%;">
         </div>
         <strong>{{ docs.name }}       </strong>
     </a>
