@@ -63,7 +63,7 @@
         </div>
     </div>
 </div>
-<div class="row" >
+<div class="row">
     <div class="col-xl-3 mb-30">
         <div class="card-box height-100-p widget-style1">
             <div class="d-flex flex-wrap align-items-center">
@@ -100,24 +100,27 @@
 <h3>Filtrar dados por estado e município</h3>
 <br>
 <form method="get">
-    <div class="col-lg-6">
-        <label>Selecione o estado desejado</label>
-       <span><div class="input-group">
+    <div class="col-lg-12">
+        <div class="input-group">
+            <div class="input-group">
             <select class="form-control" name="estado">
                 <option selected>Selecione uma opção</option>
                 {% for estados in ibge_uf %}
                 <option value="{{ estados.sigla }}">{{ estados.nome }}</option>
                 {% endfor %}
             </select>
-       </div></span><span><button class="btn btn-primary" type="submit">Selecionar estado</button></span>
+        </div>
+            <span class="input-group-btn">
+        <button class="btn btn-primary" type="submit">Selecionar estado</button>
+      </span>
+        </div>
     </div>
-
 </form>
 <br>
 <form method="get">
-    <div class="col-lg-6">
-        <label>Selecione a cidade desejada</label>
+    <div class="col-lg-12">
         <div class="input-group">
+            <div class="input-group">
             <select class="form-control" name="municipio">
                 <option selected>Selecione uma opção</option>
                 {% for municipios in ibge_mun %}
@@ -125,8 +128,11 @@
                 {% endfor %}
             </select>
         </div>
+            <span class="input-group-btn">
+        <button class="btn btn-primary" type="submit">Selecionar municipio</button>
+      </span>
+        </div>
     </div>
-    <button class="btn btn-primary" type="submit">Pesquisar</button>
 </form>
 
 <br>
