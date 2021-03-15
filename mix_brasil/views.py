@@ -26,16 +26,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 import pandas as pd
 import pprint
 
-config = {
-    'apiKey': "AIzaSyBh-DC_fXWzzcHV6XYhFQ1Ya6MWG5OjH_w",
-    'authDomain': "mix-brasil.firebaseapp.com",
-    'databaseURL': "https://mix-brasil.firebaseio.com",
-    'projectId': "mix-brasil",
-    'storageBucket': "mix-brasil.appspot.com",
-    'messagingSenderId': "132448934641",
-    'appId': "1:132448934641:web:f22d872cbc228c8d822750",
-    'measurementId': "G-NPE7ECX901"
-}
 
 cred = credentials.Certificate("/app/mix_brasil/credencial.json")
 firebase_admin.initialize_app(cred)
